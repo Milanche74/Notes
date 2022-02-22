@@ -1,0 +1,26 @@
+{
+  "libraries": [
+    {
+      "id": 1,
+      "name": "New",
+      "documentation": "",
+      "description": "",
+      "installation": "",
+      "installSnippet": "",
+      "implementation": "",
+      "implementationSnippet": "",
+      "additional": ""
+    },
+    {
+      "id": 2,
+      "name": "Webpack",
+      "documentation": "https://webpack.js.org/concepts/",
+      "description": "JS Module Bundler",
+      "installation": "Install webpack using npm. Webpack-cli and webpack-dev-server are required for using webpack as a dev server",
+      "installSnippet": "npm i webpack webpack-cli webpack-dev-server",
+      "implementation": "Configure webpack in webpack.config.json",
+      "implementationSnippet": "const path = require('path');^const HtmlWebpackPlugin = require('html-webpack-plugin');^^module.exports = {^  mode: 'development',^  entry: './src/index.js',^  output: {^    path: path.resolve(__dirname, './dist'),^    filename: 'main.bundle.js',^  },^  target: 'web',^  devtool: 'inline-source-map',^  devServer: {^    static: './dist',^    open: true,^    hot: false,^    liveReload: true,^  },^  module: {^    rules: [^      {^        test: /\\.js$/,^        exclude: /node_modules/,^        use: {^          loader: 'babel-loader',^          options: {^            presets: ['@babel/preset-env'],^          },^        },^      },^    ],^  },^  plugins: [^    new HtmlWebpackPlugin({^      template: './src/index.html',^      filename: 'index.html',^    }),^  ],^};",
+      "additional": "- HTMLWepbackPlugin creates HTML file in /dist folder. It is possible to pass in a custom template."
+    }
+  ]
+}
