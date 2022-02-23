@@ -10,5 +10,5 @@ Notes app designed to speed up learning process by entering general info about g
 ## Future updates
 
 - [ ] Double-click event on dashboard items should trigger production of another library-detail component on the right side of the screen so that user can compare two libraries;
-- [ ] Text inside 'Official docs' should be removed on focus;
+- [x] Text inside 'Official docs' should be removed on focus;
 - [ ] Improve styling (Neumorphism).

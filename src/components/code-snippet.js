@@ -61,3 +61,4 @@ export class CodeSnippet extends LitElement {
     } else return 3
   }
 }
+

@@ -64,7 +64,8 @@ export class LibraryDetail extends LitElement {
       content: attr(placeholder);
       color: grey;
     }
-    a p, h2 {
+    a p,
+    h2 {
       padding: 1vh;
       border-radius: 5px;
     }
@@ -96,6 +97,7 @@ export class LibraryDetail extends LitElement {
       </div>
       <a target="_blank" href="${this.setHref()}"
         ><p
+          @focus="${this.linkFocus}"
           contenteditable=${this.editable}
           placeholder="Insert link..."
           .innerHTML="${this.docsLabel}"
@@ -198,10 +200,11 @@ export class LibraryDetail extends LitElement {
 
   // this is how I get values to be saved and emmited
   save() {
-
     const data = {
       name: this.name.innerHTML,
-      documentation: this.getHrefFromParagraph() ? this.linkParagraph.innerHTML : this.data.documentation,
+      documentation: this.getHrefFromParagraph()
+        ? this.linkParagraph.innerHTML
+        : this.data.documentation,
       description: this.description.innerHTML,
       installation: this.install.innerHTML,
       installSnippet: this.installCs.value,
@@ -216,9 +219,14 @@ export class LibraryDetail extends LitElement {
       bubbles: true,
       composed: true,
     });
-    this.dispatchEvent(event)
+    this.dispatchEvent(event);
   }
 
+ // auxiliary methods
+
+  linkFocus() {
+    this.linkParagraph.innerHTML = '';
+  }
   getHrefFromParagraph() {
     if (this.linkParagraph.innerHTML === this.docsLabel) {
       return false;
