@@ -57,6 +57,17 @@ export class LibraryDetail extends LitElement {
     .button-active {
       background-color: grey;
     }
+    [contenteditable="true"] {
+      outline: 1px solid grey;
+    }
+    [contenteditable="true"]:empty:before {
+      content: attr(placeholder);
+      color: grey;
+    }
+    a p, h2 {
+      padding: 1vh;
+      border-radius: 5px;
+    }
   `;
 
   constructor() {
@@ -64,11 +75,16 @@ export class LibraryDetail extends LitElement {
     this.data = {};
     this.editable = false;
   }
+  docsLabel = "Official Docs";
 
   render() {
     console.log(this.data);
     return html`
-      <h2 contenteditable=${this.editable}>${this.data.name}</h2>
+      <h2
+        contenteditable=${this.editable}
+        placeholder="Edit..."
+        .innerHTML="${this.data.name}"
+      ></h2>
       <div class="buttons">
         <button
           @click="${this.toggleEditable}"
@@ -78,27 +94,38 @@ export class LibraryDetail extends LitElement {
         </button>
         <button @click="${this.save}">Save</button>
       </div>
-      <a target="_blank" href="${this.data.documentation}">Official Docs</a>
+      <a target="_blank" href="${this.setHref()}"
+        ><p
+          contenteditable=${this.editable}
+          placeholder="Insert link..."
+          .innerHTML="${this.docsLabel}"
+        ></p
+      ></a>
       <text-field
+        id="desc"
         .editable=${this.editable}
         .data=${this.data.description}
         title="Description"
       ></text-field>
       <text-field
+        id="install"
         .editable=${this.editable}
         .data=${this.data.installation}
         title="Installation"
       ></text-field>
       <code-snippet
+        id="install-cs"
         .editable=${this.editable}
         .data=${this.data.installSnippet}
       ></code-snippet>
       <text-field
+        id="implementation"
         .editable=${this.editable}
         .data=${this.data.implementation}
         title="Implementation"
       ></text-field>
       <code-snippet
+        id="implementation-cs"
         .editable=${this.editable}
         .data=${this.data.implementationSnippet}
       ></code-snippet>
@@ -110,12 +137,94 @@ export class LibraryDetail extends LitElement {
       ></text-field>
     `;
   }
-  // this is how I get values to be saved
-  save() {
-    const textField = this.renderRoot.querySelector("#addition");
-    const paragraph = textField.renderRoot.querySelector("p");
-    console.log(paragraph.innerHTML);
+
+  // aux methods for rendering
+
+  // removes href from anchor tag so that user can input url
+  setHref() {
+    if (this.data.name === "+" || this.editable) {
+      this.link.removeAttribute("href");
+    } else return this.data.documentation;
   }
+  //makes sure that anchor tag's child paragraph is displaying
+  //correct text and determines correct url destination
+  updated() {
+    this.linkParagraph.innerHTML = this.docsLabel;
+    this.setHref();
+  }
+
+  // getters
+
+  get name() {
+    return this.renderRoot.querySelector("h2");
+  }
+
+  get link() {
+    return this.renderRoot.querySelector("a");
+  }
+
+  get linkParagraph() {
+    return this.renderRoot.querySelector("p");
+  }
+
+  get description() {
+    return this.renderRoot.querySelector("#desc").renderRoot.querySelector("p");
+  }
+  get install() {
+    return this.renderRoot
+      .querySelector("#install")
+      .renderRoot.querySelector("p");
+  }
+  get installCs() {
+    return this.renderRoot
+      .querySelector("#install-cs")
+      .renderRoot.querySelector("textarea");
+  }
+  get implementation() {
+    return this.renderRoot
+      .querySelector("#implementation")
+      .renderRoot.querySelector("p");
+  }
+  get implementationCs() {
+    return this.renderRoot
+      .querySelector("#implementation-cs")
+      .renderRoot.querySelector("textarea");
+  }
+  get addition() {
+    return this.renderRoot
+      .querySelector("#addition")
+      .renderRoot.querySelector("p");
+  }
+
+  // this is how I get values to be saved and emmited
+  save() {
+
+    const data = {
+      name: this.name.innerHTML,
+      documentation: this.getHrefFromParagraph() ? this.linkParagraph.innerHTML : this.data.documentation,
+      description: this.description.innerHTML,
+      installation: this.install.innerHTML,
+      installSnippet: this.installCs.value,
+      implementation: this.implementation.innerHTML,
+      implementationSnippet: this.implementationCs.value,
+      additional: this.addition.innerHTML,
+    };
+    let event = new CustomEvent("save-emiter", {
+      detail: {
+        data: data,
+      },
+      bubbles: true,
+      composed: true,
+    });
+    this.dispatchEvent(event)
+  }
+
+  getHrefFromParagraph() {
+    if (this.linkParagraph.innerHTML === this.docsLabel) {
+      return false;
+    } else return true;
+  }
+
   toggleEditable() {
     this.editable = !this.editable;
   }

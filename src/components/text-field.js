@@ -53,17 +53,12 @@ export class TextField extends LitElement {
         placeholder="Edit...  "
         contenteditable="${this.editable}"
         class="paragraph"
-        cols=${this.calculateCols()}
+        
         .innerHTML=${this.data}
       />
     `;
   }
 
-  calculateCols() {
-    let numOfCols = window.innerWidth / 24;
-    console.log(window.innerWidth);
-    return numOfCols;
-  }
   logInput(e) {
     const parag = e.target;
     console.log(parag.innerHTML);

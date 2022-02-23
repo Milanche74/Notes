@@ -20,10 +20,6 @@ export class CodeSnippet extends LitElement {
   }
 
   render() {
-    // const formatted = this.data.replaceAll(`^`, ` &#13;- `);
-    // const toShow=formatted.split('&#13; &#10;')
-    // console.log(toShow)
-
     const textarea = html`
       <textarea
         ?disabled=${!this.editable}
@@ -37,20 +33,31 @@ export class CodeSnippet extends LitElement {
     return html`${textarea}`;
   }
 
-  saveValue(event) {
-    const textarea = event.target;
-    console.log(JSON.stringify(textarea.value));
+  get textarea() {
+    return this.renderRoot.querySelector("textarea");
   }
+  // made sure that textarea displays correct value when updated; otherwise it woudn't be done
+  updated() {
+    this.textarea.value = this.textarea.innerHTML;
+  }
+
+  //   saveValue(event) {
+  //     console.log(this.renderRoot.querySelector('textarea'))
+  //     const textarea = event.target;
+  //     console.log(JSON.stringify(textarea.innerHTML));
+  //   }
   formatString(str) {
     let addIndent = "" + str;
-    let formatted = addIndent.replaceAll(`^`, ` &#13;  `);
+    let formatted = addIndent.replaceAll(`\n`, ` &#13;`);
 
     return formatted;
   }
   calculateRows(data) {
-    let numberOfLines = data.split("^");
-    if (numberOfLines.length > 40) {
-      return 40;
-    } else return numberOfLines.length;
+    if (data !== "") {
+      let numberOfLines = data.split(`\n`);
+      if (numberOfLines.length > 40) {
+        return 40;
+      } else return numberOfLines.length;
+    } else return 3
   }
 }

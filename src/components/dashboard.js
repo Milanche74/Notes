@@ -53,7 +53,7 @@ export class Dashboard extends LitElement {
   }
 
   onClickHandler(index) {
-    console.log(index);
+    // console.log(index);
     let event = new CustomEvent("index-emiter", {
       detail: {
         index: index,

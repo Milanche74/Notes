@@ -1,26 +1,37 @@
 {
   "libraries": [
     {
-      "id": 1,
-      "name": "New",
-      "documentation": "",
+      "name": "+",
+      "documentation": "https://git-scm.com/doc",
       "description": "",
       "installation": "",
       "installSnippet": "",
       "implementation": "",
       "implementationSnippet": "",
-      "additional": ""
+      "additional": "",
+      "id": 1
     },
     {
-      "id": 2,
       "name": "Webpack",
-      "documentation": "https://webpack.js.org/concepts/",
-      "description": "JS Module Bundler",
+      "documentation": "Official Docs",
+      "description": "JS Module Bundler work please<br>",
       "installation": "Install webpack using npm. Webpack-cli and webpack-dev-server are required for using webpack as a dev server",
       "installSnippet": "npm i webpack webpack-cli webpack-dev-server",
       "implementation": "Configure webpack in webpack.config.json",
-      "implementationSnippet": "const path = require('path');^const HtmlWebpackPlugin = require('html-webpack-plugin');^^module.exports = {^  mode: 'development',^  entry: './src/index.js',^  output: {^    path: path.resolve(__dirname, './dist'),^    filename: 'main.bundle.js',^  },^  target: 'web',^  devtool: 'inline-source-map',^  devServer: {^    static: './dist',^    open: true,^    hot: false,^    liveReload: true,^  },^  module: {^    rules: [^      {^        test: /\\.js$/,^        exclude: /node_modules/,^        use: {^          loader: 'babel-loader',^          options: {^            presets: ['@babel/preset-env'],^          },^        },^      },^    ],^  },^  plugins: [^    new HtmlWebpackPlugin({^      template: './src/index.html',^      filename: 'index.html',^    }),^  ],^};",
-      "additional": "- HTMLWepbackPlugin creates HTML file in /dist folder. It is possible to pass in a custom template."
+      "implementationSnippet": "const path = require('path');   \nconst HtmlWebpackPlugin = require('html-webpack-plugin');   \n       \nmodule.exports = {   \n      mode: 'development',   \n      entry: './src/index.js',   \n      output: {   \n        path: path.resolve(__dirname, './dist'),   \n        filename: 'main.bundle.js',   \n      },   \n      target: 'web',   \n      devtool: 'inline-source-map',   \n      devServer: {   \n        static: './dist',   \n        open: true,   \n        hot: false,   \n        liveReload: true,   \n      },   \n      module: {   \n        rules: [   \n          {   \n            test: /\\.js$/,   \n            exclude: /node_modules/,   \n            use: {   \n              loader: 'babel-loader',   \n              options: {   \n                presets: ['@babel/preset-env'],   \n              },   \n            },   \n          },   \n        ],   \n      },   \n      plugins: [   \n        new HtmlWebpackPlugin({   \n          template: './src/index.html',   \n          filename: 'index.html',   \n        }),   \n      ],   \n    };",
+      "additional": "- HTMLWepbackPlugin creates HTML file in /dist folder. It is possible to pass in a custom template.",
+      "id": 2
+    },
+    {
+      "name": "Git",
+      "documentation": "https://git-scm.com/book/en/v2",
+      "description": "Version management tool",
+      "installation": "Linux installation",
+      "installSnippet": " sudo apt install git-all",
+      "implementation": "CLI commands for setting up local and remote repository",
+      "implementationSnippet": "git init\ngit add README.md\ngit commit -m \"first commit\"\ngit branch -m master main\ngit remote add origin https://github.com/Milanche74/Notes.git\ngit push -u origin main",
+      "additional": "",
+      "id": 3
     }
   ]
 }
