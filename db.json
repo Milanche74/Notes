@@ -32,6 +32,17 @@
       "implementationSnippet": "git init\ngit add README.md\ngit commit -m \"first commit\"\ngit branch -m master main\ngit remote add origin https://github.com/Milanche74/Notes.git\ngit push -u origin main",
       "additional": "",
       "id": 3
+    },
+    {
+      "name": "Lit",
+      "documentation": "https://lit.dev/docs/",
+      "description": "Library that covers usage of web components",
+      "installation": "npm Install",
+      "installSnippet": "npm i lit",
+      "implementation": "Import lit to JS file, declare a class and set it up with properties, styles and render method<br>",
+      "implementationSnippet": "import {LitElement, html} from 'lit';\n\nclass ToDoList extends LitElement {\n  static properties = {\n    listItems: {},\n  };\n\n  constructor() {\n    super();\n    this.listItems = [\n      {text: 'Start Lit tutorial', completed: true},\n      {text: 'Make to-do list', completed: false},\n    ];\n  }\n\n  render() {\n    return html`\n      <h2>To Do</h2>\n      <ul>\n         <!-- TODO: Render list items. -->\n      </ul>\n      <input id=\"newitem\" aria-label=\"New item\">\n      <button @click=${this.addToDo}>Add</button>\n    `;\n  }\n\n  // TODO: Add click handler.\n  addToDo() {}\n}\ncustomElements.define('todo-list', ToDoList);\n",
+      "additional": "Events must have a callback (e)",
+      "id": 4
     }
   ]
 }

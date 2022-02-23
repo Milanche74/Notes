@@ -79,7 +79,6 @@ export class LibraryDetail extends LitElement {
   docsLabel = "Official Docs";
 
   render() {
-    console.log(this.data);
     return html`
       <h2
         contenteditable=${this.editable}
@@ -144,6 +143,7 @@ export class LibraryDetail extends LitElement {
 
   // removes href from anchor tag so that user can input url
   setHref() {
+    console.log(this.data)
     if (this.data.name === "+" || this.editable) {
       this.link.removeAttribute("href");
     } else return this.data.documentation;

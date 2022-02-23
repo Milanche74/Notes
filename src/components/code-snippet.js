@@ -21,9 +21,8 @@ export class CodeSnippet extends LitElement {
 
   render() {
     const textarea = html`
-      <textarea
+      <textarea       
         ?disabled=${!this.editable}
-        .innerHTML=${this.formatString(this.data)}
         @input=${this.saveValue}
         cols="80"
         rows="${this.calculateRows(this.data)}"
@@ -38,7 +37,7 @@ export class CodeSnippet extends LitElement {
   }
   // made sure that textarea displays correct value when updated; otherwise it woudn't be done
   updated() {
-    this.textarea.value = this.textarea.innerHTML;
+    this.textarea.value = this.data;
   }
 
   //   saveValue(event) {
@@ -46,19 +45,14 @@ export class CodeSnippet extends LitElement {
   //     const textarea = event.target;
   //     console.log(JSON.stringify(textarea.innerHTML));
   //   }
-  formatString(str) {
-    let addIndent = "" + str;
-    let formatted = addIndent.replaceAll(`\n`, ` &#13;`);
-
-    return formatted;
-  }
   calculateRows(data) {
     if (data !== "") {
       let numberOfLines = data.split(`\n`);
       if (numberOfLines.length > 40) {
         return 40;
       } else return numberOfLines.length;
-    } else return 3
+    } else return 3;
   }
 }
 
+// .innerHTML="${this.formatString(this.data)}"   placeholder=${this.formatString(this.data)} .replaceAll(`<`, `&#60`).replaceAll(`>`,`&#62`) .replaceAll(`\n`, ` &#13;`)
