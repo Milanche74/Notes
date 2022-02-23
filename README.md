@@ -5,7 +5,7 @@ Notes app designed to speed up learning process by entering general info about g
 # Set up
 - Run `npm install`
 - Database is run using JSON Server and command `npm run server`
-- Fontend is run using webpack dev server and command `npm run dev`
+- Frontend is run using webpack dev server and command `npm run dev`
 
 ## Future updates
 
