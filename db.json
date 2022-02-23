@@ -2,7 +2,7 @@
   "libraries": [
     {
       "name": "+",
-      "documentation": "https://git-scm.com/doc",
+      "documentation": "",
       "description": "",
       "installation": "",
       "installSnippet": "",
@@ -13,7 +13,7 @@
     },
     {
       "name": "Webpack",
-      "documentation": "Official Docs",
+      "documentation": "https://webpack.js.org/concepts/",
       "description": "JS Module Bundler work please<br>",
       "installation": "Install webpack using npm. Webpack-cli and webpack-dev-server are required for using webpack as a dev server",
       "installSnippet": "npm i webpack webpack-cli webpack-dev-server",
