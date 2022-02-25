@@ -52,4 +52,4 @@ export class CodeSnippet extends LitElement {
   }
 }
 
-// .innerHTML="${this.formatString(this.data)}"   placeholder=${this.formatString(this.data)} .replaceAll(`<`, `&#60`).replaceAll(`>`,`&#62`) .replaceAll(`\n`, ` &#13;`)
+
