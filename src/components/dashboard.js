@@ -18,6 +18,7 @@ export class Dashboard extends LitElement {
       border-bottom: 2px solid rgb(47, 79, 79);
       margin: 0;
     }
+
     .list-item {
       font-size: 36px;
       color: white;
@@ -35,7 +36,7 @@ export class Dashboard extends LitElement {
   render() {
     return html`
       <ul class="list">
-        ${this.libraries.map(
+        ${this.libraries?.map(
           (library) => html`
             <li
               class="list-item"
@@ -53,7 +54,6 @@ export class Dashboard extends LitElement {
   }
 
   onClickHandler(index) {
-    // console.log(index);
     let event = new CustomEvent("index-emiter", {
       detail: {
         index: index,

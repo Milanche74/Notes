@@ -11,9 +11,11 @@ export class CodeSnippet extends LitElement {
       border-radius: 5px;
       padding: 0.5vh;
     }
+
     textarea[disabled] {
       color: black;
     }
+
   `;
   constructor() {
     super(), (this.data = ""), (this.editable = false);
@@ -21,7 +23,7 @@ export class CodeSnippet extends LitElement {
 
   render() {
     const textarea = html`
-      <textarea       
+      <textarea
         ?disabled=${!this.editable}
         @input=${this.saveValue}
         cols="80"
@@ -40,17 +42,12 @@ export class CodeSnippet extends LitElement {
     this.textarea.value = this.data;
   }
 
-  //   saveValue(event) {
-  //     console.log(this.renderRoot.querySelector('textarea'))
-  //     const textarea = event.target;
-  //     console.log(JSON.stringify(textarea.innerHTML));
-  //   }
   calculateRows(data) {
     if (data !== "") {
-      let numberOfLines = data.split(`\n`);
-      if (numberOfLines.length > 40) {
+      let numberOfLines = data?.split(`\n`);
+      if (numberOfLines?.length > 40) {
         return 40;
-      } else return numberOfLines.length;
+      } else return numberOfLines?.length;
     } else return 3;
   }
 }

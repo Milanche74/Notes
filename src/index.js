@@ -13,18 +13,21 @@ const getData = async (i) => {
   data = await response.json();
 
   setData(i);
+  setLibraries();
 };
 
 const setData = (i) => {
+  document
+    .querySelector("library-detail")
+    .setAttribute("data", JSON.stringify(data[i]));
+};
+
+const setLibraries = () => {
   libraries = data.map(({ name }) => name);
   const librariesNames = JSON.stringify(libraries);
   document
     .querySelector("dashboard-element")
     .setAttribute("libraries", librariesNames);
-
-  document
-    .querySelector("library-detail")
-    .setAttribute("data", JSON.stringify(data[i]));
 };
 
 const putData = async (index, data) => {
@@ -51,7 +54,7 @@ const postData = async (data) => {
     requestOptions
   );
   data = await response.json();
-  getData(0)
+  getData(0);
 };
 
 window.addEventListener("index-emiter", (e) => {

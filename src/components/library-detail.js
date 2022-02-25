@@ -39,10 +39,12 @@ export class LibraryDetail extends LitElement {
       color: grey;
       width: max-content;
     }
+
     .buttons {
       display: flex;
       gap: 2vw;
     }
+
     button {
       width: max-content;
       font-size: 24px;
@@ -54,16 +56,20 @@ export class LibraryDetail extends LitElement {
       cursor: pointer;
       background-color: rgb(47, 79, 79);
     }
+
     .button-active {
       background-color: grey;
     }
+
     [contenteditable="true"] {
       outline: 1px solid grey;
     }
+
     [contenteditable="true"]:empty:before {
       content: attr(placeholder);
       color: grey;
     }
+
     a p,
     h2 {
       padding: 1vh;
@@ -143,7 +149,6 @@ export class LibraryDetail extends LitElement {
 
   // removes href from anchor tag so that user can input url
   setHref() {
-    console.log(this.data)
     if (this.data.name === "+" || this.editable) {
       this.link.removeAttribute("href");
     } else return this.data.documentation;
@@ -222,10 +227,10 @@ export class LibraryDetail extends LitElement {
     this.dispatchEvent(event);
   }
 
- // auxiliary methods
+  // auxiliary methods
 
   linkFocus() {
-    this.linkParagraph.innerHTML = '';
+    this.linkParagraph.innerHTML = "";
   }
   getHrefFromParagraph() {
     if (this.linkParagraph.innerHTML === this.docsLabel) {
