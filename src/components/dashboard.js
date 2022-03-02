@@ -12,8 +12,9 @@ export class Dashboard extends LitElement {
     .list {
       list-style: none;
       display: flex;
+      flex-wrap: wrap;
       justify-content: space-around;
-      gap: 1vh;
+      gap: 2vh;
       padding: 2vh 5vw;
       border-bottom: 2px solid rgb(47, 79, 79);
       margin: 0;
@@ -40,7 +41,7 @@ export class Dashboard extends LitElement {
           (library) => html`
             <li
               class="list-item"
-              style="background-color: hsl(${Math.random() * 360}, 100%, 30%)"
+              style="background-color: hsl(${Math.random() * 360}, ${50+Math.random() * 50}%, ${10+(Math.random() * 40)}%)"
               id=${this.libraries.indexOf(library) + 1}
               @click="${() =>
                 this.onClickHandler(this.libraries.indexOf(library))}"

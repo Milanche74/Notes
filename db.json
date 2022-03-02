@@ -17,9 +17,9 @@
       "description": "JS Module Bundler<br>",
       "installation": "Install webpack using npm. Webpack-cli and webpack-dev-server are required for using webpack as a dev server",
       "installSnippet": "npm i webpack webpack-cli webpack-dev-server",
-      "implementation": "Configure webpack in webpack.config.json",
+      "implementation": "Configure webpack in webpack.config.json and install&amp;apply additional loaders",
       "implementationSnippet": "const path = require('path');   \nconst HtmlWebpackPlugin = require('html-webpack-plugin');   \n       \nmodule.exports = {   \n      mode: 'development',   \n      entry: './src/index.js',   \n      output: {   \n        path: path.resolve(__dirname, './dist'),   \n        filename: 'main.bundle.js',   \n      },   \n      target: 'web',   \n      devtool: 'inline-source-map',   \n      devServer: {   \n        static: './dist',   \n        open: true,   \n        hot: false,   \n        liveReload: true,   \n      },   \n      module: {   \n        rules: [   \n          {   \n            test: /\\.js$/,   \n            exclude: /node_modules/,   \n            use: {   \n              loader: 'babel-loader',   \n              options: {   \n                presets: ['@babel/preset-env'],   \n              },   \n            },   \n          },   \n        ],   \n      },   \n      plugins: [   \n        new HtmlWebpackPlugin({   \n          template: './src/index.html',   \n          filename: 'index.html',   \n        }),   \n      ],   \n    };",
-      "additional": "- HTMLWepbackPlugin creates HTML file in /dist folder. It is possible to pass in a custom template.",
+      "additional": "- HTMLWepbackPlugin creates HTML file in /dist folder. It is possible to pass in a custom template<br>- Loaders are applied in reverse order =&gt; ['style-loader', 'css-loader']",
       "id": 2
     },
     {
@@ -30,7 +30,7 @@
       "installSnippet": " sudo apt install git-all",
       "implementation": "CLI commands for setting up local and remote repository",
       "implementationSnippet": "git init\ngit add README.md\ngit commit -m \"first commit\"\ngit branch -m master main\ngit remote add origin https://github.com/Milanche74/Notes.git\ngit push -u origin main",
-      "additional": "",
+      "additional": "Will add info about branching",
       "id": 3
     },
     {
@@ -76,6 +76,28 @@
       "implementationSnippet": "{\n  \"trailingComma\": \"es5\",\n  \"printWidth\": 100,\n  \"semi\": true,\n  \"singleQuote\": true\n}\n\n// command to formatt all files\nnpx prettier --write .",
       "additional": "- Might need other packages for integrations with other linters.&nbsp;<br>- Add prettierignore file to specify files to be ignored",
       "id": 7
+    },
+    {
+      "name": "HighCharts",
+      "documentation": "https://www.highcharts.com/demo/bar-basic",
+      "description": "Library that allows better data visualization",
+      "installation": "NPM installation",
+      "installSnippet": "npm install highcharts --save\n\n//addition for REACT \nnpm i highcharts-react-official --save",
+      "implementation": "* for React:<br>import both Highcharts modules and define props for HC component<br>describe chart in options object",
+      "implementationSnippet": "<HighchartsReact highcharts={Highcharts} options={chartOptions} />\n\n// define options \n          {\n            title: {\n              text: i18n.t('population')\n            },\n            yAxis: {\n              title: {\n                text: i18n.t('values')\n              }\n            },\n            series: [\n              {\n                name: i18n.t('population'), \n                data: getPopulation(data),\n              },\n              {\n                name: i18n.t('projected'),\n                data: getEstimatedPopulation(data),\n              },\n            ],\n          };",
+      "additional": "It is possible to apply custom styling, will do furher research",
+      "id": 8
+    },
+    {
+      "name": "React-wordcloud",
+      "documentation": "https://www.npmjs.com/package/react-wordcloud",
+      "description": "Word-cloud component with interactive features",
+      "installation": "<span style=\"color: rgb(51, 51, 51); font-family: &quot;Source Sans Pro&quot;, &quot;Lucida Grande&quot;, sans-serif; letter-spacing: 0.1px; background-color: rgb(255, 255, 255);\">NPM istallation: package requires&nbsp;</span><code style=\"font-family: &quot;Fira Mono&quot;, &quot;Andale Mono&quot;, Consolas, monospace; font-size: 0.9em; font-variant-ligatures: none; letter-spacing: 0px; line-height: 24px; border-radius: 2px; background: rgb(247, 247, 247); padding-right: 5px; padding-left: 5px; color: rgb(51, 51, 51);\">react^16.13.0</code><span style=\"color: rgb(51, 51, 51); font-family: &quot;Source Sans Pro&quot;, &quot;Lucida Grande&quot;, sans-serif; letter-spacing: 0.1px; background-color: rgb(255, 255, 255);\">&nbsp;as a peer dependency.</span>",
+      "installSnippet": "npm install --save  react-wordcloud --legacy-peer-deps",
+      "implementation": "Import package to JS file and define props like !words, ?options and ?callbacks",
+      "implementationSnippet": "import React from 'react';\nimport ReactWordcloud from 'react-wordcloud';\n \nconst words = [\n  {\n    text: 'told',\n    value: 64,\n  },\n  {\n    text: 'mistake',\n    value: 11,\n  },\n  {\n    text: 'thought',\n    value: 16,\n  },\n  {\n    text: 'bad',\n    value: 17,\n  },\n]\nconst callbacks = {\n  getWordColor: word => word.value > 50 ? \"blue\" : \"red\",\n  onWordClick: console.log,\n  onWordMouseOver: console.log,\n  getWordTooltip: word => `${word.text} (${word.value}) [${word.value > 50 ? \"good\" : \"bad\"}]`,\n}\nconst options = {\n  rotations: 2,\n  rotationAngles: [-90, 0],\n};\n \nfunction SimpleWordcloud() {\n  return <ReactWordcloud words={words} />\n}",
+      "additional": "",
+      "id": 9
     }
   ]
 }

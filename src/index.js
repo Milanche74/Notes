@@ -17,9 +17,20 @@ const getData = async (i) => {
 };
 
 const setData = (i) => {
-  document
-    .querySelector("library-detail")
-    .setAttribute("data", JSON.stringify(data[i]));
+  const libraryComp = document.querySelector("library-detail");
+
+  libraryComp.setAttribute("data", JSON.stringify(data[i]));
+
+  if (i === 0) {
+    libraryComp.setAttribute("editable", "");
+  } else {
+    libraryComp.removeAttribute("editable");
+  }
+
+  // document
+  //   .querySelector("library-detail")
+  //   .setAttribute("data", JSON.stringify(data[i]))
+  //   .setAttribute("editable", editable);
 };
 
 const setLibraries = () => {
@@ -59,6 +70,7 @@ const postData = async (data) => {
 
 window.addEventListener("index-emiter", (e) => {
   const index = e.detail.index;
+
   setData(index);
 });
 

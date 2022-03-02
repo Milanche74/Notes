@@ -9,7 +9,7 @@ export class LibraryDetail extends LitElement {
         if (attrValue) return JSON.parse(attrValue);
       },
     },
-    editable: {},
+    editable: { type: Boolean },
   };
 
   static styles = css`
@@ -80,20 +80,21 @@ export class LibraryDetail extends LitElement {
   constructor() {
     super();
     this.data = {};
-    this.editable = false;
+    this.editable = true;
   }
   docsLabel = "Official Docs";
 
   render() {
     return html`
       <h2
+        @focus="${(e) => this.focus(e)}"
         contenteditable=${this.editable}
-        placeholder="Edit..."
+        placeholder="Please insert a name..."
         .innerHTML="${this.data.name}"
       ></h2>
       <div class="buttons">
         <button
-          @click="${this.toggleEditable}"
+          @click="${() => (this.editable = !this.editable)}"
           class=${this.editable ? "button-active" : ""}
         >
           Edit
@@ -102,7 +103,7 @@ export class LibraryDetail extends LitElement {
       </div>
       <a target="_blank" href="${this.setHref()}"
         ><p
-          @focus="${this.linkFocus}"
+          @focus="${(e) => this.focus(e)}"
           contenteditable=${this.editable}
           placeholder="Insert link..."
           .innerHTML="${this.docsLabel}"
@@ -150,7 +151,7 @@ export class LibraryDetail extends LitElement {
   // removes href from anchor tag so that user can input url
   setHref() {
     if (this.data.name === "+" || this.editable) {
-      this.link.removeAttribute("href");
+      this.link?.removeAttribute("href");
     } else return this.data.documentation;
   }
   //makes sure that anchor tag's child paragraph is displaying
@@ -206,8 +207,16 @@ export class LibraryDetail extends LitElement {
   // this is how I get values to be saved and emmited
   save() {
     if (this.data.name !== "+") {
-      this.toggleEditable();
+      this.editable = false;
     }
+    //check if library name is entered
+
+    if (this.name.innerHTML === "" || this.name.innerHTML === "+") {
+      this.editable = true;
+      this.name.innerHTML = "";
+      return;
+    }
+
     //prepare data to be emmited
     const data = {
       name: this.name.innerHTML,
@@ -239,21 +248,18 @@ export class LibraryDetail extends LitElement {
       this.implementation.innerHTML = "";
       this.implementationCs.value = "";
       this.addition.innerHTML = "";
+      this.description.innerHTML = "";
     }
   }
 
   // auxiliary methods
 
-  linkFocus() {
-    this.linkParagraph.innerHTML = "";
+  focus(e) {
+    e.target.innerHTML = "";
   }
   getHrefFromParagraph() {
     if (this.linkParagraph.innerHTML === this.docsLabel) {
       return false;
     } else return true;
-  }
-
-  toggleEditable() {
-    this.editable = !this.editable;
   }
 }
