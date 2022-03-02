@@ -13,7 +13,7 @@ export class Dashboard extends LitElement {
       list-style: none;
       display: flex;
       flex-wrap: wrap;
-      justify-content: space-around;
+      justify-content: space-evenly;
       gap: 2vh;
       padding: 2vh 5vw;
       border-bottom: 2px solid rgb(47, 79, 79);

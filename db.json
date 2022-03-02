@@ -98,6 +98,28 @@
       "implementationSnippet": "import React from 'react';\nimport ReactWordcloud from 'react-wordcloud';\n \nconst words = [\n  {\n    text: 'told',\n    value: 64,\n  },\n  {\n    text: 'mistake',\n    value: 11,\n  },\n  {\n    text: 'thought',\n    value: 16,\n  },\n  {\n    text: 'bad',\n    value: 17,\n  },\n]\nconst callbacks = {\n  getWordColor: word => word.value > 50 ? \"blue\" : \"red\",\n  onWordClick: console.log,\n  onWordMouseOver: console.log,\n  getWordTooltip: word => `${word.text} (${word.value}) [${word.value > 50 ? \"good\" : \"bad\"}]`,\n}\nconst options = {\n  rotations: 2,\n  rotationAngles: [-90, 0],\n};\n \nfunction SimpleWordcloud() {\n  return <ReactWordcloud words={words} />\n}",
       "additional": "",
       "id": 9
+    },
+    {
+      "name": "Lodash",
+      "documentation": "https://lodash.com/",
+      "description": "<h2 style=\"box-sizing: inherit; color: rgb(95, 95, 95); font-weight: 400; letter-spacing: 0.5px; vertical-align: middle; font-size: 1.6rem; font-family: &quot;Segoe UI&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; background-color: rgb(255, 255, 255);\">A modern JavaScript utility library delivering modularity, performance &amp; extras.</h2>",
+      "installation": "NPM Install&nbsp;",
+      "installSnippet": "npm i --save lodash",
+      "implementation": "Usefull methods:<br>- reject();<br>- flow();<br>- get();<br>- isNil();<br>- map();<br>- uniq();",
+      "implementationSnippet": "const someFunc = flow(\n  reject(flow(get('projected'), isNil)),\n  lmap(({year, projected}) => [year, projected])\n)\nlet arrayOfOrigValues = uniq(data._value.map(({ city }) => city));",
+      "additional": "",
+      "id": 10
+    },
+    {
+      "name": "i18n",
+      "documentation": "https://www.i18next.com/overview/getting-started",
+      "description": "<span data-offset-key=\"ed466c53b77c41caaad19142c853679d:0\">i18next is an </span><strong data-slate-leaf=\"true\" data-offset-key=\"ed466c53b77c41caaad19142c853679d:1\" class=\"r-b88u0q\">internationalization-framework</strong><span data-offset-key=\"ed466c53b77c41caaad19142c853679d:2\" data-slate-fragment=\"JTdCJTIyb2JqZWN0JTIyJTNBJTIyZG9jdW1lbnQlMjIlMkMlMjJkYXRhJTIyJTNBJTdCJTdEJTJDJTIybm9kZXMlMjIlM0ElNUIlN0IlMjJvYmplY3QlMjIlM0ElMjJibG9jayUyMiUyQyUyMnR5cGUlMjIlM0ElMjJwYXJhZ3JhcGglMjIlMkMlMjJpc1ZvaWQlMjIlM0FmYWxzZSUyQyUyMmRhdGElMjIlM0ElN0IlN0QlMkMlMjJub2RlcyUyMiUzQSU1QiU3QiUyMm9iamVjdCUyMiUzQSUyMnRleHQlMjIlMkMlMjJsZWF2ZXMlMjIlM0ElNUIlN0IlMjJvYmplY3QlMjIlM0ElMjJsZWFmJTIyJTJDJTIydGV4dCUyMiUzQSUyMkkxOG5leHQlMjBpcyUyMGFuJTIwJTIyJTJDJTIybWFya3MlMjIlM0ElNUIlNUQlMkMlMjJzZWxlY3Rpb25zJTIyJTNBJTVCJTVEJTdEJTJDJTdCJTIyb2JqZWN0JTIyJTNBJTIybGVhZiUyMiUyQyUyMnRleHQlMjIlM0ElMjJpbnRlcm5hdGlvbmFsaXphdGlvbi1mcmFtZXdvcmslMjIlMkMlMjJtYXJrcyUyMiUzQSU1QiU3QiUyMm9iamVjdCUyMiUzQSUyMm1hcmslMjIlMkMlMjJ0eXBlJTIyJTNBJTIyYm9sZCUyMiUyQyUyMmRhdGElMjIlM0ElN0IlN0QlN0QlNUQlMkMlMjJzZWxlY3Rpb25zJTIyJTNBJTVCJTVEJTdEJTJDJTdCJTIyb2JqZWN0JTIyJTNBJTIybGVhZiUyMiUyQyUyMnRleHQlMjIlM0ElMjIlMjB3cml0dGVuJTIwaW4lMjBhbmQlMjBmb3IlMjBKYXZhU2NyaXB0JTIyJTJDJTIybWFya3MlMjIlM0ElNUIlNUQlMkMlMjJzZWxlY3Rpb25zJTIyJTNBJTVCJTVEJTdEJTVEJTJDJTIya2V5JTIyJTNBJTIyNzRiZjkwNjA3ZjI1NGRjMzhmYWQ3M2FhMjU5MWJjZGUlMjIlN0QlNUQlMkMlMjJrZXklMjIlM0ElMjI3MTA2OTgyNDdjYjI0NDRhYWZkOTkzMDdiMzZhMmNkZSUyMiU3RCU1RCUyQyUyMmtleSUyMiUzQSUyMmJjMmJiZjUwNGRmODQzMGJiYWY1NWVlMzA1ZmIyNjg4JTIyJTdE\"> written in and for JavaScript</span>",
+      "installation": "NPM install",
+      "installSnippet": "npm i --save i18next",
+      "implementation": "Step 1 =&gt; make new .js file to initialize and configure i18next;<br>Step 2 =&gt; import created module and use it&nbsp;<br>Step 3 =&gt; import i18next from node_modules to use event listeners",
+      "implementationSnippet": "// STEP 1\n\nimport i18next from 'i18next';\n\nimport enTranslation from './locales/en-US.json';\nimport huTranslation from './locales/hu-HU.json';\nimport srTranslation from './locales/sr-RS.json';\n\ni18next\n  .init({\n    lng: 'en-US',\n    fallbackLng: 'en-US',\n    debug: true,\n    resources: {\n      'en-US': {\n        translation: enTranslation,\n      },\n    },\n  })\n  .then(function (t) {\n    // initialized and ready to go!\n    console.info('i18next is initialized.', t('welcome'));\n  });\n\ni18next.addResourceBundle('hu-HU', 'translation', huTranslation);\ni18next.addResourceBundle('sr-RS', 'translation', srTranslation);\n\nexport default i18next;\n\n\n//STEP 2 \n\nheader.innerText = i18n.t('title');\n\n\n// STEP 3\n\ni18next.on('languageChanged', () => {\n  renderAppInterface();\n});\n",
+      "additional": "There is possibly a more optimised approach for using with JS frameworks - ex. react-i18next",
+      "id": 11
     }
   ]
 }
