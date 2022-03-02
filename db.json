@@ -14,7 +14,7 @@
     {
       "name": "Webpack",
       "documentation": "https://webpack.js.org/concepts/",
-      "description": "JS Module Bundler work please<br>",
+      "description": "JS Module Bundler<br>",
       "installation": "Install webpack using npm. Webpack-cli and webpack-dev-server are required for using webpack as a dev server",
       "installSnippet": "npm i webpack webpack-cli webpack-dev-server",
       "implementation": "Configure webpack in webpack.config.json",
@@ -39,10 +39,43 @@
       "description": "Library that covers usage of web components",
       "installation": "npm Install",
       "installSnippet": "npm i lit",
-      "implementation": "Import lit to JS file, declare a class and set it up with properties, styles and render method<br>",
+      "implementation": "Import lit to JS file, declare and export a class and set it up with properties, styles and render method.<br>",
       "implementationSnippet": "import {LitElement, html} from 'lit';\n\nclass ToDoList extends LitElement {\n  static properties = {\n    listItems: {},\n  };\n\n  constructor() {\n    super();\n    this.listItems = [\n      {text: 'Start Lit tutorial', completed: true},\n      {text: 'Make to-do list', completed: false},\n    ];\n  }\n\n  render() {\n    return html`\n      <h2>To Do</h2>\n      <ul>\n         <!-- TODO: Render list items. -->\n      </ul>\n      <input id=\"newitem\" aria-label=\"New item\">\n      <button @click=${this.addToDo}>Add</button>\n    `;\n  }\n\n  // TODO: Add click handler.\n  addToDo() {}\n}\ncustomElements.define('todo-list', ToDoList);\n",
       "additional": "Events must have a callback (e)",
       "id": 4
+    },
+    {
+      "name": "Babel",
+      "documentation": "https://babeljs.io/docs/en/",
+      "description": "Javascript Compiler",
+      "installation": "Run these commands to prepare configuration with webpack:",
+      "installSnippet": "npm i @babel/preset-env babel-loader\n\n// for REACT \nnpm i @babel/core @babel/preset-react\n\n// there may be a need to install additional plugins:\nnpm i core-js regeneration-runtime etc",
+      "implementation": "babel.config.json file handles presets and plugins",
+      "implementationSnippet": "// in babel.config.json\n\n{\n  \"presets\": [\"@babel/preset-env\", \"@babel/preset-react\"],\n  \"plugins\": [\n    [\n      \"@babel/plugin-proposal-class-properties\",\n      {\n        \"loose\": true\n      }\n    ],\n    [\"@babel/plugin-proposal-private-methods\", { \"loose\": true }]\n  ]\n}\n\n// in webpack.config.js\n\nmodule: {\n    rules: [\n      {\n        test: /\\.js$/,\n        exclude: /node_modules/,\n        use: {\n          loader: \"babel-loader\",\n          options: {\n            presets: [\"@babel/preset-env\"],\n          },\n        },\n      },\n    ],\n  },\n",
+      "additional": "",
+      "id": 5
+    },
+    {
+      "name": "ESLint",
+      "documentation": "https://eslint.org/docs/user-guide/getting-started",
+      "description": "Linter tool for identifying and reporting on JavaScript patterns.",
+      "installation": "Install inside project folder",
+      "installSnippet": "npm install eslint --save-dev\n\n// init a config file from CLI \nnpm init @eslint/config",
+      "implementation": "Edit configuration file: Add plugins and set rules.&nbsp;",
+      "implementationSnippet": "module.exports = {\n  env: {\n    browser: true,\n    es2021: true,\n  },\n  extends: [\"plugin:wc/recommended\", \"plugin:lit/recommended\"],\n  parserOptions: {\n    ecmaVersion: \"latest\",\n    sourceType: \"module\",\n  },\n  rules: {},\n};\n\n// run command from terminal\nnpx eslint --fix .",
+      "additional": "- ESLint should be used as code quality tool, not a formatter.<br>- It's recommended to define script in package.json that will run multiple linters",
+      "id": 6
+    },
+    {
+      "name": "Prettier",
+      "documentation": "https://prettier.io/docs/en/install.html",
+      "description": "Code formatter tool",
+      "installation": "Despite it being integrated in code editor, it is recommended to initialize Prettier in each project.<br>",
+      "installSnippet": "npm install --save-dev --save-exact prettier",
+      "implementation": "Configure specific rules in prettierrc.json file. It will have precedence to code editor configs.",
+      "implementationSnippet": "{\n  \"trailingComma\": \"es5\",\n  \"printWidth\": 100,\n  \"semi\": true,\n  \"singleQuote\": true\n}\n\n// command to formatt all files\nnpx prettier --write .",
+      "additional": "- Might need other packages for integrations with other linters.&nbsp;<br>- Add prettierignore file to specify files to be ignored",
+      "id": 7
     }
   ]
 }

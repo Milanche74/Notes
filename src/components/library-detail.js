@@ -205,6 +205,10 @@ export class LibraryDetail extends LitElement {
 
   // this is how I get values to be saved and emmited
   save() {
+    if (this.data.name !== "+") {
+      this.toggleEditable();
+    }
+    //prepare data to be emmited
     const data = {
       name: this.name.innerHTML,
       documentation: this.getHrefFromParagraph()
@@ -224,7 +228,18 @@ export class LibraryDetail extends LitElement {
       bubbles: true,
       composed: true,
     });
+    // emmit
     this.dispatchEvent(event);
+    //return values to default if new note is added
+    if (this.data.name === "+") {
+      this.name.innerHTML = "";
+      this.linkParagraph.innerHTML = "";
+      this.installCs.value = "";
+      this.install.innerHTML = "";
+      this.implementation.innerHTML = "";
+      this.implementationCs.value = "";
+      this.addition.innerHTML = "";
+    }
   }
 
   // auxiliary methods

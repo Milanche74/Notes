@@ -57,7 +57,7 @@ export class TextField extends LitElement {
         contenteditable="${this.editable}"
         class="paragraph"
         .innerHTML=${this.data}
-      />
+      ></p>
     `;
   }
 
@@ -65,4 +65,3 @@ export class TextField extends LitElement {
     const parag = e.target;
   }
 }
-
