@@ -33,6 +33,8 @@ export class Dashboard extends LitElement {
     super();
     this.libraries = [];
   }
+  click = 0;
+  timer = null;
 
   render() {
     return html`
@@ -41,10 +43,14 @@ export class Dashboard extends LitElement {
           (library) => html`
             <li
               class="list-item"
-              style="background-color: hsl(${Math.random() * 360}, ${50+Math.random() * 50}%, ${10+(Math.random() * 40)}%)"
+              style="background-color: hsl(${Math.random() * 360}, ${50 +
+              Math.random() * 50}%, ${10 + Math.random() * 40}%)"
               id=${this.libraries.indexOf(library) + 1}
               @click="${() =>
                 this.onClickHandler(this.libraries.indexOf(library))}"
+              @dblclick="${(e) => {
+                e.preventDefault();
+              }}"
             >
               ${library}
             </li>
@@ -55,7 +61,14 @@ export class Dashboard extends LitElement {
   }
 
   onClickHandler(index) {
-    let event = new CustomEvent("index-emiter", {
+    const clickEvent = new CustomEvent("click-emiter", {
+      detail: {
+        index: index,
+      },
+      bubbles: true,
+      composed: true,
+    });
+    const dbClickEvent = new CustomEvent("dbclick-emiter", {
       detail: {
         index: index,
       },
@@ -63,6 +76,16 @@ export class Dashboard extends LitElement {
       composed: true,
     });
 
-    this.dispatchEvent(event);
+    this.click++;
+    if (this.click === 1) {
+      this.timer = setTimeout(() => {
+        this.dispatchEvent(clickEvent);
+        this.click = 0;
+      }, 200);
+    } else {
+      clearTimeout(this.timer);
+      this.dispatchEvent(dbClickEvent);
+      this.click = 0;
+    }
   }
 }

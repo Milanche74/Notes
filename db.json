@@ -26,7 +26,7 @@
       "name": "Git",
       "documentation": "https://git-scm.com/book/en/v2",
       "description": "Version management tool",
-      "installation": "Linux installation",
+      "installation": "Linux installation:",
       "installSnippet": " sudo apt install git-all",
       "implementation": "CLI commands for setting up local and remote repository",
       "implementationSnippet": "git init\ngit add README.md\ngit commit -m \"first commit\"\ngit branch -m master main\ngit remote add origin https://github.com/Milanche74/Notes.git\ngit push -u origin main",
@@ -37,7 +37,7 @@
       "name": "Lit",
       "documentation": "https://lit.dev/docs/",
       "description": "Library that covers usage of web components",
-      "installation": "npm Install",
+      "installation": "NPM Install:",
       "installSnippet": "npm i lit",
       "implementation": "Import lit to JS file, declare and export a class and set it up with properties, styles and render method.<br>",
       "implementationSnippet": "import {LitElement, html} from 'lit';\n\nclass ToDoList extends LitElement {\n  static properties = {\n    listItems: {},\n  };\n\n  constructor() {\n    super();\n    this.listItems = [\n      {text: 'Start Lit tutorial', completed: true},\n      {text: 'Make to-do list', completed: false},\n    ];\n  }\n\n  render() {\n    return html`\n      <h2>To Do</h2>\n      <ul>\n         <!-- TODO: Render list items. -->\n      </ul>\n      <input id=\"newitem\" aria-label=\"New item\">\n      <button @click=${this.addToDo}>Add</button>\n    `;\n  }\n\n  // TODO: Add click handler.\n  addToDo() {}\n}\ncustomElements.define('todo-list', ToDoList);\n",
@@ -72,9 +72,9 @@
       "description": "Code formatter tool",
       "installation": "Despite it being integrated in code editor, it is recommended to initialize Prettier in each project.<br>",
       "installSnippet": "npm install --save-dev --save-exact prettier",
-      "implementation": "Configure specific rules in prettierrc.json file. It will have precedence to code editor configs.",
-      "implementationSnippet": "{\n  \"trailingComma\": \"es5\",\n  \"printWidth\": 100,\n  \"semi\": true,\n  \"singleQuote\": true\n}\n\n// command to formatt all files\nnpx prettier --write .",
-      "additional": "- Might need other packages for integrations with other linters.&nbsp;<br>- Add prettierignore file to specify files to be ignored",
+      "implementation": "Configure specific rules in prettierrc.json file. It will have precedence to code editor configs.<br>When using as an extension in code editor, add configuration to settings.json in the editor<br>",
+      "implementationSnippet": "{\n  \"trailingComma\": \"es5\",\n  \"printWidth\": 100,\n  \"semi\": true,\n  \"singleQuote\": true\n}\n\n// command to formatt all files\nnpx prettier --write .\n\n// configure on save\n \"editor.formatOnSave\": true,",
+      "additional": "- Might need other packages for integrations with other linters.&nbsp;<br>- Add prettierignore file to specify files to be ignored<br>",
       "id": 7
     },
     {
@@ -89,37 +89,26 @@
       "id": 8
     },
     {
-      "name": "React-wordcloud",
-      "documentation": "https://www.npmjs.com/package/react-wordcloud",
-      "description": "Word-cloud component with interactive features",
-      "installation": "<span style=\"color: rgb(51, 51, 51); font-family: &quot;Source Sans Pro&quot;, &quot;Lucida Grande&quot;, sans-serif; letter-spacing: 0.1px; background-color: rgb(255, 255, 255);\">NPM istallation: package requires&nbsp;</span><code style=\"font-family: &quot;Fira Mono&quot;, &quot;Andale Mono&quot;, Consolas, monospace; font-size: 0.9em; font-variant-ligatures: none; letter-spacing: 0px; line-height: 24px; border-radius: 2px; background: rgb(247, 247, 247); padding-right: 5px; padding-left: 5px; color: rgb(51, 51, 51);\">react^16.13.0</code><span style=\"color: rgb(51, 51, 51); font-family: &quot;Source Sans Pro&quot;, &quot;Lucida Grande&quot;, sans-serif; letter-spacing: 0.1px; background-color: rgb(255, 255, 255);\">&nbsp;as a peer dependency.</span>",
-      "installSnippet": "npm install --save  react-wordcloud --legacy-peer-deps",
-      "implementation": "Import package to JS file and define props like !words, ?options and ?callbacks",
-      "implementationSnippet": "import React from 'react';\nimport ReactWordcloud from 'react-wordcloud';\n \nconst words = [\n  {\n    text: 'told',\n    value: 64,\n  },\n  {\n    text: 'mistake',\n    value: 11,\n  },\n  {\n    text: 'thought',\n    value: 16,\n  },\n  {\n    text: 'bad',\n    value: 17,\n  },\n]\nconst callbacks = {\n  getWordColor: word => word.value > 50 ? \"blue\" : \"red\",\n  onWordClick: console.log,\n  onWordMouseOver: console.log,\n  getWordTooltip: word => `${word.text} (${word.value}) [${word.value > 50 ? \"good\" : \"bad\"}]`,\n}\nconst options = {\n  rotations: 2,\n  rotationAngles: [-90, 0],\n};\n \nfunction SimpleWordcloud() {\n  return <ReactWordcloud words={words} />\n}",
-      "additional": "",
-      "id": 9
-    },
-    {
       "name": "Lodash",
       "documentation": "https://lodash.com/",
-      "description": "<h2 style=\"box-sizing: inherit; color: rgb(95, 95, 95); font-weight: 400; letter-spacing: 0.5px; vertical-align: middle; font-size: 1.6rem; font-family: &quot;Segoe UI&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; background-color: rgb(255, 255, 255);\">A modern JavaScript utility library delivering modularity, performance &amp; extras.</h2>",
-      "installation": "NPM Install&nbsp;",
+      "description": "A modern Javascript utility library delivering modularity, performance &amp; extras.",
+      "installation": "NPM Install:&nbsp;",
       "installSnippet": "npm i --save lodash",
       "implementation": "Usefull methods:<br>- reject();<br>- flow();<br>- get();<br>- isNil();<br>- map();<br>- uniq();",
       "implementationSnippet": "const someFunc = flow(\n  reject(flow(get('projected'), isNil)),\n  lmap(({year, projected}) => [year, projected])\n)\nlet arrayOfOrigValues = uniq(data._value.map(({ city }) => city));",
       "additional": "",
-      "id": 10
+      "id": 9
     },
     {
-      "name": "i18n",
-      "documentation": "https://www.i18next.com/overview/getting-started",
-      "description": "<span data-offset-key=\"ed466c53b77c41caaad19142c853679d:0\">i18next is an </span><strong data-slate-leaf=\"true\" data-offset-key=\"ed466c53b77c41caaad19142c853679d:1\" class=\"r-b88u0q\">internationalization-framework</strong><span data-offset-key=\"ed466c53b77c41caaad19142c853679d:2\" data-slate-fragment=\"JTdCJTIyb2JqZWN0JTIyJTNBJTIyZG9jdW1lbnQlMjIlMkMlMjJkYXRhJTIyJTNBJTdCJTdEJTJDJTIybm9kZXMlMjIlM0ElNUIlN0IlMjJvYmplY3QlMjIlM0ElMjJibG9jayUyMiUyQyUyMnR5cGUlMjIlM0ElMjJwYXJhZ3JhcGglMjIlMkMlMjJpc1ZvaWQlMjIlM0FmYWxzZSUyQyUyMmRhdGElMjIlM0ElN0IlN0QlMkMlMjJub2RlcyUyMiUzQSU1QiU3QiUyMm9iamVjdCUyMiUzQSUyMnRleHQlMjIlMkMlMjJsZWF2ZXMlMjIlM0ElNUIlN0IlMjJvYmplY3QlMjIlM0ElMjJsZWFmJTIyJTJDJTIydGV4dCUyMiUzQSUyMkkxOG5leHQlMjBpcyUyMGFuJTIwJTIyJTJDJTIybWFya3MlMjIlM0ElNUIlNUQlMkMlMjJzZWxlY3Rpb25zJTIyJTNBJTVCJTVEJTdEJTJDJTdCJTIyb2JqZWN0JTIyJTNBJTIybGVhZiUyMiUyQyUyMnRleHQlMjIlM0ElMjJpbnRlcm5hdGlvbmFsaXphdGlvbi1mcmFtZXdvcmslMjIlMkMlMjJtYXJrcyUyMiUzQSU1QiU3QiUyMm9iamVjdCUyMiUzQSUyMm1hcmslMjIlMkMlMjJ0eXBlJTIyJTNBJTIyYm9sZCUyMiUyQyUyMmRhdGElMjIlM0ElN0IlN0QlN0QlNUQlMkMlMjJzZWxlY3Rpb25zJTIyJTNBJTVCJTVEJTdEJTJDJTdCJTIyb2JqZWN0JTIyJTNBJTIybGVhZiUyMiUyQyUyMnRleHQlMjIlM0ElMjIlMjB3cml0dGVuJTIwaW4lMjBhbmQlMjBmb3IlMjBKYXZhU2NyaXB0JTIyJTJDJTIybWFya3MlMjIlM0ElNUIlNUQlMkMlMjJzZWxlY3Rpb25zJTIyJTNBJTVCJTVEJTdEJTVEJTJDJTIya2V5JTIyJTNBJTIyNzRiZjkwNjA3ZjI1NGRjMzhmYWQ3M2FhMjU5MWJjZGUlMjIlN0QlNUQlMkMlMjJrZXklMjIlM0ElMjI3MTA2OTgyNDdjYjI0NDRhYWZkOTkzMDdiMzZhMmNkZSUyMiU3RCU1RCUyQyUyMmtleSUyMiUzQSUyMmJjMmJiZjUwNGRmODQzMGJiYWY1NWVlMzA1ZmIyNjg4JTIyJTdE\"> written in and for JavaScript</span>",
-      "installation": "NPM install",
-      "installSnippet": "npm i --save i18next",
-      "implementation": "Step 1 =&gt; make new .js file to initialize and configure i18next;<br>Step 2 =&gt; import created module and use it&nbsp;<br>Step 3 =&gt; import i18next from node_modules to use event listeners",
-      "implementationSnippet": "// STEP 1\n\nimport i18next from 'i18next';\n\nimport enTranslation from './locales/en-US.json';\nimport huTranslation from './locales/hu-HU.json';\nimport srTranslation from './locales/sr-RS.json';\n\ni18next\n  .init({\n    lng: 'en-US',\n    fallbackLng: 'en-US',\n    debug: true,\n    resources: {\n      'en-US': {\n        translation: enTranslation,\n      },\n    },\n  })\n  .then(function (t) {\n    // initialized and ready to go!\n    console.info('i18next is initialized.', t('welcome'));\n  });\n\ni18next.addResourceBundle('hu-HU', 'translation', huTranslation);\ni18next.addResourceBundle('sr-RS', 'translation', srTranslation);\n\nexport default i18next;\n\n\n//STEP 2 \n\nheader.innerText = i18n.t('title');\n\n\n// STEP 3\n\ni18next.on('languageChanged', () => {\n  renderAppInterface();\n});\n",
-      "additional": "There is possibly a more optimised approach for using with JS frameworks - ex. react-i18next",
-      "id": 11
+      "name": "React-WordCloud",
+      "documentation": "https://www.npmjs.com/package/react-wordcloud",
+      "description": "Word-cloud component with interactive features",
+      "installation": "NPM installation: Package requires react 16.13.0 as peer dependency",
+      "installSnippet": "npm install --save  react-wordcloud --legacy-peer-deps",
+      "implementation": "Import package to JS file and define props like !words, ?options and ?callbacks",
+      "implementationSnippet": "import React from 'react';\nimport ReactWordcloud from 'react-wordcloud';\n \nconst words = [\n  {\n    text: 'told',\n    value: 64,\n  },\n  {\n    text: 'mistake',\n    value: 11,\n  },\n  {\n    text: 'thought',\n    value: 16,\n  },\n  {\n    text: 'bad',\n    value: 17,\n  },\n]\nconst callbacks = {\n  getWordColor: word => word.value > 50 ? \"blue\" : \"red\",\n  onWordClick: console.log,\n  onWordMouseOver: console.log,\n  getWordTooltip: word => `${word.text} (${word.value}) [${word.value > 50 ? \"good\" : \"bad\"}]`,\n}\nconst options = {\n  rotations: 2,\n  rotationAngles: [-90, 0],\n};\n \nfunction SimpleWordcloud() {\n  return <ReactWordcloud words={words} />\n}",
+      "additional": "",
+      "id": 10
     }
   ]
 }

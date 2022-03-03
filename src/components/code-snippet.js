@@ -7,6 +7,7 @@ export class CodeSnippet extends LitElement {
   };
   static styles = css`
     textarea {
+      font-size: 16px;
       resize: none;
       border-radius: 5px;
       padding: 0.5vh;
@@ -15,7 +16,6 @@ export class CodeSnippet extends LitElement {
     textarea[disabled] {
       color: black;
     }
-
   `;
   constructor() {
     super(), (this.data = ""), (this.editable = false);
@@ -26,7 +26,7 @@ export class CodeSnippet extends LitElement {
       <textarea
         ?disabled=${!this.editable}
         @input=${this.saveValue}
-        cols="80"
+        cols="60"
         rows="${this.calculateRows(this.data)}"
       ></textarea>
     `;
@@ -47,9 +47,7 @@ export class CodeSnippet extends LitElement {
       let numberOfLines = data?.split(`\n`);
       if (numberOfLines?.length > 40) {
         return 40;
-      } else return numberOfLines?.length;
+      } else return numberOfLines?.length + 1;
     } else return 3;
   }
 }
-
-

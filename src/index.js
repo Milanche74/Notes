@@ -5,6 +5,7 @@ import { TextField } from "./components/text-field";
 import "core-js/stable";
 import "regenerator-runtime/runtime";
 
+let count = 1;
 let data = [];
 let libraries = [];
 
@@ -12,12 +13,14 @@ const getData = async (i) => {
   const response = await fetch(`http://localhost:5000/libraries`);
   data = await response.json();
 
-  setData(i);
+  setData(i, 1);
   setLibraries();
 };
 
-const setData = (i) => {
-  const libraryComp = document.querySelector("library-detail");
+const setData = (i, elIndex) => {
+  const libraryComp = document.querySelector(
+    `library-detail:nth-of-type(${elIndex})`
+  );
 
   libraryComp.setAttribute("data", JSON.stringify(data[i]));
 
@@ -26,11 +29,6 @@ const setData = (i) => {
   } else {
     libraryComp.removeAttribute("editable");
   }
-
-  // document
-  //   .querySelector("library-detail")
-  //   .setAttribute("data", JSON.stringify(data[i]))
-  //   .setAttribute("editable", editable);
 };
 
 const setLibraries = () => {
@@ -68,10 +66,22 @@ const postData = async (data) => {
   getData(0);
 };
 
-window.addEventListener("index-emiter", (e) => {
+window.addEventListener("click-emiter", (e) => {
   const index = e.detail.index;
 
-  setData(index);
+  setData(index, 1);
+});
+
+window.addEventListener("dbclick-emiter", (e) => {
+  const index = e.detail.index;
+
+  //if there is no data for secondary library, don't display it
+  if (count === 1) {
+    const createdLibrary = document.createElement("library-detail");
+    createdLibrary.setAttribute("data", JSON.stringify(data[index]));
+    document.querySelector(".libraries-container").appendChild(createdLibrary);
+    count++;
+  } else setData(index, 2);
 });
 
 window.addEventListener("save-emiter", (e) => {

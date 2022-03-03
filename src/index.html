@@ -10,6 +10,7 @@
     * {
       margin: 0;
     }
+
     h1 {
       font-size: 60px;
       text-align: center;
@@ -17,11 +18,20 @@
       background-color: rgb(47, 79, 79);
       padding: 2vh 0;
     }
+
+    .libraries-container {
+      padding: 0 5vw;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5vw;
+    }
+
     footer {
       margin-top: 5vh;
       display: flex;
       background-color: rgb(47, 79, 79);
     }
+
     footer a {
       width: 100%;
       font-size: 18px;
@@ -33,9 +43,12 @@
   </style>
   <body>
     <h1>Notes</h1>
-    <dashboard-element libraries=""></dashboard-element>
+    <dashboard-element libraries=""> </dashboard-element>
 
-    <library-detail></library-detail>
+    <div class="libraries-container">
+      <library-detail class="library-primary"></library-detail>
+      <!-- <library-detail class="library-secondary"></library-detail> -->
+    </div>
 
     <footer>
       <a target="_blank" href="https://github.com/Milanche74"

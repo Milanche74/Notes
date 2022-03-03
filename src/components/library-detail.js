@@ -20,9 +20,11 @@ export class LibraryDetail extends LitElement {
     }
 
     :host {
+      flex: 1;
+      min-width: 620px;
       display: flex;
       flex-direction: column;
-      padding: 0 5vw;
+      padding: 0 0vw;
       position: relative;
       gap: 2vh;
     }
@@ -75,12 +77,16 @@ export class LibraryDetail extends LitElement {
       padding: 1vh;
       border-radius: 5px;
     }
+
+    .no-display {
+      display: none;
+    }
   `;
 
   constructor() {
     super();
     this.data = {};
-    this.editable = true;
+    this.editable = false;
   }
   docsLabel = "Official Docs";
 
@@ -263,3 +269,5 @@ export class LibraryDetail extends LitElement {
     } else return true;
   }
 }
+
+//class=${this.data.name ? "host" : "no-display host"}
