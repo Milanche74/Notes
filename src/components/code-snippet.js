@@ -10,11 +10,21 @@ export class CodeSnippet extends LitElement {
       font-size: 16px;
       resize: none;
       border-radius: 5px;
-      padding: 0.5vh;
+      padding: 1vh;
+      border: 3px solid #f0f0f0;
+      background: linear-gradient(145deg, #e6e6e6, #ededed);
+      box-shadow: var(--bs-concave);
+      transition: var(--trans);
+    }
+
+    textarea:focus {
+      box-shadow: var(--bs-concave-focus);
+      outline: none;
     }
 
     textarea[disabled] {
       color: black;
+      box-shadow: inset 6px 6px 12px #cacaca, inset -6px -6px 12px #ffffff;
     }
   `;
   constructor() {

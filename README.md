@@ -13,4 +13,4 @@ Notes app designed to speed up learning process by entering general info about g
 - [x] Double-click event on dashboard items should trigger production of another library-detail component on the right side of the screen so that user can compare two libraries;
 - [x] Text inside 'Official docs' should be removed on focus;
 - [x] When saving new note, alert user if name of library isn't defined;
-- [ ] Improve styling (Neumorphism).
+- [x] Improve styling (Neumorphism).

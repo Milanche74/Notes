@@ -7,8 +7,16 @@
     <title>Notes</title>
   </head>
   <style>
+    :root {
+      --bs-concave: 12px 12px 24px #cacaca, -12px -12px 24px #ffffff;
+      --bs-concave-focus: 12px 12px 24px #979797, -12px -12px 24px #ffffff;
+      --trans: all 0.4s ease-out;
+    }
     * {
       margin: 0;
+    }
+    body {
+      background-color: #f0f0f0;
     }
 
     h1 {
@@ -20,10 +28,11 @@
     }
 
     .libraries-container {
-      padding: 0 5vw;
+      padding: 2vh 4vw;
       display: flex;
       flex-wrap: wrap;
       gap: 5vw;
+      background-color: #f0f0f0;
     }
 
     footer {

@@ -11,6 +11,7 @@ export class TextField extends LitElement {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
+      transition: var(--trans);
     }
 
     :host {
@@ -36,12 +37,17 @@ export class TextField extends LitElement {
     }
 
     [contenteditable="true"] {
-      outline: 1px solid grey;
+      outline: 3px solid #e6e6e6;
+      background: linear-gradient(145deg, #e6e6e6, #ededed);
+      box-shadow: var(--bs-concave);
     }
 
     [contenteditable="true"]:empty:before {
       content: attr(placeholder);
       color: grey;
+    }
+    [contenteditable="true"]:focus {
+      box-shadow: var(--bs-concave-focus);
     }
   `;
 
@@ -55,7 +61,7 @@ export class TextField extends LitElement {
       <p
         placeholder="Edit...  "
         contenteditable="${this.editable}"
-        class="paragraph"
+        class="paragraph neumorph-inset"
         .innerHTML=${this.data}
       ></p>
     `;

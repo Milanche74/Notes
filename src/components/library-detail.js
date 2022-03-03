@@ -17,21 +17,25 @@ export class LibraryDetail extends LitElement {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
+      transition: var(--trans);
     }
 
     :host {
       flex: 1;
       min-width: 620px;
+      height: min-content;
       display: flex;
       flex-direction: column;
-      padding: 0 0vw;
+      padding: 2vh 1vw;
       position: relative;
       gap: 2vh;
+      border-radius: 10px;
+      border: 5px solid #f0f0f0;
+      box-shadow: 15px 15px 20px #adadad, -15px -15px 20px #ffffff;
     }
 
     h2 {
       font-size: 48px;
-      margin-block: 2vh;
     }
 
     a {
@@ -56,15 +60,27 @@ export class LibraryDetail extends LitElement {
       color: white;
       margin-bottom: 1vh;
       cursor: pointer;
-      background-color: rgb(47, 79, 79);
+      border: 5px solid rgb(47, 79, 79);
+      background: linear-gradient(
+        145deg,
+        rgba(34, 55, 55, 1) 0%,
+        rgba(47, 79, 79, 1) 35%,
+        rgba(80, 133, 133, 1) 100%
+      );
+      box-shadow: 5px 5px 5px 2px rgb(46, 46, 46), -5px -5px 5px 2px #ffffff;
+      transition: var(--trans);
     }
 
     .button-active {
-      background-color: grey;
+      background-color: rgb(47, 79, 79);
+      box-shadow: none;
+      transition: var(--trans);
     }
 
     [contenteditable="true"] {
-      outline: 1px solid grey;
+      outline: 3px solid #e6e6e6;
+      background: linear-gradient(145deg, #e6e6e6, #ededed);
+      box-shadow: var(--bs-concave);
     }
 
     [contenteditable="true"]:empty:before {
