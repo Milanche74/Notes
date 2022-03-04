@@ -277,7 +277,9 @@ export class LibraryDetail extends LitElement {
   // auxiliary methods
 
   focus(e) {
-    e.target.innerHTML = "";
+    if (e.target.innerHTML === "+" || e.target.innerHTML === "Official Docs") {
+      e.target.innerHTML = "";
+    }
   }
   getHrefFromParagraph() {
     if (this.linkParagraph.innerHTML === this.docsLabel) {
