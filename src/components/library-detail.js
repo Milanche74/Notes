@@ -236,6 +236,7 @@ export class LibraryDetail extends LitElement {
     if (this.name.innerHTML === "" || this.name.innerHTML === "+") {
       this.editable = true;
       this.name.innerHTML = "";
+      this.name.focus();
       return;
     }
 
