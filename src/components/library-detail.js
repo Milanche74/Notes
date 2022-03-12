@@ -1,5 +1,7 @@
 import { LitElement, html, css } from "lit";
+
 import "./code-snippet.js";
+
 import "./text-field.js";
 
 export class LibraryDetail extends LitElement {
@@ -93,7 +95,6 @@ export class LibraryDetail extends LitElement {
       padding: 1vh;
       border-radius: 5px;
     }
-
     .no-display {
       display: none;
     }
@@ -101,7 +102,9 @@ export class LibraryDetail extends LitElement {
 
   constructor() {
     super();
+
     this.data = {};
+
     this.editable = false;
   }
   docsLabel = "Official Docs";
@@ -176,10 +179,12 @@ export class LibraryDetail extends LitElement {
       this.link?.removeAttribute("href");
     } else return this.data.documentation;
   }
+
   //makes sure that anchor tag's child paragraph is displaying
   //correct text and determines correct url destination
   updated() {
     this.linkParagraph.innerHTML = this.docsLabel;
+
     this.setHref();
   }
 
@@ -200,26 +205,31 @@ export class LibraryDetail extends LitElement {
   get description() {
     return this.renderRoot.querySelector("#desc").renderRoot.querySelector("p");
   }
+
   get install() {
     return this.renderRoot
       .querySelector("#install")
       .renderRoot.querySelector("p");
   }
+
   get installCs() {
     return this.renderRoot
       .querySelector("#install-cs")
       .renderRoot.querySelector("textarea");
   }
+
   get implementation() {
     return this.renderRoot
       .querySelector("#implementation")
       .renderRoot.querySelector("p");
   }
+
   get implementationCs() {
     return this.renderRoot
       .querySelector("#implementation-cs")
       .renderRoot.querySelector("textarea");
   }
+
   get addition() {
     return this.renderRoot
       .querySelector("#addition")
@@ -237,6 +247,7 @@ export class LibraryDetail extends LitElement {
       this.editable = true;
       this.name.innerHTML = "";
       this.name.focus();
+
       return;
     }
 
@@ -253,6 +264,7 @@ export class LibraryDetail extends LitElement {
       implementationSnippet: this.implementationCs.value,
       additional: this.addition.innerHTML,
     };
+
     let event = new CustomEvent("save-emiter", {
       detail: {
         data: data,
@@ -260,8 +272,10 @@ export class LibraryDetail extends LitElement {
       bubbles: true,
       composed: true,
     });
+
     // emmit
     this.dispatchEvent(event);
+
     //return values to default if new note is added
     if (this.data.name === "+") {
       this.name.innerHTML = "";
@@ -288,5 +302,3 @@ export class LibraryDetail extends LitElement {
     } else return true;
   }
 }
-
-//class=${this.data.name ? "host" : "no-display host"}

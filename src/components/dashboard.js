@@ -33,6 +33,13 @@ export class Dashboard extends LitElement {
       transition: var(--trans);
     }
 
+    .list-item p {
+      position: relative;
+      padding: 0;
+      margin: 0;
+      z-index: 10;
+    }
+
     .list-item::after {
       content: "";
       position: absolute;
@@ -44,6 +51,8 @@ export class Dashboard extends LitElement {
         rgba(0, 0, 0, 0) 50%,
         rgba(255, 255, 255, 0.3) 100%
       );
+      z-index: 5;
+      border-radius: 5px;
     }
 
     .list-item:hover {
@@ -53,6 +62,7 @@ export class Dashboard extends LitElement {
 
   constructor() {
     super();
+
     this.libraries = [];
   }
   click = 0;
@@ -74,7 +84,7 @@ export class Dashboard extends LitElement {
                 e.preventDefault();
               }}"
             >
-              ${library}
+              <p>${library}</p>
             </li>
           `
         )}
@@ -97,7 +107,6 @@ export class Dashboard extends LitElement {
       bubbles: true,
       composed: true,
     });
-
     this.click++;
     if (this.click === 1) {
       this.timer = setTimeout(() => {

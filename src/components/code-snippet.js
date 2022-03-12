@@ -35,7 +35,6 @@ export class CodeSnippet extends LitElement {
     const textarea = html`
       <textarea
         ?disabled=${!this.editable}
-        @input=${this.saveValue}
         cols="60"
         rows="${this.calculateRows(this.data)}"
       ></textarea>
@@ -55,6 +54,7 @@ export class CodeSnippet extends LitElement {
   calculateRows(data) {
     if (data !== "") {
       let numberOfLines = data?.split(`\n`);
+
       if (numberOfLines?.length > 40) {
         return 40;
       } else return numberOfLines?.length + 1;

@@ -9,10 +9,11 @@ let count = 1;
 let data = [];
 let libraries = [];
 
+// FUNCTIONS
+
 const getData = async (i) => {
   const response = await fetch(`http://localhost:5000/libraries`);
   data = await response.json();
-
   setData(i, 1);
   setLibraries();
 };
@@ -21,9 +22,7 @@ const setData = (i, elIndex) => {
   const libraryComp = document.querySelector(
     `library-detail:nth-of-type(${elIndex})`
   );
-
   libraryComp.setAttribute("data", JSON.stringify(data[i]));
-
   if (i === 0) {
     libraryComp.setAttribute("editable", "");
   } else {
@@ -52,6 +51,7 @@ const putData = async (index, data) => {
   data = await response.json();
   getData(index - 1);
 };
+
 const postData = async (data) => {
   const requestOptions = {
     method: "POST",
@@ -66,15 +66,15 @@ const postData = async (data) => {
   getData(0);
 };
 
+// EVENT LISTENERS
+
 window.addEventListener("click-emiter", (e) => {
   const index = e.detail.index;
-
   setData(index, 1);
 });
 
 window.addEventListener("dbclick-emiter", (e) => {
   const index = e.detail.index;
-
   //if there is no data for secondary library, don't display it
   if (count === 1) {
     const createdLibrary = document.createElement("library-detail");

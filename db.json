@@ -29,8 +29,8 @@
       "installation": "Linux installation:",
       "installSnippet": " sudo apt install git-all",
       "implementation": "CLI commands for setting up local and remote repository",
-      "implementationSnippet": "git init\ngit add README.md\ngit commit -m \"first commit\"\ngit branch -m master main\ngit remote add origin https://github.com/Milanche74/Notes.git\ngit push -u origin main",
-      "additional": "Will add info about branching",
+      "implementationSnippet": "git init\ngit add README.md\ngit commit -m \"first commit\"\ngit branch -m master main\ngit remote add origin https://github.com/Milanche74/Notes.git\ngit push -u origin main\n\n// cloning\ngit clone <link> <set-name (opt)>",
+      "additional": "- On Linux, authentication key is required for pull and push requests<br><br>Will add info about branching",
       "id": 3
     },
     {
@@ -47,7 +47,7 @@
     {
       "name": "Babel",
       "documentation": "https://babeljs.io/docs/en/",
-      "description": "Javascript Compiler",
+      "description": "Javascript Compiler tool",
       "installation": "Run these commands to prepare configuration with webpack:",
       "installSnippet": "npm i @babel/preset-env babel-loader\n\n// for REACT \nnpm i @babel/core @babel/preset-react\n\n// there may be a need to install additional plugins:\nnpm i core-js regeneration-runtime etc",
       "implementation": "babel.config.json file handles presets and plugins",
@@ -59,7 +59,7 @@
       "name": "ESLint",
       "documentation": "https://eslint.org/docs/user-guide/getting-started",
       "description": "Linter tool for identifying and reporting on JavaScript patterns.",
-      "installation": "Install inside project folder",
+      "installation": "Install inside project folder:",
       "installSnippet": "npm install eslint --save-dev\n\n// init a config file from CLI \nnpm init @eslint/config",
       "implementation": "Edit configuration file: Add plugins and set rules.&nbsp;",
       "implementationSnippet": "module.exports = {\n  env: {\n    browser: true,\n    es2021: true,\n  },\n  extends: [\"plugin:wc/recommended\", \"plugin:lit/recommended\"],\n  parserOptions: {\n    ecmaVersion: \"latest\",\n    sourceType: \"module\",\n  },\n  rules: {},\n};\n\n// run command from terminal\nnpx eslint --fix .",
@@ -74,7 +74,7 @@
       "installSnippet": "npm install --save-dev --save-exact prettier",
       "implementation": "Configure specific rules in prettierrc.json file. It will have precedence to code editor configs.<br>When using as an extension in code editor, add configuration to settings.json in the editor<br>",
       "implementationSnippet": "{\n  \"trailingComma\": \"es5\",\n  \"printWidth\": 100,\n  \"semi\": true,\n  \"singleQuote\": true\n}\n\n// command to formatt all files\nnpx prettier --write .\n\n// configure on save\n \"editor.formatOnSave\": true,",
-      "additional": "- Might need other packages for integrations with other linters.&nbsp;<br>- Add prettierignore file to specify files to be ignored<br>",
+      "additional": "- Might need additional packages for integrations with other linters.&nbsp;<br>- Add prettierignore file to specify files to be ignored<br>",
       "id": 7
     },
     {
@@ -114,12 +114,23 @@
       "name": "i18n",
       "documentation": "https://www.i18next.com/overview/getting-started",
       "description": "<span data-offset-key=\"ed466c53b77c41caaad19142c853679d:0\">i18next is an </span><strong data-slate-leaf=\"true\" data-offset-key=\"ed466c53b77c41caaad19142c853679d:1\" class=\"r-b88u0q\">internationalization-framework</strong><span data-offset-key=\"ed466c53b77c41caaad19142c853679d:2\" data-slate-fragment=\"JTdCJTIyb2JqZWN0JTIyJTNBJTIyZG9jdW1lbnQlMjIlMkMlMjJkYXRhJTIyJTNBJTdCJTdEJTJDJTIybm9kZXMlMjIlM0ElNUIlN0IlMjJvYmplY3QlMjIlM0ElMjJibG9jayUyMiUyQyUyMnR5cGUlMjIlM0ElMjJwYXJhZ3JhcGglMjIlMkMlMjJpc1ZvaWQlMjIlM0FmYWxzZSUyQyUyMmRhdGElMjIlM0ElN0IlN0QlMkMlMjJub2RlcyUyMiUzQSU1QiU3QiUyMm9iamVjdCUyMiUzQSUyMnRleHQlMjIlMkMlMjJsZWF2ZXMlMjIlM0ElNUIlN0IlMjJvYmplY3QlMjIlM0ElMjJsZWFmJTIyJTJDJTIydGV4dCUyMiUzQSUyMkkxOG5leHQlMjBpcyUyMGFuJTIwJTIyJTJDJTIybWFya3MlMjIlM0ElNUIlNUQlMkMlMjJzZWxlY3Rpb25zJTIyJTNBJTVCJTVEJTdEJTJDJTdCJTIyb2JqZWN0JTIyJTNBJTIybGVhZiUyMiUyQyUyMnRleHQlMjIlM0ElMjJpbnRlcm5hdGlvbmFsaXphdGlvbi1mcmFtZXdvcmslMjIlMkMlMjJtYXJrcyUyMiUzQSU1QiU3QiUyMm9iamVjdCUyMiUzQSUyMm1hcmslMjIlMkMlMjJ0eXBlJTIyJTNBJTIyYm9sZCUyMiUyQyUyMmRhdGElMjIlM0ElN0IlN0QlN0QlNUQlMkMlMjJzZWxlY3Rpb25zJTIyJTNBJTVCJTVEJTdEJTJDJTdCJTIyb2JqZWN0JTIyJTNBJTIybGVhZiUyMiUyQyUyMnRleHQlMjIlM0ElMjIlMjB3cml0dGVuJTIwaW4lMjBhbmQlMjBmb3IlMjBKYXZhU2NyaXB0JTIyJTJDJTIybWFya3MlMjIlM0ElNUIlNUQlMkMlMjJzZWxlY3Rpb25zJTIyJTNBJTVCJTVEJTdEJTVEJTJDJTIya2V5JTIyJTNBJTIyNzRiZjkwNjA3ZjI1NGRjMzhmYWQ3M2FhMjU5MWJjZGUlMjIlN0QlNUQlMkMlMjJrZXklMjIlM0ElMjI3MTA2OTgyNDdjYjI0NDRhYWZkOTkzMDdiMzZhMmNkZSUyMiU3RCU1RCUyQyUyMmtleSUyMiUzQSUyMmJjMmJiZjUwNGRmODQzMGJiYWY1NWVlMzA1ZmIyNjg4JTIyJTdE\"> written in and for JavaScript</span>",
-      "installation": "NPM install",
+      "installation": "NPM install:",
       "installSnippet": "npm i --save i18next",
       "implementation": "Step 1 =&gt; make new .js file to initialize and configure i18next;<br>Step 2 =&gt; import created module and use it&nbsp;<br>Step 3 =&gt; import i18next from node_modules to use event listeners",
       "implementationSnippet": "// STEP 1\n\nimport i18next from 'i18next';\n\nimport enTranslation from './locales/en-US.json';\nimport huTranslation from './locales/hu-HU.json';\nimport srTranslation from './locales/sr-RS.json';\n\ni18next\n  .init({\n    lng: 'en-US',\n    fallbackLng: 'en-US',\n    debug: true,\n    resources: {\n      'en-US': {\n        translation: enTranslation,\n      },\n    },\n  })\n  .then(function (t) {\n    // initialized and ready to go!\n    console.info('i18next is initialized.', t('welcome'));\n  });\n\ni18next.addResourceBundle('hu-HU', 'translation', huTranslation);\ni18next.addResourceBundle('sr-RS', 'translation', srTranslation);\n\nexport default i18next;\n\n\n//STEP 2 \n\nheader.innerText = i18n.t('title');\n\n\n// STEP 3\n\ni18next.on('languageChanged', () => {\n  renderAppInterface();\n});\n",
       "additional": "There is possibly a more optimised approach for using with JS frameworks - ex. react-i18next",
       "id": 11
+    },
+    {
+      "name": "React-range",
+      "documentation": "https://github.com/tajo/react-range/tree/master/examples",
+      "description": "Range slider component for React",
+      "installation": "NPM Installation",
+      "installSnippet": "npm i react-range",
+      "implementation": "Define a component and set attributes as given:&nbsp;",
+      "implementationSnippet": "return (\n      <Range\n        values={values}\n        step={STEP}\n        min={MIN}\n        max={MAX}\n        rtl={rtl}\n        onChange={(values) => setValues(values)}\n        renderTrack={({ props, children }) => (\n          <div\n            onMouseDown={props.onMouseDown}\n            onTouchStart={props.onTouchStart}\n            style={{\n              ...props.style,\n              height: '36px',\n              display: 'flex',\n              width: '100%'\n            }}\n          >\n            <div\n              ref={props.ref}\n              style={{\n                height: '5px',\n                width: '100%',\n                borderRadius: '4px',\n                background: getTrackBackground({\n                  values,\n                  colors: ['#ccc', '#548BF4', '#ccc'],\n                  min: MIN,\n                  max: MAX,\n                  rtl\n                }),\n                alignSelf: 'center'\n              }}\n            >\n              {children}\n            </div>\n          </div>\n        )}\n        renderThumb={({ index, props, isDragged }) => (\n          <div\n            {...props}\n            style={{\n              ...props.style,\n              height: '42px',\n              width: '42px',\n              borderRadius: '4px',\n              backgroundColor: '#FFF',\n              display: 'flex',\n              justifyContent: 'center',\n              alignItems: 'center',\n              boxShadow: '0px 2px 6px #AAA'\n            }}\n          >\n            <div\n              style={{\n                position: 'absolute',\n                top: '-28px',\n                color: '#fff',\n                fontWeight: 'bold',\n                fontSize: '14px',\n                fontFamily: 'Arial,Helvetica Neue,Helvetica,sans-serif',\n                padding: '4px',\n                borderRadius: '4px',\n                backgroundColor: '#548BF4'\n              }}\n            >\n              {values[index].toFixed(1)}\n            </div>\n            <div\n              style={{\n                height: '16px',\n                width: '5px',\n                backgroundColor: isDragged ? '#548BF4' : '#CCC'\n              }}\n            />\n          </div>\n        )}\n      />\n  );",
+      "additional": "- If values are dynamically loaded, calculate steps attribute based on those values;<br>- Track background color can be determined using getTrackBackground() based on values.",
+      "id": 12
     }
   ]
 }

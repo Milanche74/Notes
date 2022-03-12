@@ -8,5 +8,10 @@ module.exports = {
     ecmaVersion: "latest",
     sourceType: "module",
   },
-  rules: {},
+  // rules: {
+  //   "padding-line-between-statements": [
+  //     "error",
+  //     { blankLine: "always", prev: "*", next: "*" },
+  //   ],
+  // },
 };
