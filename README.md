@@ -14,3 +14,6 @@ Notes app designed to speed up learning process by entering general info about g
 - [x] Text inside 'Official docs' should be removed on focus;
 - [x] When saving new note, alert user if name of library isn't defined;
 - [x] Improve styling (Neumorphism).
+- [x] User should define custom additional notes (append smaller wc)
+- [ ] Add search funtionality for selecting notes, think about tags
+- [ ] Edit heading of each addition to the notes to be content editable

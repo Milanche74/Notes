@@ -90,11 +90,34 @@ export class LibraryDetail extends LitElement {
       color: grey;
     }
 
+    .additional-note-button {
+      position: relative;
+      margin-top: 2vh;
+      transition: var(--trans);
+    }
+
+    .additional-note-button::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        145deg,
+        rgba(17, 28, 28, 0.4) 0%,
+        rgba(0, 0, 0, 0) 50%,
+        rgba(17, 28, 28, 0.4) 100%
+      );
+    }
+
+    .additional-note-button:hover:after {
+      transform: scale(0);
+    }
+
     a p,
     h2 {
       padding: 1vh;
       border-radius: 5px;
     }
+
     .no-display {
       display: none;
     }
@@ -104,7 +127,6 @@ export class LibraryDetail extends LitElement {
     super();
 
     this.data = {};
-
     this.editable = false;
   }
   docsLabel = "Official Docs";
@@ -117,6 +139,7 @@ export class LibraryDetail extends LitElement {
         placeholder="Please insert a name..."
         .innerHTML="${this.data.name}"
       ></h2>
+
       <div class="buttons">
         <button
           @click="${() => (this.editable = !this.editable)}"
@@ -126,6 +149,7 @@ export class LibraryDetail extends LitElement {
         </button>
         <button @click="${this.save}">Save</button>
       </div>
+
       <a target="_blank" href="${this.setHref()}"
         ><p
           @focus="${(e) => this.focus(e)}"
@@ -134,40 +158,70 @@ export class LibraryDetail extends LitElement {
           .innerHTML="${this.docsLabel}"
         ></p
       ></a>
+
       <text-field
         id="desc"
         .editable=${this.editable}
         .data=${this.data.description}
         title="Description"
       ></text-field>
+
       <text-field
         id="install"
         .editable=${this.editable}
         .data=${this.data.installation}
         title="Installation"
       ></text-field>
+
       <code-snippet
         id="install-cs"
         .editable=${this.editable}
         .data=${this.data.installSnippet}
       ></code-snippet>
+
       <text-field
         id="implementation"
         .editable=${this.editable}
         .data=${this.data.implementation}
         title="Implementation"
       ></text-field>
+
       <code-snippet
         id="implementation-cs"
         .editable=${this.editable}
         .data=${this.data.implementationSnippet}
       ></code-snippet>
-      <text-field
-        .editable=${this.editable}
-        .data=${this.data.additional}
-        title="Additional notes"
-        id="addition"
-      ></text-field>
+
+      ${this.data?.additional?.map((addition, index) => {
+        let textField =
+          addition.textField !== undefined
+            ? html`<text-field
+                class="additional-text"
+                .editable=${this.editable}
+                .data=${addition.textField}
+                title="#${index + 1}"
+                id="addition-text-${index + 1}"
+              ></text-field>`
+            : null;
+        let codeSnippet =
+          addition.codeSnippet !== undefined
+            ? html`<code-snippet
+                class="additional-code"
+                .editable=${this.editable}
+                .data=${addition.codeSnippet}
+                id="addition-code-${index + 1}"
+              ></code-snippet>`
+            : null;
+        return html`${textField}${codeSnippet}`;
+      })}
+
+      <button
+        ?hidden=${!this.editable}
+        class="additional-note-button"
+        @click="${this.addAddition}"
+      >
+        Addition
+      </button>
     `;
   }
 
@@ -186,6 +240,16 @@ export class LibraryDetail extends LitElement {
     this.linkParagraph.innerHTML = this.docsLabel;
 
     this.setHref();
+  }
+
+  addAddition() {
+    if (this.editable === true) {
+      this.data.additional.push({
+        textField: "",
+        codeSnippet: "",
+      });
+      this.requestUpdate();
+    } else return null;
   }
 
   // getters
@@ -230,10 +294,34 @@ export class LibraryDetail extends LitElement {
       .renderRoot.querySelector("textarea");
   }
 
-  get addition() {
-    return this.renderRoot
-      .querySelector("#addition")
-      .renderRoot.querySelector("p");
+  formatAdditionals() {
+    // empty input value will be set to undefined so the element won't be rendered
+    const handleEmptyInput = (input) => {
+      if (input === "") {
+        return undefined;
+      } else return input;
+    };
+
+    const numOfAdditionals =
+      this.renderRoot.querySelectorAll(".additional-text");
+    let additionalsData = [];
+
+    for (let i = 0; i < numOfAdditionals.length; i++) {
+      let text = this.renderRoot
+        .querySelector(`#addition-text-${i + 1}`)
+        ?.renderRoot.querySelector("p");
+      let code = this.renderRoot
+        .querySelector(`#addition-code-${i + 1}`)
+        ?.renderRoot.querySelector("textarea");
+
+      console.log(text);
+      additionalsData.push({
+        textField: handleEmptyInput(text?.innerHTML),
+        codeSnippet: handleEmptyInput(code?.value),
+      });
+    }
+
+    return additionalsData;
   }
 
   // this is how I get values to be saved and emmited
@@ -262,7 +350,7 @@ export class LibraryDetail extends LitElement {
       installSnippet: this.installCs.value,
       implementation: this.implementation.innerHTML,
       implementationSnippet: this.implementationCs.value,
-      additional: this.addition.innerHTML,
+      additional: this.formatAdditionals(),
     };
 
     let event = new CustomEvent("save-emiter", {
@@ -284,7 +372,7 @@ export class LibraryDetail extends LitElement {
       this.install.innerHTML = "";
       this.implementation.innerHTML = "";
       this.implementationCs.value = "";
-      this.addition.innerHTML = "";
+      this.additional = [];
       this.description.innerHTML = "";
     }
   }

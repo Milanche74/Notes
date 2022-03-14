@@ -35,6 +35,7 @@ export class CodeSnippet extends LitElement {
     const textarea = html`
       <textarea
         ?disabled=${!this.editable}
+        @input=${this.saveValue}
         cols="60"
         rows="${this.calculateRows(this.data)}"
       ></textarea>

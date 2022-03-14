@@ -75,7 +75,7 @@ window.addEventListener("click-emiter", (e) => {
 
 window.addEventListener("dbclick-emiter", (e) => {
   const index = e.detail.index;
-  //if there is no data for secondary library, don't display it
+  // initial dblclick should create DOM element
   if (count === 1) {
     const createdLibrary = document.createElement("library-detail");
     createdLibrary.setAttribute("data", JSON.stringify(data[index]));
