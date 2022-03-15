@@ -15,7 +15,7 @@ const getData = async (i) => {
   const response = await fetch(`http://localhost:5000/libraries`);
   data = await response.json();
   setData(i, 1);
-  setLibraries();
+  setDashboard();
 };
 
 const setData = (i, elIndex) => {
@@ -30,12 +30,16 @@ const setData = (i, elIndex) => {
   }
 };
 
-const setLibraries = () => {
-  libraries = data.map(({ name }) => name);
-  const librariesNames = JSON.stringify(libraries);
-  document
-    .querySelector("dashboard-element")
-    .setAttribute("libraries", librariesNames);
+const setDashboard = () => {
+  libraries = data.map(({ name, tags }) => ({
+    name: name,
+    tags: tags,
+  }));
+  const dashboardInfo = JSON.stringify(libraries);
+  const dashboardElement = document.querySelector("dashboard-element");
+
+  dashboardElement.setAttribute("data", dashboardInfo);
+  // dashboardElement.setAttribute("tags", JSON.stringify(getTags()));
 };
 
 const putData = async (index, data) => {

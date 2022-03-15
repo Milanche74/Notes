@@ -9,6 +9,7 @@
       "implementation": "",
       "implementationSnippet": "",
       "additional": [],
+      "tags": [],
       "id": 1
     },
     {
@@ -27,6 +28,7 @@
           "textField": "- Loaders are applied in reverse order =&gt; ['style-loader', 'css-loader']"
         }
       ],
+      "tags": ["bundler", "js"],
       "id": 2
     },
     {
@@ -45,6 +47,7 @@
           "textField": "* Will add info about branching"
         }
       ],
+      "tags": ["version-control"],
       "id": 3
     },
     {
@@ -66,6 +69,7 @@
           "textField": "- There has to be a custom converter for attr values that are of type object/array"
         }
       ],
+      "tags": ["web-components", "library"],
       "id": 4
     },
     {
@@ -77,6 +81,7 @@
       "implementation": "babel.config.json file handles presets and plugins",
       "implementationSnippet": "// in babel.config.json\n\n{\n  \"presets\": [\"@babel/preset-env\", \"@babel/preset-react\"],\n  \"plugins\": [\n    [\n      \"@babel/plugin-proposal-class-properties\",\n      {\n        \"loose\": true\n      }\n    ],\n    [\"@babel/plugin-proposal-private-methods\", { \"loose\": true }]\n  ]\n}\n\n// in webpack.config.js\n\nmodule: {\n    rules: [\n      {\n        test: /\\.js$/,\n        exclude: /node_modules/,\n        use: {\n          loader: \"babel-loader\",\n          options: {\n            presets: [\"@babel/preset-env\"],\n          },\n        },\n      },\n    ],\n  },\n",
       "additional": [],
+      "tags": ["compiler", "js"],
       "id": 5
     },
     {
@@ -95,6 +100,7 @@
           "textField": "- It's recommended to define script in package.json that will run multiple linters"
         }
       ],
+      "tags": ["linter", "formatter", "code-quality"],
       "id": 6
     },
     {
@@ -113,6 +119,7 @@
           "textField": "- Add prettierignore file to specify files to be ignored<br>"
         }
       ],
+      "tags": ["code-quality", "formatter"],
       "id": 7
     },
     {
@@ -128,6 +135,7 @@
           "textField": "- It is possible to apply custom styling, will do furher research"
         }
       ],
+      "tags": ["data-visalization", "react", "library"],
       "id": 8
     },
     {
@@ -139,6 +147,7 @@
       "implementation": "Usefull methods:<br>- reject();<br>- flow();<br>- get();<br>- isNil();<br>- map();<br>- uniq();",
       "implementationSnippet": "const someFunc = flow(\n  reject(flow(get('projected'), isNil)),\n  lmap(({year, projected}) => [year, projected])\n)\nlet arrayOfOrigValues = uniq(data._value.map(({ city }) => city));",
       "additional": [],
+      "tags": ["library", "data-handler"],
       "id": 9
     },
     {
@@ -155,6 +164,7 @@
           "codeSnippet": "const callbacks = {\n  getWordColor: word => word.value > 50 ? \"blue\" : \"red\",\n  onWordClick: console.log,\n  onWordMouseOver: console.log,\n  getWordTooltip: word => `${word.text} (${word.value}) [${word.value > 50 ? \"good\" : \"bad\"}]`,\n}"
         }
       ],
+      "tags": ["library", "react", "plugin", "data-visalization"],
       "id": 10
     },
     {
@@ -170,6 +180,7 @@
           "textField": "There is possibly a more optimised approach for using with JS frameworks - ex. react-i18next"
         }
       ],
+      "tags": ["framework", "internationalization", "js"],
       "id": 11
     },
     {
@@ -179,7 +190,7 @@
       "installation": "NPM Installation",
       "installSnippet": "npm i react-range",
       "implementation": "Define a component and set attributes as given:&nbsp;",
-      "implementationSnippet": "return (\n      <Range\n        values={values}\n        step={STEP}\n        min={MIN}\n        max={MAX}\n        rtl={rtl}\n        onChange={(values) => setValues(values)}\n        renderTrack={({ props, children }) => (\n          <div\n            onMouseDown={props.onMouseDown}\n            onTouchStart={props.onTouchStart}\n            style={{\n              ...props.style,\n              height: '36px',\n              display: 'flex',\n              width: '100%'\n            }}\n          >\n            <div\n              ref={props.ref}\n              style={{\n                height: '5px',\n                width: '100%',\n                borderRadius: '4px',\n                background: getTrackBackground({\n                  values,\n                  colors: ['#ccc', '#548BF4', '#ccc'],\n                  min: MIN,\n                  max: MAX,\n                  rtl\n                }),\n                alignSelf: 'center'\n              }}\n            >\n              {children}\n            </div>\n          </div>\n        )}\n        renderThumb={({ index, props, isDragged }) => (\n          <div\n            {...props}\n            style={{\n              ...props.style,\n              height: '42px',\n              width: '42px',\n              borderRadius: '4px',\n              backgroundColor: '#FFF',\n              display: 'flex',\n              justifyContent: 'center',\n              alignItems: 'center',\n              boxShadow: '0px 2px 6px #AAA'\n            }}\n          >\n            <div\n              style={{\n                position: 'absolute',\n                top: '-28px',\n                color: '#fff',\n                fontWeight: 'bold',\n                fontSize: '14px',\n                fontFamily: 'Arial,Helvetica Neue,Helvetica,sans-serif',\n                padding: '4px',\n                borderRadius: '4px',\n                backgroundColor: '#548BF4'\n              }}\n            >\n              {values[index].toFixed(1)}\n            </div>\n            <div\n              style={{\n                height: '16px',\n                width: '5px',\n                backgroundColor: isDragged ? '#548BF4' : '#CCC'\n              }}\n            />\n          </div>\n        )}\n      />\n  );",
+      "implementationSnippet": "return(\n  <Range\n    values={values}\n    step={STEP}\n    min={MIN}\n    max={MAX}\n    rtl={rtl}\n    onChange={(values) => setValues(values)}\n    renderTrack={({ props, children }) => (\n      <div\n        onMouseDown={props.onMouseDown}\n        onTouchStart={props.onTouchStart}\n        style={{\n          ...props.style,\n          height: '36px',\n          display: 'flex',\n          width: '100%'\n        }}\n      >\n        <div\n          ref={props.ref}\n          style={{\n            height: '5px',\n            width: '100%',\n            borderRadius: '4px',\n            background: getTrackBackground({\n              values,\n              colors: ['#ccc', '#548BF4', '#ccc'],\n              min: MIN,\n              max: MAX,\n              rtl\n            }),\n            alignSelf: 'center'\n          }}\n        >\n          {children}\n        </div>\n      </div>\n    )}\n    renderThumb={({ index, props, isDragged }) => (\n      <div\n        {...props}\n        style={{\n          ...props.style,\n          height: '42px',\n          width: '42px',\n          borderRadius: '4px',\n          backgroundColor: '#FFF',\n          display: 'flex',\n          justifyContent: 'center',\n          alignItems: 'center',\n          boxShadow: '0px 2px 6px #AAA'\n        }}\n      >\n        <div\n          style={{\n            position: 'absolute',\n            top: '-28px',\n            color: '#fff',\n            fontWeight: 'bold',\n            fontSize: '14px',\n            fontFamily: 'Arial,Helvetica Neue,Helvetica,sans-serif',\n            padding: '4px',\n            borderRadius: '4px',\n            backgroundColor: '#548BF4'\n          }}\n        >\n          {values[index].toFixed(1)}\n        </div>\n        <div\n          style={{\n            height: '16px',\n            width: '5px',\n            backgroundColor: isDragged ? '#548BF4' : '#CCC'\n          }}\n        />\n      </div>\n    )}\n  />\n);",
       "additional": [
         {
           "textField": "- If values are dynamically loaded, calculate steps attribute based on those values;"
@@ -188,6 +199,7 @@
           "textField": "- Track background color can be determined using getTrackBackground() based on values."
         }
       ],
+      "tags": ["plugin", "react"],
       "id": 12
     }
   ]

@@ -90,6 +90,10 @@ export class LibraryDetail extends LitElement {
       color: grey;
     }
 
+    [contenteditable="true"]:focus {
+      box-shadow: var(--bs-concave-focus);
+    }
+
     .additional-note-button {
       position: relative;
       margin-top: 2vh;
@@ -314,7 +318,6 @@ export class LibraryDetail extends LitElement {
         .querySelector(`#addition-code-${i + 1}`)
         ?.renderRoot.querySelector("textarea");
 
-      console.log(text);
       additionalsData.push({
         textField: handleEmptyInput(text?.innerHTML),
         codeSnippet: handleEmptyInput(code?.value),

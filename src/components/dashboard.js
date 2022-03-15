@@ -2,11 +2,13 @@ import { LitElement, html, css } from "lit";
 
 export class Dashboard extends LitElement {
   static properties = {
-    libraries: {
+    data: {
       converter: (attrValue) => {
         if (attrValue) return JSON.parse(attrValue);
       },
     },
+    _filteredTags: { state: true },
+    _filteredLibraries: { state: true },
   };
   static styles = css`
     .list {
@@ -62,34 +64,111 @@ export class Dashboard extends LitElement {
 
   constructor() {
     super();
-
-    this.libraries = [];
+    this.data = [];
+    this._filteredTags = [];
+    this._filteredLibraries = [];
   }
   click = 0;
   timer = null;
+  tags = [];
+  libraries = [];
 
   render() {
+    this.tags = this.getTags();
+    this.libraries = this.getLibraries();
+
     return html`
-      <ul class="list">
-        ${this.libraries?.map(
-          (library) => html`
-            <li
-              class="list-item"
-              style="background-color: hsl(${Math.random() * 360}, ${50 +
-              Math.random() * 50}%, ${10 + Math.random() * 40}%)"
-              id=${this.libraries.indexOf(library) + 1}
-              @click="${() =>
-                this.onClickHandler(this.libraries.indexOf(library))}"
-              @dblclick="${(e) => {
-                e.preventDefault();
-              }}"
-            >
-              <p>${library}</p>
-            </li>
-          `
-        )}
-      </ul>
+      <div class="dashboard">
+        <div class="search-container">
+          <input @input=${this.handleInput} id="search-input" />
+          <ul class="tags">
+            ${this._filteredTags.length
+              ? this._filteredTags.map(
+                  (tag) =>
+                    html`<li
+                      class="tag"
+                      @click=${() => this.handleSelection(tag)}
+                    >
+                      ${tag}
+                    </li>`
+                )
+              : null}
+          </ul>
+          <button @click=${this.handleSearch}>Search</button>
+        </div>
+        <ul class="list">
+          ${this._filteredLibraries?.map(
+            (library) => html`
+              <li
+                class="list-item"
+                style="background-color: hsl(${Math.random() * 360}, ${50 +
+                Math.random() * 50}%, ${10 + Math.random() * 40}%)"
+                id=${this.libraries.indexOf(library) + 1}
+                @click="${() =>
+                  this.onClickHandler(this.libraries.indexOf(library))}"
+                @dblclick="${(e) => {
+                  e.preventDefault();
+                }}"
+              >
+                <p>${library}</p>
+              </li>
+            `
+          )}
+        </ul>
+      </div>
     `;
+  }
+
+  get input() {
+    return this.renderRoot.querySelector("#search-input");
+  }
+
+  getTags() {
+    //retrieves tags from data and flattens the nested array
+    const tags = this.data?.map(({ tags }) => tags).flat();
+
+    //returns only unique values
+    return [...new Set(tags)];
+  }
+
+  getLibraries() {
+    const libraries = this.data?.map(({ name }) => name);
+    return libraries;
+  }
+
+  handleInput() {
+    const inputWords = this.input.value.split(" ");
+    let lastWord = inputWords[inputWords.length - 1];
+
+    if (lastWord !== "") {
+      this._filteredTags = this.tags.filter((tag) => tag.includes(lastWord));
+    }
+  }
+
+  handleSelection(tag) {
+    const inputWords = this.input.value
+      .split(" ")
+      .filter((word) => this.tags.includes(word));
+    let formattedInput = inputWords.join(" ");
+    let inputValue = `${formattedInput} ${tag}`;
+
+    this.input.value = inputValue.trim();
+
+    this._filteredTags = [];
+  }
+
+  handleSearch() {
+    let searchTerms = this.input.value.trim().split(" ");
+
+    let filteredData = this.data.filter((item) => {
+      let joinedTags = item.tags.join();
+      let ex = joinedTags.replaceAll(`,`, ` `);
+
+      return searchTerms.every((term) => ex.includes(term));
+    });
+    console.log(filteredData);
+    let extractedNames = filteredData.map(({ name }) => name);
+    this._filteredLibraries = extractedNames;
   }
 
   onClickHandler(index) {
