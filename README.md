@@ -1,6 +1,7 @@
 # About
 
 Notes app designed to speed up learning process by entering general info about given library, framework or any other tool in general as well as some code snippets.
+Single click on item labels in the dashboard will open up selected item's details on the left, and double click will show details on the right so user can compare two libraries.
 
 # Set up
 
@@ -17,3 +18,4 @@ Notes app designed to speed up learning process by entering general info about g
 - [x] User should define custom additional notes (append smaller wc)
 - [ ] Add search funtionality for selecting notes, think about tags
 - [ ] Edit heading of each addition to the notes to be content editable
+- [ ] On save, library-detail should appear on the side of the screen where it was initially opened.
