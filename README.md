@@ -17,9 +17,6 @@ Single click on item labels in the dashboard will open up selected item's detail
 - [x] Improve styling (Neumorphism).
 - [x] User should define custom additional notes (append smaller wc)
 - [x] Add search funtionality for selecting notes, think about tags
-- [ ] Improve search component:
-        - differentiate search between tag and name,
-        - make selection user friendlier,
-        - sort suggestions by first letter
+- [x] Improve search component (tag + library name, user-friendliness, sort by first letter)
 - [ ] Edit heading of each addition to the notes to be content editable
 - [ ] On save, library-detail should appear on the side of the screen where it was initially opened.

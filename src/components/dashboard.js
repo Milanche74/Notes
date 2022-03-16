@@ -11,54 +11,50 @@ export class Dashboard extends LitElement {
     _filteredLibraries: { state: true },
   };
   static styles = css`
-    .list {
-      list-style: none;
+    .search-container {
+      padding: 2vh 20vw;
       display: flex;
-      flex-wrap: wrap;
-      justify-content: space-evenly;
-      gap: 2vh;
-      padding: 2vh 5vw;
-      border-bottom: 2px solid rgb(47, 79, 79);
-      margin: 0;
-      background-color: #f0f0f0;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 1vh;
     }
 
-    .list-item {
-      position: relative;
-      font-size: 36px;
-      color: white;
-      padding: 1vh 2vw;
+    .search-container > * {
       border-radius: 10px;
-      border: 5px solid #f0f0f0;
-      cursor: pointer;
-      box-shadow: 10px 10px 15px #929292, -10px -10px 15px #ffffff;
+    }
+
+    #search-input {
+      min-width: 30vw;
+      padding: 5px 1vw;
+      font-size: 16px;
+      border: 1px solid rgb(47, 79, 79);
       transition: var(--trans);
     }
 
-    .list-item p {
-      position: relative;
-      padding: 0;
-      margin: 0;
-      z-index: 10;
+    #search-input:focus {
+      outline: none;
+      box-shadow: 10px 10px 15px #adadad, -10px -10px 15px #ffffff;
+      transition: var(--trans);
     }
 
-    .list-item::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
+    datalist {
+      display: block;
+    }
+
+    .search-container #search-btn {
+      font-size: 24px;
+      color: white;
+      padding: 0.5vh 1vw;
+      border: 5px solid rgb(47, 79, 79);
       background: linear-gradient(
         145deg,
-        rgba(17, 28, 28, 0.3) 0%,
-        rgba(0, 0, 0, 0) 50%,
-        rgba(255, 255, 255, 0.3) 100%
+        rgba(34, 55, 55, 1) 0%,
+        rgba(47, 79, 79, 1) 35%,
+        rgba(80, 133, 133, 1) 100%
       );
-      z-index: 5;
-      border-radius: 5px;
-    }
-
-    .list-item:hover {
-      box-shadow: 10px 10px 20px #696969, -10px -10px 20px #ffffff;
+      box-shadow: 5px 5px 5px 2px rgb(46, 46, 46), -5px -5px 5px 2px #ffffff;
+      cursor: pointer;
     }
   `;
 
@@ -68,33 +64,34 @@ export class Dashboard extends LitElement {
     this._filteredTags = [];
     this._filteredLibraries = [];
   }
-  click = 0;
-  timer = null;
+
   tags = [];
   libraries = [];
 
   render() {
-    this.tags = this.getTags();
     this.libraries = this.getLibraries();
+    this.tags = this.getTags();
 
     return html`
       <div class="dashboard">
-        <div class="search-container">
-          <input @input=${this.handleInput} id="search-input" />
-          <ul class="tags">
-            ${this._filteredTags.length
+        <div
+          class="search-container
+        "
+        >
+          <input
+            @input=${this.handleInput}
+            id="search-input"
+            list="datalist"
+            name="datalist"
+          />
+          <datalist id="datalist">
+            ${this._filteredTags?.length
               ? this._filteredTags.map(
-                  (tag) =>
-                    html`<li
-                      class="tag"
-                      @click=${() => this.handleSelection(tag)}
-                    >
-                      ${tag}
-                    </li>`
+                  (tag) => html`<option value=${tag}></option>`
                 )
               : null}
-          </ul>
-          <button @click=${this.handleSearch}>Search</button>
+          </datalist>
+          <button id="search-btn" @click=${this.handleSearch}>Search</button>
         </div>
         <library-links .links=${this._filteredLibraries}></library-links>
       </div>
@@ -106,8 +103,11 @@ export class Dashboard extends LitElement {
   }
 
   getTags() {
-    //retrieves tags from data and flattens the nested array
-    const tags = this.data?.map(({ tags }) => tags).flat();
+    //retrieves tags from data, flattens the nested array and concatinates library names
+    const tags = this.data
+      ?.map(({ tags }) => tags)
+      .flat()
+      .concat(this.libraries);
 
     //returns only unique values
     return [...new Set(tags)];
@@ -119,38 +119,51 @@ export class Dashboard extends LitElement {
   }
 
   handleInput() {
+    this.input.value = this.input.value.replace("#", "");
     const inputWords = this.input.value.split(" ");
-    let lastWord = inputWords[inputWords.length - 1];
 
+    let lastWord = inputWords[inputWords.length - 1];
     if (lastWord !== "") {
-      this._filteredTags = this.tags.filter((tag) => tag?.includes(lastWord));
+      this._filteredTags = this.tags.filter((tag) =>
+        tag?.toLowerCase().replace("#", "").startsWith(lastWord)
+      );
+    }
+    if (inputWords.length > 1) {
+      for (let i = 0; i < this._filteredTags.length; i++) {
+        this._filteredTags[i] =
+          inputWords.slice(0, -1).join().replaceAll(",", " ") +
+          " " +
+          this._filteredTags[i];
+      }
     }
   }
 
-  handleSelection(tag) {
-    const inputWords = this.input.value
-      .split(" ")
-      .filter((word) => this.tags.includes(word));
-    let formattedInput = inputWords.join(" ");
-    let inputValue = `${formattedInput} ${tag}`;
+  // handleSelection(tag) {
+  //   const inputWords = this.input.value
+  //     .split(" ")
+  //     .filter((word) => this.tags.includes(word));
+  //   let formattedInput = inputWords.join(" ");
+  //   let inputValue = `${formattedInput} ${tag}`;
 
-    this.input.value = inputValue.trim();
+  //   this.input.value = inputValue.trim();
 
-    this._filteredTags = [];
-  }
+  //   this._filteredTags = [];
+  // }
 
   handleSearch() {
     let searchTerms = this.input.value.trim().split(" ");
 
     let filteredData = this.data.filter((item) => {
-      let joinedTags = item.tags?.join();
-      let ex = joinedTags?.replaceAll(`,`, ` `);
+      let joinedTags = item.tags?.join() + item.name;
+      let formattedTags = joinedTags?.replaceAll(`,`, ` `);
 
-      return searchTerms.every((term) => ex?.includes(term));
+      return searchTerms.every((term) => formattedTags?.includes(term));
     });
 
     let extractedNames = filteredData.map(({ name }) => name);
+    extractedNames.push("+");
     this._filteredLibraries = extractedNames;
+    console.log(this._filteredLibraries);
   }
 }
 

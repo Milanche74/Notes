@@ -65,8 +65,12 @@ export class LibraryLinks extends LitElement {
     this.links = [];
   }
 
+  click = 0;
+  timer = null;
+
   render() {
     return html` <ul class="list">
+      </li>
       ${this.links?.map(
         (link) => html`
           <li
@@ -112,4 +116,24 @@ export class LibraryLinks extends LitElement {
       this.click = 0;
     }
   }
+}
+
+{
+  /* <div class="search-container">
+          <input @input=${this.handleInput} id="search-input" />
+          <ul class="tags">
+            ${this._filteredTags.length
+              ? this._filteredTags.map(
+                  (tag) =>
+                    html`<li
+                      class="tag"
+                      @click=${() => this.handleSelection(tag)}
+                    >
+                      ${tag}
+                    </li>`
+                )
+              : null}
+          </ul>
+          <button @click=${this.handleSearch}>Search</button>
+        </div> */
 }
