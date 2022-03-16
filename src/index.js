@@ -2,12 +2,14 @@ import { CodeSnippet } from "./components/code-snippet";
 import { Dashboard } from "./components/dashboard";
 import { LibraryDetail } from "./components/library-detail";
 import { TextField } from "./components/text-field";
+import { LibraryLinks } from "./components/library-links";
 import "core-js/stable";
 import "regenerator-runtime/runtime";
 
 let count = 1;
 let data = [];
-let libraries = [];
+// let dashboardInfo = [];
+let libraries;
 
 // FUNCTIONS
 
@@ -31,14 +33,15 @@ const setData = (i, elIndex) => {
 };
 
 const setDashboard = () => {
-  libraries = data.map(({ name, tags }) => ({
+  const dashboardInfo = data.map(({ name, tags }) => ({
     name: name,
     tags: tags,
   }));
-  const dashboardInfo = JSON.stringify(libraries);
+  libraries = dashboardInfo.map(({ name }) => name);
+  const dashboardData = JSON.stringify(dashboardInfo);
   const dashboardElement = document.querySelector("dashboard-element");
 
-  dashboardElement.setAttribute("data", dashboardInfo);
+  dashboardElement.setAttribute("data", dashboardData);
   // dashboardElement.setAttribute("tags", JSON.stringify(getTags()));
 };
 
@@ -73,12 +76,12 @@ const postData = async (data) => {
 // EVENT LISTENERS
 
 window.addEventListener("click-emiter", (e) => {
-  const index = e.detail.index;
+  const index = libraries.indexOf(e.detail.libraryName);
   setData(index, 1);
 });
 
 window.addEventListener("dbclick-emiter", (e) => {
-  const index = e.detail.index;
+  const index = libraries.indexOf(e.detail.libraryName);
   // initial dblclick should create DOM element
   if (count === 1) {
     const createdLibrary = document.createElement("library-detail");
@@ -102,6 +105,7 @@ window.addEventListener("save-emiter", (e) => {
 });
 
 customElements.define("dashboard-element", Dashboard);
+customElements.define("library-links", LibraryLinks);
 customElements.define("library-detail", LibraryDetail);
 customElements.define("code-snippet", CodeSnippet);
 customElements.define("text-field", TextField);

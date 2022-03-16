@@ -1,7 +1,5 @@
 import { LitElement, html, css } from "lit";
-
 import "./code-snippet.js";
-
 import "./text-field.js";
 
 export class LibraryDetail extends LitElement {

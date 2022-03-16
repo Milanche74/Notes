@@ -28,7 +28,10 @@
           "textField": "- Loaders are applied in reverse order =&gt; ['style-loader', 'css-loader']"
         }
       ],
-      "tags": ["bundler", "js"],
+      "tags": [
+        "bundler",
+        "js"
+      ],
       "id": 2
     },
     {
@@ -47,7 +50,9 @@
           "textField": "* Will add info about branching"
         }
       ],
-      "tags": ["version-control"],
+      "tags": [
+        "version-control"
+      ],
       "id": 3
     },
     {
@@ -69,7 +74,10 @@
           "textField": "- There has to be a custom converter for attr values that are of type object/array"
         }
       ],
-      "tags": ["web-components", "library"],
+      "tags": [
+        "web-components",
+        "library"
+      ],
       "id": 4
     },
     {
@@ -81,7 +89,10 @@
       "implementation": "babel.config.json file handles presets and plugins",
       "implementationSnippet": "// in babel.config.json\n\n{\n  \"presets\": [\"@babel/preset-env\", \"@babel/preset-react\"],\n  \"plugins\": [\n    [\n      \"@babel/plugin-proposal-class-properties\",\n      {\n        \"loose\": true\n      }\n    ],\n    [\"@babel/plugin-proposal-private-methods\", { \"loose\": true }]\n  ]\n}\n\n// in webpack.config.js\n\nmodule: {\n    rules: [\n      {\n        test: /\\.js$/,\n        exclude: /node_modules/,\n        use: {\n          loader: \"babel-loader\",\n          options: {\n            presets: [\"@babel/preset-env\"],\n          },\n        },\n      },\n    ],\n  },\n",
       "additional": [],
-      "tags": ["compiler", "js"],
+      "tags": [
+        "compiler",
+        "js"
+      ],
       "id": 5
     },
     {
@@ -100,14 +111,18 @@
           "textField": "- It's recommended to define script in package.json that will run multiple linters"
         }
       ],
-      "tags": ["linter", "formatter", "code-quality"],
+      "tags": [
+        "linter",
+        "formatter",
+        "code-quality"
+      ],
       "id": 6
     },
     {
       "name": "Prettier",
       "documentation": "https://prettier.io/docs/en/install.html",
       "description": "Code formatter tool",
-      "installation": "Despite it being integrated in code editor, it is recommended to initialize Prettier in each project.<br>",
+      "installation": "Despite it being integrated in code editor, it is recommended to initialize Prettier in each project<br>",
       "installSnippet": "npm install --save-dev --save-exact prettier",
       "implementation": "Configure specific rules in prettierrc.json file. It will have precedence to code editor configs.<br>When using as an extension in code editor, add configuration to settings.json in the editor<br>",
       "implementationSnippet": "{\n  \"trailingComma\": \"es5\",\n  \"printWidth\": 100,\n  \"semi\": true,\n  \"singleQuote\": true\n}\n\n// command to formatt all files\nnpx prettier --write .\n\n// configure on save\n \"editor.formatOnSave\": true,",
@@ -119,7 +134,6 @@
           "textField": "- Add prettierignore file to specify files to be ignored<br>"
         }
       ],
-      "tags": ["code-quality", "formatter"],
       "id": 7
     },
     {
@@ -128,14 +142,13 @@
       "description": "Library that allows superior data visualization",
       "installation": "NPM installation",
       "installSnippet": "npm install highcharts --save\n\n//addition for REACT \nnpm i highcharts-react-official --save",
-      "implementation": "* for React:<br>- import both Highcharts modules and define props for HC component<br>- describe chart in options object",
+      "implementation": "For React:<br>- import both Highcharts modules and define props for HC component<br>- describe chart in options object",
       "implementationSnippet": "<HighchartsReact highcharts={Highcharts} options={chartOptions} />\n\n// define options \n          {\n            title: {\n              text: i18n.t('population')\n            },\n            yAxis: {\n              title: {\n                text: i18n.t('values')\n              }\n            },\n            series: [\n              {\n                name: i18n.t('population'), \n                data: getPopulation(data),\n              },\n              {\n                name: i18n.t('projected'),\n                data: getEstimatedPopulation(data),\n              },\n            ],\n          };",
       "additional": [
         {
           "textField": "- It is possible to apply custom styling, will do furher research"
         }
       ],
-      "tags": ["data-visalization", "react", "library"],
       "id": 8
     },
     {
@@ -147,7 +160,10 @@
       "implementation": "Usefull methods:<br>- reject();<br>- flow();<br>- get();<br>- isNil();<br>- map();<br>- uniq();",
       "implementationSnippet": "const someFunc = flow(\n  reject(flow(get('projected'), isNil)),\n  lmap(({year, projected}) => [year, projected])\n)\nlet arrayOfOrigValues = uniq(data._value.map(({ city }) => city));",
       "additional": [],
-      "tags": ["library", "data-handler"],
+      "tags": [
+        "library",
+        "data-handler"
+      ],
       "id": 9
     },
     {
@@ -164,7 +180,12 @@
           "codeSnippet": "const callbacks = {\n  getWordColor: word => word.value > 50 ? \"blue\" : \"red\",\n  onWordClick: console.log,\n  onWordMouseOver: console.log,\n  getWordTooltip: word => `${word.text} (${word.value}) [${word.value > 50 ? \"good\" : \"bad\"}]`,\n}"
         }
       ],
-      "tags": ["library", "react", "plugin", "data-visalization"],
+      "tags": [
+        "library",
+        "react",
+        "plugin",
+        "data-visalization"
+      ],
       "id": 10
     },
     {
@@ -180,7 +201,11 @@
           "textField": "There is possibly a more optimised approach for using with JS frameworks - ex. react-i18next"
         }
       ],
-      "tags": ["framework", "internationalization", "js"],
+      "tags": [
+        "framework",
+        "internationalization",
+        "js"
+      ],
       "id": 11
     },
     {
@@ -199,7 +224,10 @@
           "textField": "- Track background color can be determined using getTrackBackground() based on values."
         }
       ],
-      "tags": ["plugin", "react"],
+      "tags": [
+        "plugin",
+        "react"
+      ],
       "id": 12
     }
   ]

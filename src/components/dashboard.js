@@ -96,25 +96,7 @@ export class Dashboard extends LitElement {
           </ul>
           <button @click=${this.handleSearch}>Search</button>
         </div>
-        <ul class="list">
-          ${this._filteredLibraries?.map(
-            (library) => html`
-              <li
-                class="list-item"
-                style="background-color: hsl(${Math.random() * 360}, ${50 +
-                Math.random() * 50}%, ${10 + Math.random() * 40}%)"
-                id=${this.libraries.indexOf(library) + 1}
-                @click="${() =>
-                  this.onClickHandler(this.libraries.indexOf(library))}"
-                @dblclick="${(e) => {
-                  e.preventDefault();
-                }}"
-              >
-                <p>${library}</p>
-              </li>
-            `
-          )}
-        </ul>
+        <library-links .links=${this._filteredLibraries}></library-links>
       </div>
     `;
   }
@@ -141,7 +123,7 @@ export class Dashboard extends LitElement {
     let lastWord = inputWords[inputWords.length - 1];
 
     if (lastWord !== "") {
-      this._filteredTags = this.tags.filter((tag) => tag.includes(lastWord));
+      this._filteredTags = this.tags.filter((tag) => tag?.includes(lastWord));
     }
   }
 
@@ -161,17 +143,39 @@ export class Dashboard extends LitElement {
     let searchTerms = this.input.value.trim().split(" ");
 
     let filteredData = this.data.filter((item) => {
-      let joinedTags = item.tags.join();
-      let ex = joinedTags.replaceAll(`,`, ` `);
+      let joinedTags = item.tags?.join();
+      let ex = joinedTags?.replaceAll(`,`, ` `);
 
-      return searchTerms.every((term) => ex.includes(term));
+      return searchTerms.every((term) => ex?.includes(term));
     });
-    console.log(filteredData);
+
     let extractedNames = filteredData.map(({ name }) => name);
     this._filteredLibraries = extractedNames;
   }
+}
 
-  onClickHandler(index) {
+{
+  /* <ul class="list">
+          ${this._filteredLibraries?.map(
+            (library) => html`
+              <li
+                class="list-item"
+                style="background-color: hsl(${Math.random() * 360}, ${50 +
+                Math.random() * 50}%, ${10 + Math.random() * 40}%)"
+                id=${this.libraries.indexOf(library) + 1}
+                @click="${() =>
+                  this.onClickHandler(this.libraries.indexOf(library))}"
+                @dblclick="${(e) => {
+                  e.preventDefault();
+                }}"
+              >
+                <p>${library}</p>
+              </li>
+            `
+          )}
+        </ul>
+        onClickHandler(index) {
+    console.log(index);
     const clickEvent = new CustomEvent("click-emiter", {
       detail: {
         index: index,
@@ -197,5 +201,5 @@ export class Dashboard extends LitElement {
       this.dispatchEvent(dbClickEvent);
       this.click = 0;
     }
-  }
+  } */
 }
