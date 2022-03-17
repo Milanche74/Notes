@@ -28,7 +28,7 @@ export class Dashboard extends LitElement {
       min-width: 30vw;
       padding: 5px 1vw;
       font-size: 16px;
-      border: 1px solid rgb(47, 79, 79);
+      border: 2px solid rgb(47, 79, 79);
       transition: var(--trans);
     }
 
@@ -80,9 +80,11 @@ export class Dashboard extends LitElement {
         >
           <input
             @input=${this.handleInput}
+            @change=${this.handleSearch}
             id="search-input"
             list="datalist"
             name="datalist"
+            placeholder="search by name or #tag"
           />
           <datalist id="datalist">
             ${this._filteredTags?.length
@@ -91,7 +93,6 @@ export class Dashboard extends LitElement {
                 )
               : null}
           </datalist>
-          <button id="search-btn" @click=${this.handleSearch}>Search</button>
         </div>
         <library-links .links=${this._filteredLibraries}></library-links>
       </div>
@@ -138,32 +139,27 @@ export class Dashboard extends LitElement {
     }
   }
 
-  // handleSelection(tag) {
-  //   const inputWords = this.input.value
-  //     .split(" ")
-  //     .filter((word) => this.tags.includes(word));
-  //   let formattedInput = inputWords.join(" ");
-  //   let inputValue = `${formattedInput} ${tag}`;
-
-  //   this.input.value = inputValue.trim();
-
-  //   this._filteredTags = [];
-  // }
-
   handleSearch() {
     let searchTerms = this.input.value.trim().split(" ");
 
     let filteredData = this.data.filter((item) => {
-      let joinedTags = item.tags?.join() + item.name;
+      let joinedTags = item.tags?.join() + item.name.toLowerCase();
       let formattedTags = joinedTags?.replaceAll(`,`, ` `);
 
-      return searchTerms.every((term) => formattedTags?.includes(term));
+      // check if every search term is present in either library name or library tag
+      return searchTerms.every((term) =>
+        formattedTags?.includes(term.toLowerCase())
+      );
     });
 
     let extractedNames = filteredData.map(({ name }) => name);
     extractedNames.push("+");
-    this._filteredLibraries = extractedNames;
-    console.log(this._filteredLibraries);
+
+    if (this.input.value !== "") {
+      this._filteredLibraries = extractedNames;
+    }
+    //make input field loose focus so datalist isn't visible
+    this.input.blur();
   }
 }
 
