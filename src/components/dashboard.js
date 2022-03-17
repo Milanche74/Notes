@@ -71,6 +71,7 @@ export class Dashboard extends LitElement {
   render() {
     this.libraries = this.getLibraries();
     this.tags = this.getTags();
+    console.log(this.data);
 
     return html`
       <div class="dashboard">

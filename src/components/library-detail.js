@@ -340,7 +340,7 @@ export class LibraryDetail extends LitElement {
       return;
     }
 
-    //prepare data to be emmited
+    //prepare data to be emitted
     const data = {
       name: this.name.innerHTML,
       documentation: this.getHrefFromParagraph()
