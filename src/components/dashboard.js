@@ -70,7 +70,7 @@ export class Dashboard extends LitElement {
     let searchTerms = inputValue.trim().split(" ");
 
     let filteredData = this.data.filter((item) => {
-      let joinedTags = item.tags?.join() + item.name.toLowerCase();
+      let joinedTags = item.name.toLowerCase() + item.tags?.join();
       let formattedTags = joinedTags?.replaceAll(`,`, ` `);
 
       // check if every search term is present in either library name or library tag

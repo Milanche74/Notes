@@ -101,9 +101,18 @@ export class InputField extends LitElement {
 
     let lastWord = inputWords[inputWords.length - 1];
     if (lastWord !== "") {
-      this._filteredSuggestions = this.tags.filter((tag) =>
+      // primary checks terms that start with user input
+      let primarySuggestions = this.tags.filter((tag) =>
         tag?.toLowerCase().replace("#", "").startsWith(lastWord)
       );
+      // secondary checks terms that include input
+      let secondarySuggestions = this.tags.filter((tag) =>
+        tag?.toLowerCase().replace("#", "").includes(lastWord)
+      );
+      // concatinate...
+      let suggestions = primarySuggestions.concat(secondarySuggestions);
+      // and return unique values
+      this._filteredSuggestions = [...new Set(suggestions)];
     }
     if (inputWords.length > 1) {
       for (let i = 0; i < this._filteredSuggestions.length; i++) {
