@@ -7,94 +7,40 @@ export class Dashboard extends LitElement {
         if (attrValue) return JSON.parse(attrValue);
       },
     },
-    _filteredTags: { state: true },
     _filteredLibraries: { state: true },
   };
-  static styles = css`
-    .search-container {
-      padding: 2vh 20vw;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      gap: 1vh;
-    }
 
-    .search-container > * {
-      border-radius: 10px;
-    }
-
-    #search-input {
-      min-width: 30vw;
-      padding: 5px 1vw;
-      font-size: 16px;
-      border: 2px solid rgb(47, 79, 79);
-      transition: var(--trans);
-    }
-
-    #search-input:focus {
-      outline: none;
-      box-shadow: 10px 10px 15px #adadad, -10px -10px 15px #ffffff;
-      transition: var(--trans);
-    }
-
-    datalist {
-      display: block;
-    }
-
-    .search-container #search-btn {
-      font-size: 24px;
-      color: white;
-      padding: 0.5vh 1vw;
-      border: 5px solid rgb(47, 79, 79);
-      background: linear-gradient(
-        145deg,
-        rgba(34, 55, 55, 1) 0%,
-        rgba(47, 79, 79, 1) 35%,
-        rgba(80, 133, 133, 1) 100%
-      );
-      box-shadow: 5px 5px 5px 2px rgb(46, 46, 46), -5px -5px 5px 2px #ffffff;
-      cursor: pointer;
-    }
-  `;
+  static styles = css``;
 
   constructor() {
     super();
     this.data = [];
-    this._filteredTags = [];
     this._filteredLibraries = [];
+    this.addEventListener("input-emitter", (e) => {
+      this.handleSearch(e.detail.inputValue);
+    });
   }
-
   tags = [];
   libraries = [];
+
+  suggestions = [];
 
   render() {
     this.libraries = this.getLibraries();
     this.tags = this.getTags();
-    console.log(this.data);
 
     return html`
       <div class="dashboard">
-        <div
-          class="search-container
-        "
-        >
-          <input
-            @input=${this.handleInput}
-            @change=${this.handleSearch}
-            id="search-input"
-            list="datalist"
-            name="datalist"
-            placeholder="search by name or #tag"
-          />
-          <datalist id="datalist">
-            ${this._filteredTags?.length
-              ? this._filteredTags.map(
-                  (tag) => html`<option value=${tag}></option>`
-                )
-              : null}
-          </datalist>
-        </div>
+        <style>
+          input-field {
+            --input-align-items: center;
+            --input-padding: 2vh 5vw 0;
+          }
+        </style>
+        <input-field
+          .tags=${this.tags}
+          placeholder="search by Name or #tag"
+        ></input-field>
         <library-links .links=${this._filteredLibraries}></library-links>
       </div>
     `;
@@ -120,28 +66,8 @@ export class Dashboard extends LitElement {
     return libraries;
   }
 
-  handleInput() {
-    this.input.value = this.input.value.replace("#", "");
-    const inputWords = this.input.value.split(" ");
-
-    let lastWord = inputWords[inputWords.length - 1];
-    if (lastWord !== "") {
-      this._filteredTags = this.tags.filter((tag) =>
-        tag?.toLowerCase().replace("#", "").startsWith(lastWord)
-      );
-    }
-    if (inputWords.length > 1) {
-      for (let i = 0; i < this._filteredTags.length; i++) {
-        this._filteredTags[i] =
-          inputWords.slice(0, -1).join().replaceAll(",", " ") +
-          " " +
-          this._filteredTags[i];
-      }
-    }
-  }
-
-  handleSearch() {
-    let searchTerms = this.input.value.trim().split(" ");
+  handleSearch(inputValue) {
+    let searchTerms = inputValue.trim().split(" ");
 
     let filteredData = this.data.filter((item) => {
       let joinedTags = item.tags?.join() + item.name.toLowerCase();
@@ -156,60 +82,8 @@ export class Dashboard extends LitElement {
     let extractedNames = filteredData.map(({ name }) => name);
     extractedNames.push("+");
 
-    if (this.input.value !== "") {
+    if (inputValue !== "") {
       this._filteredLibraries = extractedNames;
     }
-    //make input field loose focus so datalist isn't visible
-    this.input.blur();
   }
-}
-
-{
-  /* <ul class="list">
-          ${this._filteredLibraries?.map(
-            (library) => html`
-              <li
-                class="list-item"
-                style="background-color: hsl(${Math.random() * 360}, ${50 +
-                Math.random() * 50}%, ${10 + Math.random() * 40}%)"
-                id=${this.libraries.indexOf(library) + 1}
-                @click="${() =>
-                  this.onClickHandler(this.libraries.indexOf(library))}"
-                @dblclick="${(e) => {
-                  e.preventDefault();
-                }}"
-              >
-                <p>${library}</p>
-              </li>
-            `
-          )}
-        </ul>
-        onClickHandler(index) {
-    console.log(index);
-    const clickEvent = new CustomEvent("click-emiter", {
-      detail: {
-        index: index,
-      },
-      bubbles: true,
-      composed: true,
-    });
-    const dbClickEvent = new CustomEvent("dbclick-emiter", {
-      detail: {
-        index: index,
-      },
-      bubbles: true,
-      composed: true,
-    });
-    this.click++;
-    if (this.click === 1) {
-      this.timer = setTimeout(() => {
-        this.dispatchEvent(clickEvent);
-        this.click = 0;
-      }, 200);
-    } else {
-      clearTimeout(this.timer);
-      this.dispatchEvent(dbClickEvent);
-      this.click = 0;
-    }
-  } */
 }

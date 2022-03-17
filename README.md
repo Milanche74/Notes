@@ -20,6 +20,8 @@ Single click on item labels in the dashboard will open up selected item's detail
 - [x] User should define custom additional notes (append smaller wc)
 - [x] Add search funtionality for selecting notes, think about tags
 - [x] Improve search component (tag + library name, user-friendliness, sort by first letter)
-- [ ] Add tags to library detail component
+- [x] Add tags to library detail component
+- [ ] If there is only one search result, open it up automatically
 - [ ] Edit heading of each addition to the notes to be content editable
 - [ ] On save, library-detail should appear on the side of the screen where it was initially opened.
+- [ ] Think about a way to make library component code more concise

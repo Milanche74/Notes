@@ -111,6 +111,7 @@
       "installSnippet": "npm install --save-dev --save-exact prettier",
       "implementation": "Configure specific rules in prettierrc.json file. It will have precedence to code editor configs.<br>When using as an extension in code editor, add configuration to settings.json in the editor<br>",
       "implementationSnippet": "{\n  \"trailingComma\": \"es5\",\n  \"printWidth\": 100,\n  \"semi\": true,\n  \"singleQuote\": true\n}\n\n// command to formatt all files\nnpx prettier --write .\n\n// configure on save\n \"editor.formatOnSave\": true,",
+      "tags": ["#formatter", "#code-quality"],
       "additional": [
         {
           "textField": "- Might need additional packages for integrations with other linters.&nbsp;"
@@ -119,7 +120,6 @@
           "textField": "- Add prettierignore file to specify files to be ignored<br>"
         }
       ],
-      "tags": ["#formatter", "#code-quality"],
       "id": 7
     },
     {

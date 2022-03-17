@@ -9,6 +9,11 @@ export class LibraryDetail extends LitElement {
         if (attrValue) return JSON.parse(attrValue);
       },
     },
+    tags: {
+      converter: (attrValue) => {
+        if (attrValue) return JSON.parse(attrValue);
+      },
+    },
     editable: { type: Boolean },
   };
 
@@ -26,6 +31,7 @@ export class LibraryDetail extends LitElement {
       height: min-content;
       display: flex;
       flex-direction: column;
+      justify-content: center;
       padding: 2vh 1vw;
       position: relative;
       gap: 2vh;
@@ -123,13 +129,36 @@ export class LibraryDetail extends LitElement {
     .no-display {
       display: none;
     }
+
+    .tags-container {
+    }
+
+    .tags-list {
+      display: flex;
+      gap: 2vw;
+      justify-content: space-around;
+      width: max-content;
+    }
+
+    .tags-list li {
+      list-style: none;
+      font-weight: bold;
+      font-size: 24px;
+      padding: 0.5vh 0.5vw;
+      border-radius: 10px;
+      background-color: white;
+      box-shadow: 0 0 5px white;
+    }
   `;
 
   constructor() {
     super();
-
     this.data = {};
+    this.tags = [];
     this.editable = false;
+    this.addEventListener("input-emitter", (e) => {
+      this.addTag(e.detail.inputValue);
+    });
   }
   docsLabel = "Official Docs";
 
@@ -167,6 +196,25 @@ export class LibraryDetail extends LitElement {
         .data=${this.data.description}
         title="Description"
       ></text-field>
+
+      <div class="tags-container">
+        <style>
+          input-field {
+            --input-align-items: flex-start;
+            --input-padding: 0;
+          }
+        </style>
+        <input-field
+          ?hidden=${!this.editable}
+          placeholder="Add tag"
+          .tags=${this.getTags()}
+        ></input-field>
+        <ul class="tags-list">
+          ${this.data.tags?.map((tag) => {
+            return html`<li>${tag}</li>`;
+          })}
+        </ul>
+      </div>
 
       <text-field
         id="install"
@@ -252,6 +300,22 @@ export class LibraryDetail extends LitElement {
       });
       this.requestUpdate();
     } else return null;
+  }
+
+  getTags() {
+    //retrieves tags from data, flattens the nested array
+    const tags = this.tags?.flat();
+    //returns only unique values
+    return [...new Set(tags)];
+  }
+
+  addTag(tag) {
+    if (tag !== "") {
+      tag = "#" + tag;
+      this.data.tags.push(tag);
+      this.requestUpdate();
+    }
+    console.log(this.data.tags);
   }
 
   // getters
@@ -351,6 +415,7 @@ export class LibraryDetail extends LitElement {
       installSnippet: this.installCs.value,
       implementation: this.implementation.innerHTML,
       implementationSnippet: this.implementationCs.value,
+      tags: this.data.tags,
       additional: this.formatAdditionals(),
     };
 

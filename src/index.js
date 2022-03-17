@@ -3,19 +3,22 @@ import { Dashboard } from "./components/dashboard";
 import { LibraryDetail } from "./components/library-detail";
 import { TextField } from "./components/text-field";
 import { LibraryLinks } from "./components/library-links";
+import { InputField } from "./components/input-field";
 import "core-js/stable";
 import "regenerator-runtime/runtime";
 
 let count = 1;
 let data = [];
-// let dashboardInfo = [];
-let libraries;
+let libraries = [];
+let tags = [];
 
 // FUNCTIONS
 
 const getData = async (i) => {
   const response = await fetch(`http://localhost:5000/libraries`);
   data = await response.json();
+  tags = data.map(({ tags }) => tags);
+
   setData(i, 1);
   setDashboard();
 };
@@ -25,6 +28,7 @@ const setData = (i, elIndex) => {
     `library-detail:nth-of-type(${elIndex})`
   );
   libraryComp.setAttribute("data", JSON.stringify(data[i]));
+  libraryComp.setAttribute("tags", JSON.stringify(tags));
   if (i === 0) {
     libraryComp.setAttribute("editable", "");
   } else {
@@ -37,11 +41,12 @@ const setDashboard = () => {
     name: name,
     tags: tags,
   }));
+  //set libraries as global variable so that click events could be handled properly
   libraries = dashboardInfo.map(({ name }) => name);
-  const dashboardData = JSON.stringify(dashboardInfo);
-  const dashboardElement = document.querySelector("dashboard-element");
 
-  dashboardElement.setAttribute("data", dashboardData);
+  const dashboardElement = document.querySelector("dashboard-element");
+  dashboardElement.setAttribute("data", JSON.stringify(dashboardInfo));
+
   // dashboardElement.setAttribute("tags", JSON.stringify(getTags()));
 };
 
@@ -109,5 +114,15 @@ customElements.define("library-links", LibraryLinks);
 customElements.define("library-detail", LibraryDetail);
 customElements.define("code-snippet", CodeSnippet);
 customElements.define("text-field", TextField);
+customElements.define("input-field", InputField);
 
-getData(0);
+getData(6);
+
+//aux functions
+// const setTags = () => {
+//   //retrieves tags from data, flattens the nested array and concatinates library names
+//   const tags = data?.map(({ tags }) => tags).flat();
+
+//   //returns only unique values
+//   return [...new Set(tags)];
+// };

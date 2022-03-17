@@ -70,7 +70,6 @@ export class LibraryLinks extends LitElement {
 
   render() {
     return html` <ul class="list">
-      </li>
       ${this.links?.map(
         (link) => html`
           <li
