@@ -39,10 +39,6 @@ export class InputField extends LitElement {
       transition: var(--trans);
     }
 
-    datalist {
-      display: block;
-    }
-
     .search-container #search-btn {
       font-size: 24px;
       color: white;

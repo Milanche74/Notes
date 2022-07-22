@@ -27,3 +27,4 @@ Single click on item labels in the dashboard will open up selected item's detail
 - [ ] Edit heading of each addition to the notes to be content editable
 - [ ] On save, library-detail should appear on the side of the screen where it was initially opened.
 - [ ] Think about a way to make library component code more concise
+- [ ] When adding multiple tags, they eventually overflow

@@ -130,14 +130,12 @@ export class LibraryDetail extends LitElement {
       display: none;
     }
 
-    .tags-container {
-    }
-
     .tags-list {
       display: flex;
       gap: 2vw;
       justify-content: space-around;
       width: max-content;
+      margin-top: 1vh;
     }
 
     .tags-list li {

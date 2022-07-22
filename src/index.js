@@ -91,6 +91,7 @@ window.addEventListener("dbclick-emiter", (e) => {
   if (count === 1) {
     const createdLibrary = document.createElement("library-detail");
     createdLibrary.setAttribute("data", JSON.stringify(data[index]));
+    createdLibrary.setAttribute("tags", JSON.stringify(tags));
     document.querySelector(".libraries-container").appendChild(createdLibrary);
     count++;
   } else setData(index, 2);
@@ -116,7 +117,7 @@ customElements.define("code-snippet", CodeSnippet);
 customElements.define("text-field", TextField);
 customElements.define("input-field", InputField);
 
-getData(6);
+getData(0);
 
 //aux functions
 // const setTags = () => {
