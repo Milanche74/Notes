@@ -28,7 +28,10 @@
           "textField": "- Loaders are applied in reverse order =&gt; ['style-loader', 'css-loader']"
         }
       ],
-      "tags": ["bundler", "js"],
+      "tags": [
+        "#bundler",
+        "#js"
+      ],
       "id": 2
     },
     {
@@ -39,15 +42,26 @@
       "installSnippet": " sudo apt install git-all",
       "implementation": "CLI commands for setting up local and remote repository",
       "implementationSnippet": "git init\ngit add README.md\ngit commit -m \"first commit\"\ngit branch -m master main\ngit remote add origin https://github.com/Milanche74/Notes.git\ngit push -u origin main\n\n// cloning\ngit clone <link> <set-name (opt)>",
+      "tags": [
+        "#version-control"
+      ],
       "additional": [
         {
           "textField": "- On Linux, authentication key is required for pull and push requests<br>"
         },
         {
-          "textField": "* Will add info about branching"
+          "textField": "Branching:&nbsp;",
+          "codeSnippet": "// add new branch \ngit branch new_branch\n\n// checkout to it\ngit checkout new_branch\n\n// shortened\ngit checkout -b new_branch"
+        },
+        {
+          "textField": "Merging:<br>",
+          "codeSnippet": "// navigate to destination branch\ngit checkout destination_branch\n\n// perform merge\ngit merge dev_branch"
+        },
+        {
+          "textField": "Rebase - performed to align dev branch progress with base (main, master) branch:",
+          "codeSnippet": "git rebase destination_branch <branch_to_checkout_to>"
         }
       ],
-      "tags": ["version-control"],
       "id": 3
     },
     {
@@ -69,7 +83,10 @@
           "textField": "- There has to be a custom converter for attr values that are of type object/array"
         }
       ],
-      "tags": ["web-components", "library"],
+      "tags": [
+        "#web-components",
+        "#library"
+      ],
       "id": 4
     },
     {
@@ -81,7 +98,10 @@
       "implementation": "babel.config.json file handles presets and plugins",
       "implementationSnippet": "// in babel.config.json\n\n{\n  \"presets\": [\"@babel/preset-env\", \"@babel/preset-react\"],\n  \"plugins\": [\n    [\n      \"@babel/plugin-proposal-class-properties\",\n      {\n        \"loose\": true\n      }\n    ],\n    [\"@babel/plugin-proposal-private-methods\", { \"loose\": true }]\n  ]\n}\n\n// in webpack.config.js\n\nmodule: {\n    rules: [\n      {\n        test: /\\.js$/,\n        exclude: /node_modules/,\n        use: {\n          loader: \"babel-loader\",\n          options: {\n            presets: [\"@babel/preset-env\"],\n          },\n        },\n      },\n    ],\n  },\n",
       "additional": [],
-      "tags": ["compiler", "js"],
+      "tags": [
+        "#compiler",
+        "#js"
+      ],
       "id": 5
     },
     {
@@ -92,25 +112,34 @@
       "installSnippet": "npm install eslint --save-dev\n\n// init a config file from CLI \nnpm init @eslint/config",
       "implementation": "Edit configuration file: Add plugins and set rules.&nbsp;",
       "implementationSnippet": "module.exports = {\n  env: {\n    browser: true,\n    es2021: true,\n  },\n  extends: [\"plugin:wc/recommended\", \"plugin:lit/recommended\"],\n  parserOptions: {\n    ecmaVersion: \"latest\",\n    sourceType: \"module\",\n  },\n  rules: {},\n};\n\n// run command from terminal\nnpx eslint --fix .",
+      "tags": [
+        "#linter",
+        "#formatter",
+        "#code-quality"
+      ],
       "additional": [
         {
           "textField": "- ESLint should be used as code quality tool, not a formatter."
         },
         {
           "textField": "- It's recommended to define script in package.json that will run multiple linters"
-        }
+        },
+        {}
       ],
-      "tags": ["linter", "formatter", "code-quality"],
       "id": 6
     },
     {
       "name": "Prettier",
       "documentation": "https://prettier.io/docs/en/install.html",
       "description": "Code formatter tool",
-      "installation": "Despite it being integrated in code editor, it is recommended to initialize Prettier in each project.<br>",
+      "installation": "Despite it being integrated in code editor, it is recommended to initialize Prettier in each project<br>",
       "installSnippet": "npm install --save-dev --save-exact prettier",
       "implementation": "Configure specific rules in prettierrc.json file. It will have precedence to code editor configs.<br>When using as an extension in code editor, add configuration to settings.json in the editor<br>",
       "implementationSnippet": "{\n  \"trailingComma\": \"es5\",\n  \"printWidth\": 100,\n  \"semi\": true,\n  \"singleQuote\": true\n}\n\n// command to formatt all files\nnpx prettier --write .\n\n// configure on save\n \"editor.formatOnSave\": true,",
+      "tags": [
+        "#formatter",
+        "#code-quality"
+      ],
       "additional": [
         {
           "textField": "- Might need additional packages for integrations with other linters.&nbsp;"
@@ -119,7 +148,6 @@
           "textField": "- Add prettierignore file to specify files to be ignored<br>"
         }
       ],
-      "tags": ["code-quality", "formatter"],
       "id": 7
     },
     {
@@ -128,14 +156,19 @@
       "description": "Library that allows superior data visualization",
       "installation": "NPM installation",
       "installSnippet": "npm install highcharts --save\n\n//addition for REACT \nnpm i highcharts-react-official --save",
-      "implementation": "* for React:<br>- import both Highcharts modules and define props for HC component<br>- describe chart in options object",
+      "implementation": "For React:<br>- import both Highcharts modules and define props for HC component<br>- describe chart in options object",
       "implementationSnippet": "<HighchartsReact highcharts={Highcharts} options={chartOptions} />\n\n// define options \n          {\n            title: {\n              text: i18n.t('population')\n            },\n            yAxis: {\n              title: {\n                text: i18n.t('values')\n              }\n            },\n            series: [\n              {\n                name: i18n.t('population'), \n                data: getPopulation(data),\n              },\n              {\n                name: i18n.t('projected'),\n                data: getEstimatedPopulation(data),\n              },\n            ],\n          };",
       "additional": [
         {
           "textField": "- It is possible to apply custom styling, will do furher research"
         }
       ],
-      "tags": ["data-visalization", "react", "library"],
+      "tags": [
+        "#react",
+        "#data-visualization",
+        "#plugin",
+        "#library"
+      ],
       "id": 8
     },
     {
@@ -147,7 +180,10 @@
       "implementation": "Usefull methods:<br>- reject();<br>- flow();<br>- get();<br>- isNil();<br>- map();<br>- uniq();",
       "implementationSnippet": "const someFunc = flow(\n  reject(flow(get('projected'), isNil)),\n  lmap(({year, projected}) => [year, projected])\n)\nlet arrayOfOrigValues = uniq(data._value.map(({ city }) => city));",
       "additional": [],
-      "tags": ["library", "data-handler"],
+      "tags": [
+        "#library",
+        "#data-handler"
+      ],
       "id": 9
     },
     {
@@ -158,13 +194,18 @@
       "installSnippet": "npm install --save  react-wordcloud --legacy-peer-deps",
       "implementation": "Import package to JS file and define props like !words, ?options and ?callbacks",
       "implementationSnippet": "import React from 'react';\nimport ReactWordcloud from 'react-wordcloud';\n \nconst words = [\n  {\n    text: 'told',\n    value: 64,\n  },\n  {\n    text: 'mistake',\n    value: 11,\n  },\n  {\n    text: 'thought',\n    value: 16,\n  },\n  {\n    text: 'bad',\n    value: 17,\n  },\n]\nconst callbacks = {\n  // some functions\n}\nconst options = {\n  rotations: 2,\n  rotationAngles: [-90, 0],\n};\n \nfunction SimpleWordcloud() {\n  return <ReactWordcloud words={words} />\n}",
+      "tags": [
+        "#library",
+        "#react",
+        "#plugin",
+        "#data-visualization"
+      ],
       "additional": [
         {
           "textField": "- Callbacks object comes in handy for handling user events",
           "codeSnippet": "const callbacks = {\n  getWordColor: word => word.value > 50 ? \"blue\" : \"red\",\n  onWordClick: console.log,\n  onWordMouseOver: console.log,\n  getWordTooltip: word => `${word.text} (${word.value}) [${word.value > 50 ? \"good\" : \"bad\"}]`,\n}"
         }
       ],
-      "tags": ["library", "react", "plugin", "data-visalization"],
       "id": 10
     },
     {
@@ -180,7 +221,11 @@
           "textField": "There is possibly a more optimised approach for using with JS frameworks - ex. react-i18next"
         }
       ],
-      "tags": ["framework", "internationalization", "js"],
+      "tags": [
+        "#framework",
+        "#internationalization",
+        "#js"
+      ],
       "id": 11
     },
     {
@@ -191,6 +236,10 @@
       "installSnippet": "npm i react-range",
       "implementation": "Define a component and set attributes as given:&nbsp;",
       "implementationSnippet": "return(\n  <Range\n    values={values}\n    step={STEP}\n    min={MIN}\n    max={MAX}\n    rtl={rtl}\n    onChange={(values) => setValues(values)}\n    renderTrack={({ props, children }) => (\n      <div\n        onMouseDown={props.onMouseDown}\n        onTouchStart={props.onTouchStart}\n        style={{\n          ...props.style,\n          height: '36px',\n          display: 'flex',\n          width: '100%'\n        }}\n      >\n        <div\n          ref={props.ref}\n          style={{\n            height: '5px',\n            width: '100%',\n            borderRadius: '4px',\n            background: getTrackBackground({\n              values,\n              colors: ['#ccc', '#548BF4', '#ccc'],\n              min: MIN,\n              max: MAX,\n              rtl\n            }),\n            alignSelf: 'center'\n          }}\n        >\n          {children}\n        </div>\n      </div>\n    )}\n    renderThumb={({ index, props, isDragged }) => (\n      <div\n        {...props}\n        style={{\n          ...props.style,\n          height: '42px',\n          width: '42px',\n          borderRadius: '4px',\n          backgroundColor: '#FFF',\n          display: 'flex',\n          justifyContent: 'center',\n          alignItems: 'center',\n          boxShadow: '0px 2px 6px #AAA'\n        }}\n      >\n        <div\n          style={{\n            position: 'absolute',\n            top: '-28px',\n            color: '#fff',\n            fontWeight: 'bold',\n            fontSize: '14px',\n            fontFamily: 'Arial,Helvetica Neue,Helvetica,sans-serif',\n            padding: '4px',\n            borderRadius: '4px',\n            backgroundColor: '#548BF4'\n          }}\n        >\n          {values[index].toFixed(1)}\n        </div>\n        <div\n          style={{\n            height: '16px',\n            width: '5px',\n            backgroundColor: isDragged ? '#548BF4' : '#CCC'\n          }}\n        />\n      </div>\n    )}\n  />\n);",
+      "tags": [
+        "#plugin",
+        "#react"
+      ],
       "additional": [
         {
           "textField": "- If values are dynamically loaded, calculate steps attribute based on those values;"
@@ -199,8 +248,57 @@
           "textField": "- Track background color can be determined using getTrackBackground() based on values."
         }
       ],
-      "tags": ["plugin", "react"],
       "id": 12
+    },
+    {
+      "name": "Highcharts - accessibility",
+      "documentation": "https://www.highcharts.com/docs/accessibility/accessibility-module",
+      "description": "Note demonstrates how to use various accessibility features within Highcharts",
+      "installation": "",
+      "installSnippet": "",
+      "implementation": "Import accessibility module:",
+      "implementationSnippet": "import Highchart from 'highcharts';\nimport accessibility from 'highcharts/modules/accessibility';\n\naccessibility(Highchart)",
+      "tags": [
+        "#highcharts",
+        "#accessibility"
+      ],
+      "additional": [
+        {
+          "textField": "Screen readers",
+          "codeSnippet": "// description that screen readers can pick up\naccessibility: {\n  description: '<someDescription>'\n}\n\n// configure SR behaviour\naccessibility: {\n    point: {\n        descriptionFormatter: <someFunction>,\n        valueDescriptionFormat: '{index}. {point.name}, {point.y}.'\n    }\n}\n\n// announce new data with dynamic charts or drill-downs\naccessibility: {\n    announceNewData: {\n        enabled: true\n    }\n}\n\n// remove treshold for large data\naccessibility: {\n    series: {\n        pointDescriptionEnabledTreshold: false\n    }\n}\n\n// expose data series as a group\nseries: {\n    accessibility: {\n        exposeAsGroupOnly: true\n    }\n}\n"
+        }
+      ],
+      "id": 13
+    },
+    {
+      "name": "Docker",
+      "documentation": "https://docs.docker.com/",
+      "description": "Software development tool used to containerize apps with all dependencies and configuration",
+      "installation": "To install Docker Desktop on Linux, you'll need to :<br>- set up package repo;<br>- download latest DEB package (https://docs.docker.com/desktop/release-notes/);<br>- and install it with apt:",
+      "installSnippet": "// setup repo\nsudo apt-get install \\\n    ca-certificates \\\n    curl \\\n    gnupg \\\n    lsb-release\n\nsudo mkdir -p /etc/apt/keyrings\n\ncurl -fsSL https://download.docker.com/linux/debian/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg\n\necho \\\n  \"deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/debian \\\n  $(lsb_release -cs) stable\" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null\n\n// install with apt\nsudo apt-get update\nsudo apt-get install ./docker-desktop-<version>-<arch>.deb",
+      "implementation": "Create and run container or use .yaml file:&nbsp;",
+      "implementationSnippet": "// run manually\ndocker run <image> -p<HOST-PORT>:<CONTAINER-PORT>\n\n// run from file\ndocker-compose -f <FILENAME> up \n\n// example of .yml file \nversion: '3'\nservices:\n  # my-app:\n  # image: ${docker-registry}/my-app:1.0\n  # ports:\n  # - 3000:3000\n  mongodb:\n    image: mongo\n    ports:\n      - 27017:27017\n    environment:\n      - MONGO_INITDB_ROOT_USERNAME=admin\n      - MONGO_INITDB_ROOT_PASSWORD=password\n    volumes:\n      - mongo-data:/data/db\n  mongo-express:\n    image: mongo-express\n    restart: always # fixes MongoNetworkError when mongodb is not ready when mongo-express starts\n    ports:\n      - 8080:8081\n    environment:\n      - ME_CONFIG_MONGODB_ADMINUSERNAME=admin\n      - ME_CONFIG_MONGODB_ADMINPASSWORD=password\n      - ME_CONFIG_MONGODB_SERVER=mongodb\nvolumes:\n  mongo-data:\n    driver: local\n",
+      "tags": [
+        "#js",
+        "#docker",
+        "#deployment",
+        "#virtualMachine"
+      ],
+      "additional": [
+        {
+          "textField": "Useful container debugging tips",
+          "codeSnippet": "docker logs <CONTAINER-ID>\n\ndocker exec -it <CONTAINER-ID> /bin/(bash OR sh)"
+        },
+        {
+          "textField": "Build images using Dockerfile:",
+          "codeSnippet": "docker build -t <IMG-NAME>:<VERSION/TAG> <DOCKERFILE DESTINATION>\n\n// Demo of Dockerfile\nFROM node:12-alpine as base\n\nRUN apk add --no-cache openssh git\n\nHEALTHCHECK --interval=10s CMD [\"wget\", \"--spider\", \"http://127.0.0.1:8080/healthz\"]\nEXPOSE 8080\n\nCOPY /.npmrc /root/.npmrc\n\nWORKDIR /node\n\nARG NODE_ENV=development\nENV NODE_ENV=${NODE_ENV} \\\n    PATH=/node/node_modules/.bin:$PATH\n\nCOPY package.json package-lock.json ./\nRUN npm ci\nWORKDIR /node/src\nCOPY ./src .\n\nFROM node:10-alpine\n\nEXPOSE 8080\nWORKDIR /node\n\nENV NODE_ENV=${NODE_ENV} \\\n    PATH=/node/node_modules/.bin:$PATH\n\nCOPY --from=base /node/node_modules node_modules\nCOPY --from=base /node/src/ src\nCOPY --from=base /node/package.json package.json\n\nCMD [\"node\", \"./src\"]\n"
+        },
+        {
+          "textField": "Data persistance is achieved by aligning host and virtual file system",
+          "codeSnippet": "<IMG-NAME>:\n  volumes:\n   - <HOST-FILE>:<CONTAINER-FILE>\nvolumes:\n  <HOST-FILE>\n    driver: local"
+        }
+      ],
+      "id": 14
     }
   ]
 }

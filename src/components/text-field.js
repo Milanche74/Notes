@@ -67,7 +67,7 @@ export class TextField extends LitElement {
     `;
   }
 
-  logInput(e) {
-    const parag = e.target;
-  }
+  // logInput(e) {
+  //   const parag = e.target;
+  // }
 }
