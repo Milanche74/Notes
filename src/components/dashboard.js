@@ -16,7 +16,7 @@ export class Dashboard extends LitElement {
     super();
     this.data = [];
     this._filteredLibraries = [];
-    this.addEventListener("input-emitter", (e) => {
+    this.addEventListener("search-emitter", (e) => {
       this.handleSearch(e.detail.inputValue);
     });
   }
@@ -84,6 +84,21 @@ export class Dashboard extends LitElement {
 
     if (inputValue !== "") {
       this._filteredLibraries = extractedNames;
+
+      if (extractedNames.length === 2) {
+        const clickEvent = new CustomEvent("click-emiter", {
+          detail: {
+            libraryName: extractedNames[0],
+          },
+          bubbles: true,
+          composed: true,
+        });
+        this.dispatchEvent(clickEvent)
+      }
+    }
+
+    if (inputValue === '*') {
+      this._filteredLibraries = this.data.map(d => d.name)
     }
   }
 }

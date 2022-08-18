@@ -254,8 +254,6 @@
       "name": "Highcharts - accessibility",
       "documentation": "https://www.highcharts.com/docs/accessibility/accessibility-module",
       "description": "Note demonstrates how to use various accessibility features within Highcharts",
-      "installation": "",
-      "installSnippet": "",
       "implementation": "Import accessibility module:",
       "implementationSnippet": "import Highchart from 'highcharts';\nimport accessibility from 'highcharts/modules/accessibility';\n\naccessibility(Highchart)",
       "tags": [
@@ -264,7 +262,7 @@
       ],
       "additional": [
         {
-          "textField": "Screen readers",
+          "headerText": "Screen readers",
           "codeSnippet": "// description that screen readers can pick up\naccessibility: {\n  description: '<someDescription>'\n}\n\n// configure SR behaviour\naccessibility: {\n    point: {\n        descriptionFormatter: <someFunction>,\n        valueDescriptionFormat: '{index}. {point.name}, {point.y}.'\n    }\n}\n\n// announce new data with dynamic charts or drill-downs\naccessibility: {\n    announceNewData: {\n        enabled: true\n    }\n}\n\n// remove treshold for large data\naccessibility: {\n    series: {\n        pointDescriptionEnabledTreshold: false\n    }\n}\n\n// expose data series as a group\nseries: {\n    accessibility: {\n        exposeAsGroupOnly: true\n    }\n}\n"
         }
       ],
@@ -299,6 +297,83 @@
         }
       ],
       "id": 14
+    },
+    {
+      "name": "Notes from FullStack eXchange",
+      "documentation": "",
+      "description": "",
+      "installation": "",
+      "installSnippet": "",
+      "implementation": "",
+      "implementationSnippet": "",
+      "tags": [
+        "#conference",
+        "#storybook",
+        "#DevTools",
+        "#debugging",
+        "#fwa",
+        "#a11y",
+        "#serverless",
+        "#testing"
+      ],
+      "additional": [
+        {
+          "textField": "DevTools",
+          "codeSnippet": "Throttle network and hardware to reproduce client's environment\n\nconsole.time(), timeLog(), timeEnd()\nconsole.trace()\n\nExternal error\nCheck Network tab, copy request and run in console if can't see otherwise\nTrace network\n{} action button to expand bundled files, source map for minified\n\n\nmemory tab recording, compare env profiles \nblue line is possible memory leak\n\ndetached element - window stores element that is removed from the DOM\n\n\nperformance tab - practice recording succesfully\nexperience map: zoom on first row chart =>\n - red triangle, smthng wrong\n - zoom on function\n\n\n\nincognito window\n\nreproduce, \nexternal issues, \ndata handling,\ndetached elems & untracked obj, \ninterface breakdown (simplify logic)"
+        },
+        {
+          "textField": "Storybook",
+          "codeSnippet": "- color palette as a control\n"
+        },
+        {
+          "textField": "Accessibility",
+          "codeSnippet": "- how to test? \n- think of a11y when changing features\n- d&d https://medium.com/salesforce-ux/4-major-patterns-for-accessible-drag-and-drop-1d43f64ebf09\n      https://www.w3.org/WAI/WCAG22/Understanding/dragging-movements"
+        },
+        {
+          "textField": "GitHub",
+          "codeSnippet": "- git reflog // log of everything\n- git fsck   // recover from everything else\n- git config --global rerere.enabled true // reuse recorder resolution"
+        },
+        {
+          "textField": "Functional Web Apps",
+          "codeSnippet": "- Model (DB) => Controller (app) => View\n- Physical arch: CDN => Load balancer => Web servers => Cache and db server\n- Pheonix project, Accelerate\n- Jamstack: DATA => View + App, Tradeoffs? (dynamic wa)\n- FWA:\n  - HTML first (dynamic personalization and a11y priority)\n  - Cloud function centric mode\n  - On-demand database\n  - Declarative deployment (explicitly defined Infra as Code)\n- logical arch: View / Controller function => Database\n- physical arch: CDN => Static assets\n                     => Cloud stuff => Managed DB\n- Downsides: Coldstart, Database story still emergent, writing docs complex\n             All-in with a cloud vendor\n- HTML-first progressive enhancement\n- Cloud funcs centered development model\n- Managed database built-in\n- Explicit declarative deployment IaC\n- Architect\n- fwa.dev\n- begin.com"
+        },
+        {
+          "textField": "Micro Frontends",
+          "codeSnippet": "- pieces of project, owned by teams\n- architect the project \n- learn what's CI/CD\n- Monolith VS MicroFE\n- made 2 screenshots"
+        },
+        {
+          "textField": "TS beyond stack",
+          "codeSnippet": "CDK - Cloud Development Kit\nStack - logical grouping of app\nConstructs++ => stack, contains lambda func, queue, bucket, api\n- cdk diff: compare deployed stack with current state\n- cdk synth: emits the synthesized CloudFormation template\n- cdk deploy: deploy this stack to your default AWS account/region\n\nhttps://github.com/ryancormack/cdk-webapp"
+        },
+        {
+          "textField": "JS Testing Pyramid",
+          "codeSnippet": "       e2e\n   Integration\nLots of unit tests\n\nscreenshot taken showing useful tools for various testing\n\ncomponent tests - interaction\nGH actions test report\nunit test use mocked deps, integration and e2e use real deps\n\nhttps://github.com/robrich/web-test-all-the-things"
+        },
+        {
+          "textField": "Works on my machine",
+          "codeSnippet": "REASONS:\n\n-complex envs: Serverless, Micro Services, Kubernetes\n\n-what the user was doing, \n-what device/browser/env, \n-what requests were triggered\n\n- data cause \n\nBEST PRACTISES:\n - command line debugging\n - local debugging\n - logging and tracing\n - remote debugging\n\nfor Kubernetes: \n - Tilt: allows to create prod env locally\nfor Serverless:\n - SAM create serverless env and func, also locally\n\nLive debugging?\n"
+        }
+      ],
+      "id": 15
+    },
+    {
+      "name": "Vizia deployment",
+      "documentation": "",
+      "description": "Steps how to deploy VIZIA",
+      "installation": "",
+      "installSnippet": "",
+      "implementation": "",
+      "implementationSnippet": "Containers are being used. Kubernetes orchestrates. Concourse is glue \nof CI/CD pipeline - VPN. Katalog gives instructions for Kubernetes to run service.\nbrandwatch.dev => deploy to production (slipstream)",
+      "tags": [
+        "#deployment"
+      ],
+      "additional": [
+        {
+          "textField": "Pipeline",
+          "codeSnippet": "Concourse build images => pushes to brandwatch.dev (slipstream)\n=> to Kubernetes => to GCP or AWS"
+        }
+      ],
+      "id": 16
     }
   ]
 }

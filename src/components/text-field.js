@@ -18,12 +18,12 @@ export class TextField extends LitElement {
       display: flex;
       flex-direction: column;
       justify-content: center;
-      gap: 1vh;
+      gap: 2vh;
       margin-bottom: 0vh;
     }
 
     h3 {
-      font-size: 30px;
+      font-size: 30px;      
     }
 
     p {
@@ -32,8 +32,6 @@ export class TextField extends LitElement {
       overflow: auto;
       align-self: flex-start;
       min-height: 18px;
-      padding: 1vh;
-      border-radius: 5px;
     }
 
     [contenteditable="true"] {
@@ -49,6 +47,13 @@ export class TextField extends LitElement {
     [contenteditable="true"]:focus {
       box-shadow: var(--bs-concave-focus);
     }
+
+    p, h3 {
+      max-width: 640px;
+      padding: 1vh;
+      border-radius: 5px;
+      transition: all ease-out .3s;
+    }
   `;
 
   constructor() {
@@ -56,14 +61,32 @@ export class TextField extends LitElement {
   }
 
   render() {
+    console.log(this.title)
+
     return html`
-      <h3>${this.title}</h3>
-      <p
-        placeholder="Edit...  "
-        contenteditable="${this.editable}"
-        class="paragraph neumorph-inset"
-        .innerHTML=${this.data}
-      ></p>
+      ${
+        this.title !== undefined ?
+
+        html`
+          <h3
+            contenteditable="${this.editable}"
+            placeholder="Edit header...  "
+          >${this.title}</h3>
+        ` : null
+      }
+      
+      ${
+        this.data !== undefined ?
+
+        html`
+          <p
+            placeholder="Edit...  "
+            contenteditable="${this.editable}"
+            class="paragraph neumorph-inset"
+            .innerHTML=${this.data}
+          ></p>
+        ` : null
+      }
     `;
   }
 

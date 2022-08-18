@@ -108,7 +108,7 @@ export class InputField extends LitElement {
       // concatinate...
       let suggestions = primarySuggestions.concat(secondarySuggestions);
       // and return unique values
-      this._filteredSuggestions = [...new Set(suggestions)];
+      this._filteredSuggestions = [...new Set(suggestions)].slice(0, 10);
     }
     if (inputWords.length > 1) {
       for (let i = 0; i < this._filteredSuggestions.length; i++) {
@@ -121,7 +121,7 @@ export class InputField extends LitElement {
   }
 
   handleSelect() {
-    let event = new CustomEvent("input-emitter", {
+    let event = new CustomEvent("search-emitter", {
       detail: {
         inputValue: this.input.value,
       },
@@ -129,6 +129,9 @@ export class InputField extends LitElement {
       bubbles: false,
     });
     this.dispatchEvent(event);
+
     this.input.blur();
+    // this.input.value = '';
+    this._filteredSuggestions = [];
   }
 }

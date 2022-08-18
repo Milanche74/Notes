@@ -22,9 +22,10 @@ Single click on item labels in the dashboard will open up selected item's detail
 - [x] Improve search component (tag + library name, user-friendliness, sort by first letter)
 - [x] Add tags to library detail component
 - [x] Improve suggestions filter
-- [ ] Improve search filter
-- [ ] If there is only one search result, open it up automatically
-- [ ] Edit heading of each addition to the notes to be content editable
+- [o] Improve search filter
+- [x] If there is only one search result, open it up automatically
+- [x] Edit heading of each addition to the notes to be content editable
 - [ ] On save, library-detail should appear on the side of the screen where it was initially opened.
 - [ ] Think about a way to make library component code more concise
-- [ ] When adding multiple tags, they eventually overflow
+- [x] When adding multiple tags, they eventually overflow
+- [ ] Remove tags functionality

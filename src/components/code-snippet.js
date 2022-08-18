@@ -32,7 +32,7 @@ export class CodeSnippet extends LitElement {
   }
 
   render() {
-    const textarea = html`
+    const textarea = this.data !== undefined ? html`
       <textarea
         ?disabled=${!this.editable}
         @input=${this.saveValue}
@@ -40,7 +40,7 @@ export class CodeSnippet extends LitElement {
         wrap="off"
         rows="${this.calculateRows(this.data)}"
       ></textarea>
-    `;
+    ` : null;
 
     return html`${textarea}`;
   }
@@ -50,7 +50,9 @@ export class CodeSnippet extends LitElement {
   }
   // made sure that textarea displays correct value when updated; otherwise it woudn't be done
   updated() {
-    this.textarea.value = this.data;
+    if (this.textarea) {
+      this.textarea.value = this.data;
+    }
   }
 
   calculateRows(data) {

@@ -132,10 +132,13 @@ export class LibraryDetail extends LitElement {
 
     .tags-list {
       display: flex;
-      gap: 2vw;
+      column-gap: 1vw;
+      row-gap: 1vh;
       justify-content: space-around;
       width: max-content;
       margin-top: 1vh;
+      flex-wrap: wrap;
+      max-width: 600px;
     }
 
     .tags-list li {
@@ -154,7 +157,7 @@ export class LibraryDetail extends LitElement {
     this.data = {};
     this.tags = [];
     this.editable = false;
-    this.addEventListener("input-emitter", (e) => {
+    this.addEventListener("search-emitter", (e) => {
       this.addTag(e.detail.inputValue);
     });
   }
@@ -214,52 +217,77 @@ export class LibraryDetail extends LitElement {
         </ul>
       </div>
 
-      <text-field
+      ${
+        this.data.installation !== undefined ?
+        
+        html`<text-field
         id="install"
         .editable=${this.editable}
         .data=${this.data.installation}
         title="Installation"
-      ></text-field>
+        ></text-field>` :
+        
+        null
+      }    
 
-      <code-snippet
+      ${
+        this.data.installSnippet !== undefined ?
+
+        html`<code-snippet
         id="install-cs"
         .editable=${this.editable}
         .data=${this.data.installSnippet}
-      ></code-snippet>
+        ></code-snippet>` :
+        
+        null
+      }
 
-      <text-field
+      ${
+        this.data.implementation !== undefined ?
+        
+        html`<text-field
         id="implementation"
         .editable=${this.editable}
         .data=${this.data.implementation}
         title="Implementation"
-      ></text-field>
+        ></text-field>` :
+        
+        null
+      }
 
-      <code-snippet
+      ${
+        this.data.implementationSnippet !== undefined ?
+        
+        html`<code-snippet
         id="implementation-cs"
         .editable=${this.editable}
         .data=${this.data.implementationSnippet}
-      ></code-snippet>
+        ></code-snippet>` :
+        
+        null
+      }
 
       ${this.data?.additional?.map((addition, index) => {
         let textField =
-          addition.textField !== undefined
-            ? html`<text-field
+            html`
+              <text-field
                 class="additional-text"
                 .editable=${this.editable}
                 .data=${addition.textField}
-                title="#${index + 1}"
+                title=${addition.headerText}
                 id="addition-text-${index + 1}"
-              ></text-field>`
-            : null;
+              >
+              </text-field>
+            `
         let codeSnippet =
-          addition.codeSnippet !== undefined
-            ? html`<code-snippet
+              html`<code-snippet
                 class="additional-code"
                 .editable=${this.editable}
                 .data=${addition.codeSnippet}
                 id="addition-code-${index + 1}"
-              ></code-snippet>`
-            : null;
+              >
+              </code-snippet>
+            `  
         return html`${textField}${codeSnippet}`;
       })}
 
@@ -293,6 +321,7 @@ export class LibraryDetail extends LitElement {
   addAddition() {
     if (this.editable === true) {
       this.data.additional.push({
+        headerText: "",
         textField: "",
         codeSnippet: "",
       });
@@ -337,25 +366,25 @@ export class LibraryDetail extends LitElement {
   get install() {
     return this.renderRoot
       .querySelector("#install")
-      .renderRoot.querySelector("p");
+      ?.renderRoot.querySelector("p");
   }
 
   get installCs() {
     return this.renderRoot
       .querySelector("#install-cs")
-      .renderRoot.querySelector("textarea");
+      ?.renderRoot.querySelector("textarea");
   }
 
   get implementation() {
     return this.renderRoot
       .querySelector("#implementation")
-      .renderRoot.querySelector("p");
+      ?.renderRoot.querySelector("p");
   }
 
   get implementationCs() {
     return this.renderRoot
       .querySelector("#implementation-cs")
-      .renderRoot.querySelector("textarea");
+      ?.renderRoot.querySelector("textarea");
   }
 
   formatAdditionals() {
@@ -371,18 +400,25 @@ export class LibraryDetail extends LitElement {
     let additionalsData = [];
 
     for (let i = 0; i < numOfAdditionals.length; i++) {
+      let header = this.renderRoot
+        .querySelector(`#addition-text-${i + 1}`)
+        ?.renderRoot.querySelector("h3");
+
       let text = this.renderRoot
         .querySelector(`#addition-text-${i + 1}`)
         ?.renderRoot.querySelector("p");
+
       let code = this.renderRoot
         .querySelector(`#addition-code-${i + 1}`)
         ?.renderRoot.querySelector("textarea");
 
       additionalsData.push({
+        headerText: handleEmptyInput(header?.innerText),
         textField: handleEmptyInput(text?.innerHTML),
         codeSnippet: handleEmptyInput(code?.value),
       });
     }
+    console.log(additionalsData)
 
     return additionalsData;
   }
@@ -402,17 +438,17 @@ export class LibraryDetail extends LitElement {
       return;
     }
 
-    //prepare data to be emitted
+    //prepare data to be emittedd
     const data = {
       name: this.name.innerHTML,
       documentation: this.getHrefFromParagraph()
         ? this.linkParagraph.innerHTML
         : this.data.documentation,
       description: this.description.innerHTML,
-      installation: this.install.innerHTML,
-      installSnippet: this.installCs.value,
-      implementation: this.implementation.innerHTML,
-      implementationSnippet: this.implementationCs.value,
+      installation: this.install?.innerHTML,
+      installSnippet: this.installCs?.value,
+      implementation: this.implementation?.innerHTML,
+      implementationSnippet: this.implementationCs?.value,
       tags: this.data.tags,
       additional: this.formatAdditionals(),
     };

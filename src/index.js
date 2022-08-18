@@ -47,7 +47,6 @@ const setDashboard = () => {
   const dashboardElement = document.querySelector("dashboard-element");
   dashboardElement.setAttribute("data", JSON.stringify(dashboardInfo));
 
-  // dashboardElement.setAttribute("tags", JSON.stringify(getTags()));
 };
 
 const putData = async (index, data) => {
