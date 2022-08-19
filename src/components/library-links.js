@@ -75,7 +75,7 @@ export class LibraryLinks extends LitElement {
           <li
             class="list-item"
             style="background-color: hsl(${Math.random() * 360}, ${50 +
-            Math.random() * 50}%, ${10 + Math.random() * 40}%)"
+              Math.random() * 50}%, ${10 + Math.random() * 40}%)"
             @click="${() => this.onClickHandler(link)}"
             @dblclick="${(e) => {
               e.preventDefault();
@@ -89,50 +89,34 @@ export class LibraryLinks extends LitElement {
   }
 
   onClickHandler(libName) {
-    const clickEvent = new CustomEvent("click-emiter", {
-      detail: {
-        libraryName: libName,
-      },
-      bubbles: true,
-      composed: true,
-    });
-    const dbClickEvent = new CustomEvent("dbclick-emiter", {
-      detail: {
-        libraryName: libName,
-      },
-      bubbles: true,
-      composed: true,
-    });
     this.click++;
+
     if (this.click === 1) {
       this.timer = setTimeout(() => {
+        const clickEvent = new CustomEvent("click-emiter", {
+          detail: {
+            libraryName: libName,
+          },
+          bubbles: true,
+          composed: true,
+        });
+
         this.dispatchEvent(clickEvent);
         this.click = 0;
       }, 200);
     } else {
       clearTimeout(this.timer);
+
+      const dbClickEvent = new CustomEvent("dbclick-emiter", {
+        detail: {
+          libraryName: libName,
+        },
+        bubbles: true,
+        composed: true,
+      });
+
       this.dispatchEvent(dbClickEvent);
       this.click = 0;
     }
   }
-}
-
-{
-  /* <div class="search-container">
-          <input @input=${this.handleInput} id="search-input" />
-          <ul class="tags">
-            ${this._filteredTags.length
-              ? this._filteredTags.map(
-                  (tag) =>
-                    html`<li
-                      class="tag"
-                      @click=${() => this.handleSelection(tag)}
-                    >
-                      ${tag}
-                    </li>`
-                )
-              : null}
-          </ul>
-          <button @click=${this.handleSearch}>Search</button>
-        </div> */
 }

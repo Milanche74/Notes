@@ -15,7 +15,7 @@ export class Dashboard extends LitElement {
   constructor() {
     super();
     this.data = [];
-    this._filteredLibraries = [];
+    this._filteredLibraries = ['+'];
     this.addEventListener("search-emitter", (e) => {
       this.handleSearch(e.detail.inputValue);
     });
@@ -70,7 +70,7 @@ export class Dashboard extends LitElement {
     let searchTerms = inputValue.trim().split(" ");
 
     let filteredData = this.data.filter((item) => {
-      let joinedTags = item.name.toLowerCase() + item.tags?.join();
+      let joinedTags = item.name.toLowerCase() + item.tags?.join().toLowerCase();
       let formattedTags = joinedTags?.replaceAll(`,`, ` `);
 
       // check if every search term is present in either library name or library tag
@@ -89,6 +89,7 @@ export class Dashboard extends LitElement {
         const clickEvent = new CustomEvent("click-emiter", {
           detail: {
             libraryName: extractedNames[0],
+            onlyResult: true
           },
           bubbles: true,
           composed: true,

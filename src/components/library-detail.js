@@ -47,7 +47,7 @@ export class LibraryDetail extends LitElement {
     a {
       font-size: 30px;
       font-weight: bold;
-      text-decoration: none;
+      text-decoration: underline;
       color: grey;
       width: max-content;
     }
@@ -142,6 +142,7 @@ export class LibraryDetail extends LitElement {
     }
 
     .tags-list li {
+      position: relative;
       list-style: none;
       font-weight: bold;
       font-size: 24px;
@@ -149,6 +150,22 @@ export class LibraryDetail extends LitElement {
       border-radius: 10px;
       background-color: white;
       box-shadow: 0 0 5px white;
+    }
+
+    .remove-tag {
+      display: grid;
+      place-content: center;
+      height: 20px;
+      width: 20px;
+      border-radius: 50%;
+      position: absolute;
+      top: 0;
+      right: 0;
+      background-color: red;
+      color: white;
+      transform: translate(50%, -30%) rotate(45deg);
+      opacity: 1;
+      transition: opacity ease-in-out .4s; 
     }
   `;
 
@@ -209,62 +226,48 @@ export class LibraryDetail extends LitElement {
           ?hidden=${!this.editable}
           placeholder="Add tag"
           .tags=${this.getTags()}
+          .clearInput=${true}
         ></input-field>
         <ul class="tags-list">
           ${this.data.tags?.map((tag) => {
-            return html`<li>${tag}</li>`;
+            return html`
+              <li>
+                ${tag}
+                <span @click="${() => this.removeTag(tag) }" class="remove-tag">+</span>
+              </li>
+            `;
           })}
         </ul>
       </div>
 
       ${
-        this.data.installation !== undefined ?
-        
-        html`<text-field
-        id="install"
-        .editable=${this.editable}
-        .data=${this.data.installation}
-        title="Installation"
-        ></text-field>` :
-        
-        null
-      }    
+        ['installation', 'installSnippet', 'implementation', 'implementationSnippet'].map((el, index) => {
+          const element = this.data[el] !== undefined ?
+            html`
+              ${
+                index % 2 === 0 ?
+                  html`
+                    <text-field
+                      id=${el}
+                      .editable=${this.editable}
+                      .data=${this.data[el]}
+                      title=${el.charAt(0).toUpperCase() + el.slice(1)}
+                    >
+                    </text-field>
+                  ` :
+                  html`
+                    <code-snippet
+                      id=${el}
+                      .editable=${this.editable}
+                      .data=${this.data[el]}
+                    >
+                    </code-snippet>
+                  `
+              }
+            ` : null
 
-      ${
-        this.data.installSnippet !== undefined ?
-
-        html`<code-snippet
-        id="install-cs"
-        .editable=${this.editable}
-        .data=${this.data.installSnippet}
-        ></code-snippet>` :
-        
-        null
-      }
-
-      ${
-        this.data.implementation !== undefined ?
-        
-        html`<text-field
-        id="implementation"
-        .editable=${this.editable}
-        .data=${this.data.implementation}
-        title="Implementation"
-        ></text-field>` :
-        
-        null
-      }
-
-      ${
-        this.data.implementationSnippet !== undefined ?
-        
-        html`<code-snippet
-        id="implementation-cs"
-        .editable=${this.editable}
-        .data=${this.data.implementationSnippet}
-        ></code-snippet>` :
-        
-        null
+          return html`${element}` 
+        })
       }
 
       ${this.data?.additional?.map((addition, index) => {
@@ -338,11 +341,15 @@ export class LibraryDetail extends LitElement {
 
   addTag(tag) {
     if (tag !== "") {
-      tag = "#" + tag;
       this.data.tags.push(tag);
       this.requestUpdate();
     }
-    console.log(this.data.tags);
+  }
+
+  removeTag(tagToRemove) {
+    this.data.tags = this.data.tags.filter(tag => tag !== tagToRemove);
+    console.log(this.data.tags)
+    this.requestUpdate()
   }
 
   // getters
@@ -365,13 +372,13 @@ export class LibraryDetail extends LitElement {
 
   get install() {
     return this.renderRoot
-      .querySelector("#install")
+      .querySelector("#installation")
       ?.renderRoot.querySelector("p");
   }
 
   get installCs() {
     return this.renderRoot
-      .querySelector("#install-cs")
+      .querySelector("#installSnippet")
       ?.renderRoot.querySelector("textarea");
   }
 
@@ -383,18 +390,18 @@ export class LibraryDetail extends LitElement {
 
   get implementationCs() {
     return this.renderRoot
-      .querySelector("#implementation-cs")
+      .querySelector("#implementationSnippet")
       ?.renderRoot.querySelector("textarea");
   }
 
-  formatAdditionals() {
-    // empty input value will be set to undefined so the element won't be rendered
-    const handleEmptyInput = (input) => {
-      if (input === "") {
-        return undefined;
-      } else return input;
-    };
+  // empty input value will be set to undefined so the element won't be rendered
+  handleEmptyInput(input) {
+    if (input === "") {
+      return undefined;
+    } else return input;
+  };
 
+  formatAdditionals() {
     const numOfAdditionals =
       this.renderRoot.querySelectorAll(".additional-text");
     let additionalsData = [];
@@ -413,9 +420,9 @@ export class LibraryDetail extends LitElement {
         ?.renderRoot.querySelector("textarea");
 
       additionalsData.push({
-        headerText: handleEmptyInput(header?.innerText),
-        textField: handleEmptyInput(text?.innerHTML),
-        codeSnippet: handleEmptyInput(code?.value),
+        headerText: this.handleEmptyInput(header?.innerText),
+        textField: this.handleEmptyInput(text?.innerHTML),
+        codeSnippet: this.handleEmptyInput(code?.value),
       });
     }
     console.log(additionalsData)
@@ -445,10 +452,10 @@ export class LibraryDetail extends LitElement {
         ? this.linkParagraph.innerHTML
         : this.data.documentation,
       description: this.description.innerHTML,
-      installation: this.install?.innerHTML,
-      installSnippet: this.installCs?.value,
-      implementation: this.implementation?.innerHTML,
-      implementationSnippet: this.implementationCs?.value,
+      installation: this.handleEmptyInput(this.install?.innerHTML),
+      installSnippet: this.handleEmptyInput(this.installCs?.value),
+      implementation: this.handleEmptyInput(this.implementation?.innerHTML),
+      implementationSnippet: this.handleEmptyInput(this.implementationCs?.value),
       tags: this.data.tags,
       additional: this.formatAdditionals(),
     };
@@ -465,7 +472,7 @@ export class LibraryDetail extends LitElement {
     this.dispatchEvent(event);
 
     //return values to default if new note is added
-    if (this.data.name === "+") {
+   /*  if (this.data.name === "+") {
       this.name.innerHTML = "";
       this.linkParagraph.innerHTML = "";
       this.installCs.value = "";
@@ -474,7 +481,7 @@ export class LibraryDetail extends LitElement {
       this.implementationCs.value = "";
       this.additional = [];
       this.description.innerHTML = "";
-    }
+    } */
   }
 
   // auxiliary methods
@@ -484,6 +491,7 @@ export class LibraryDetail extends LitElement {
       e.target.innerHTML = "";
     }
   }
+
   getHrefFromParagraph() {
     if (this.linkParagraph.innerHTML === this.docsLabel) {
       return false;

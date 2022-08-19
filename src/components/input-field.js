@@ -9,6 +9,7 @@ export class InputField extends LitElement {
     },
     placeholder: { type: String },
     _filteredSuggestions: { state: true },
+    clearInput: {}
   };
 
   static styles = css`
@@ -60,6 +61,7 @@ export class InputField extends LitElement {
     this.tags = [];
     this.placeholder = "";
     this._filteredSuggestions = [];
+    this.clearInput = false;
   }
 
   render() {
@@ -92,10 +94,10 @@ export class InputField extends LitElement {
   }
 
   handleInput() {
-    this.input.value = this.input.value.replace("#", "");
+    this.input.value = this.input.value;
     const inputWords = this.input.value.split(" ");
 
-    let lastWord = inputWords[inputWords.length - 1];
+    let lastWord = inputWords[inputWords.length - 1].toLowerCase().replace("#", "");
     if (lastWord !== "") {
       // primary checks terms that start with user input
       let primarySuggestions = this.tags.filter((tag) =>
@@ -109,13 +111,20 @@ export class InputField extends LitElement {
       let suggestions = primarySuggestions.concat(secondarySuggestions);
       // and return unique values
       this._filteredSuggestions = [...new Set(suggestions)].slice(0, 10);
+      console.log(this._filteredSuggestions)
     }
     if (inputWords.length > 1) {
-      for (let i = 0; i < this._filteredSuggestions.length; i++) {
+      const firstWords = inputWords.slice(0, - 1).join(' ');
+  
+      const filteredSuggestionsForPreviousWords =  this._filteredSuggestions.filter(sugg => !firstWords.includes(sugg));
+      console.log(firstWords, filteredSuggestionsForPreviousWords)
+
+  
+      for (let i = 0; i < filteredSuggestionsForPreviousWords.length; i++) {
         this._filteredSuggestions[i] =
-          inputWords.slice(0, -1).join().replaceAll(",", " ") +
+          inputWords.slice(0, -1).join(' ') +
           " " +
-          this._filteredSuggestions[i];
+          filteredSuggestionsForPreviousWords[i];
       }
     }
   }
@@ -131,7 +140,11 @@ export class InputField extends LitElement {
     this.dispatchEvent(event);
 
     this.input.blur();
-    // this.input.value = '';
+
+    if(this.clearInput) {
+      this.input.value = '';
+    }
+
     this._filteredSuggestions = [];
   }
 }

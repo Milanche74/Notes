@@ -14,12 +14,12 @@ let tags = [];
 
 // FUNCTIONS
 
-const getData = async (i) => {
+const getData = async (i, libraryId = 1) => {
   const response = await fetch(`http://localhost:5000/libraries`);
   data = await response.json();
   tags = data.map(({ tags }) => tags);
 
-  setData(i, 1);
+  setData(i, libraryId);
   setDashboard();
 };
 
@@ -49,7 +49,7 @@ const setDashboard = () => {
 
 };
 
-const putData = async (index, data) => {
+const putData = async (index, data, libraryId) => {
   const requestOptions = {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
@@ -60,10 +60,10 @@ const putData = async (index, data) => {
     requestOptions
   );
   data = await response.json();
-  getData(index - 1);
+  getData(index - 1, libraryId);
 };
 
-const postData = async (data) => {
+const postData = async (data, libraryId) => {
   const requestOptions = {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -74,38 +74,62 @@ const postData = async (data) => {
     requestOptions
   );
   data = await response.json();
-  getData(0);
+
+  console.log(data);
+  getData(libraries.length, libraryId);
 };
 
 // EVENT LISTENERS
 
 window.addEventListener("click-emiter", (e) => {
   const index = libraries.indexOf(e.detail.libraryName);
-  setData(index, 1);
+  console.log(document.querySelector('library-detail:nth-of-type(2)')?.getAttribute("data"))
+
+
+  if (e.detail.onlyResult) {
+    const firstLibraryData = document.querySelector('library-detail:nth-of-type(1)').getAttribute("data");
+    const secondLibraryData = document.querySelector('library-detail:nth-of-type(2)')?.getAttribute("data");
+
+    if (JSON.parse(firstLibraryData).name === "+") {
+      setData(index, 1)
+    } else if (!secondLibraryData) {
+      dblClickHandler(index)
+    }
+
+  } else setData(index, 1);
+
 });
 
 window.addEventListener("dbclick-emiter", (e) => {
   const index = libraries.indexOf(e.detail.libraryName);
+
+  dblClickHandler(index);  
+});
+
+const dblClickHandler = (index) => {
   // initial dblclick should create DOM element
   if (count === 1) {
     const createdLibrary = document.createElement("library-detail");
+    createdLibrary.classList.add('library-secondary');
     createdLibrary.setAttribute("data", JSON.stringify(data[index]));
     createdLibrary.setAttribute("tags", JSON.stringify(tags));
     document.querySelector(".libraries-container").appendChild(createdLibrary);
     count++;
   } else setData(index, 2);
-});
+}
 
 window.addEventListener("save-emiter", (e) => {
+  console.log(e.target.classList)
+  const libraryId = e.target.classList[0] === 'library-primary' ? 1 : 2;
   const data = e.detail.data;
   if (libraries.includes(e.detail.data.name)) {
     let index = libraries.indexOf(e.detail.data.name) + 1;
     // data object must have an id for JSON server to work properly
     data.id = index;
-    putData(index, data);
+    putData(index, data, libraryId);
   } else {
     data.id = libraries.length + 1;
-    postData(data);
+    postData(data, libraryId);
   }
 });
 
