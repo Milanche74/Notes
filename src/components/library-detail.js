@@ -31,7 +31,7 @@ export class LibraryDetail extends LitElement {
       height: min-content;
       display: flex;
       flex-direction: column;
-      justify-content: center;
+      //justify-content: center;
       padding: 2vh 1vw;
       position: relative;
       gap: 2vh;
@@ -42,6 +42,7 @@ export class LibraryDetail extends LitElement {
 
     h2 {
       font-size: 48px;
+      max-width: 90%;
     }
 
     a {
@@ -152,11 +153,9 @@ export class LibraryDetail extends LitElement {
       box-shadow: 0 0 5px white;
     }
 
-    .remove-tag {
+    .remove-button {
       display: grid;
       place-content: center;
-      height: 20px;
-      width: 20px;
       border-radius: 50%;
       position: absolute;
       top: 0;
@@ -164,8 +163,28 @@ export class LibraryDetail extends LitElement {
       background-color: red;
       color: white;
       transform: translate(50%, -30%) rotate(45deg);
-      opacity: 1;
+      opacity: 0;
       transition: opacity ease-in-out .4s; 
+      cursor: pointer;
+    }
+
+    .remove-tag {
+      height: 20px;
+      width: 20px;
+    }
+
+    .remove-library {
+      font-size: 30px;
+      font-weight: bold;
+      height: 30px;
+      width: 30px;
+      transform: translate(50%, -50%) rotate(45deg);
+      opacity: 1;
+      box-shadow: 5px 2px 5px #adadad;
+    }
+
+    .tags-list li:hover .remove-tag {
+      opacity: 1;
     }
   `;
 
@@ -233,7 +252,11 @@ export class LibraryDetail extends LitElement {
             return html`
               <li>
                 ${tag}
-                <span @click="${() => this.removeTag(tag) }" class="remove-tag">+</span>
+                ${
+                  this.editable ?
+                  html`<span @click="${() => this.removeTag(tag) }" class="remove-button remove-tag">+</span>` :
+                  null
+                }
               </li>
             `;
           })}
@@ -301,6 +324,11 @@ export class LibraryDetail extends LitElement {
       >
         Addition
       </button>
+
+      ${
+        this.classList[0] === 'library-secondary' ?
+        html`<div @click="${this.removeLibrary}" class="remove-button remove-library">+</div>` : null
+      }
     `;
   }
 
@@ -341,7 +369,9 @@ export class LibraryDetail extends LitElement {
 
   addTag(tag) {
     if (tag !== "") {
-      this.data.tags.push(tag);
+      const formattedTag = tag.includes('#') ? tag : '#' + tag
+
+      this.data.tags.push(formattedTag);
       this.requestUpdate();
     }
   }
@@ -350,6 +380,12 @@ export class LibraryDetail extends LitElement {
     this.data.tags = this.data.tags.filter(tag => tag !== tagToRemove);
     console.log(this.data.tags)
     this.requestUpdate()
+  }
+
+  removeLibrary() {
+    // TODO add clean up method here
+
+    this.remove()
   }
 
   // getters

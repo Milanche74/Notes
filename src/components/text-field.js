@@ -61,8 +61,6 @@ export class TextField extends LitElement {
   }
 
   render() {
-    console.log(this.title)
-
     return html`
       ${
         this.title !== undefined ?

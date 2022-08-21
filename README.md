@@ -28,5 +28,8 @@ Single click on item labels in the dashboard will open up selected item's detail
 - [x] On save, library-detail should appear on the side of the screen where it was initially opened.
 - [x] Think about a way to make library component code more concise
 - [x] When adding multiple tags, they eventually overflow
-- [ ] Remove-tags functionality
+- [x] Remove-tags functionality
+- [ ] Set max height for note
 - [ ] Make note header, paragraph and code snippet (textarea) into 1 component
+- [ ] When new note's installation or implementation header's are modified, don't save them as that property
+- [ ] Add clean up method to elements 

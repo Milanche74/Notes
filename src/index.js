@@ -7,7 +7,6 @@ import { InputField } from "./components/input-field";
 import "core-js/stable";
 import "regenerator-runtime/runtime";
 
-let count = 1;
 let data = [];
 let libraries = [];
 let tags = [];
@@ -107,14 +106,14 @@ window.addEventListener("dbclick-emiter", (e) => {
 });
 
 const dblClickHandler = (index) => {
+  const libraryElements = document.querySelectorAll('library-detail');
   // initial dblclick should create DOM element
-  if (count === 1) {
+  if (libraryElements.length === 1) {
     const createdLibrary = document.createElement("library-detail");
     createdLibrary.classList.add('library-secondary');
     createdLibrary.setAttribute("data", JSON.stringify(data[index]));
     createdLibrary.setAttribute("tags", JSON.stringify(tags));
     document.querySelector(".libraries-container").appendChild(createdLibrary);
-    count++;
   } else setData(index, 2);
 }
 
