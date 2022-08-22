@@ -130,6 +130,13 @@ export class InputField extends LitElement {
   }
 
   handleSelect() {
+
+    // safeguard for when user blurs the element without selecting a tag or pressing enter after typing a new one
+    console.log(document.activeElement, document.activeElement.tagName)
+    if (document.activeElement.tagName.includes('BODY')) {
+      return
+    }
+  
     let event = new CustomEvent("search-emitter", {
       detail: {
         inputValue: this.input.value,

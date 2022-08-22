@@ -56,12 +56,12 @@ export class LibraryDetail extends LitElement {
       overflow-x: hidden;
       position: relative;
       padding: 24px;
+      border: 3px solid rgba(47, 79, 79, 1);
+      border-right: none;
+      border-radius: 10px;
     }
 
 
-    main::-webkit-scrollbar-thumb {
-      color: red;
-    }
 
     h2 {
       flex: 1;

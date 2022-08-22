@@ -1,6 +1,6 @@
 # About
 
-## Notes v1.0
+## Notes v0.1.0
 
 Notes app designed to speed up learning process by entering general info about given library, framework or any other tool in general as well as some code snippets.
 Single click on item labels in the dashboard will open up selected item's details on the left, and double click will show details on the right so user can compare two libraries.
@@ -11,7 +11,7 @@ Single click on item labels in the dashboard will open up selected item's detail
 - Database is run using JSON Server and command `npm run server`
 - Frontend is run using webpack dev server and command `npm run dev`
 
-## Updates for v2.0
+## Updates for v0.2.0
 
 - [x] Double-click event on dashboard items should trigger production of another library-detail component on the right side of the screen so that user can compare two libraries;
 - [x] Text inside 'Official docs' should be removed on focus;
@@ -31,6 +31,6 @@ Single click on item labels in the dashboard will open up selected item's detail
 - [x] Remove-tags functionality
 - [x] Set max height for note
 - [ ] Make note header, paragraph and code snippet (textarea) into 1 component
-- [ ] When new note's installation or implementation header's are modified, don't save them as that property
+- [ ] When new note's installation or implementation headers are modified, don't save them as that property
 - [ ] Add clean up method to elements 
 - [ ] Improve on scroll logic
