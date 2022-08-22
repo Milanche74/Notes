@@ -28,19 +28,44 @@ export class LibraryDetail extends LitElement {
     :host {
       flex: 1;
       min-width: 620px;
-      height: min-content;
-      display: flex;
-      flex-direction: column;
       //justify-content: center;
       padding: 2vh 1vw;
       position: relative;
-      gap: 2vh;
       border-radius: 10px;
       border: 5px solid #f0f0f0;
       box-shadow: 15px 15px 20px #adadad, -15px -15px 20px #ffffff;
     }
 
+    header {
+      display: flex;
+      width: 100%;
+      justify-content: space-between;
+      align-items: center;
+      column-gap: 5vw;
+      row-gap: 2vh;
+      flex-wrap: wrap;
+      margin-bottom: 3vh;
+    }
+
+    main {
+      display: flex;
+      flex-direction: column;
+      gap: 2vh;
+      max-height: 80vh;
+      overflow-y: scroll;
+      overflow-x: hidden;
+      position: relative;
+      padding: 24px;
+    }
+
+
+    main::-webkit-scrollbar-thumb {
+      color: red;
+    }
+
     h2 {
+      flex: 1;
+      min-width: 620px;
       font-size: 48px;
       max-width: 90%;
     }
@@ -56,6 +81,8 @@ export class LibraryDetail extends LitElement {
     .buttons {
       display: flex;
       gap: 2vw;
+      margin-right: 5px;
+      justify-content: center;
     }
 
     button {
@@ -65,7 +92,6 @@ export class LibraryDetail extends LitElement {
       border-radius: 10px;
       border: none;
       color: white;
-      margin-bottom: 1vh;
       cursor: pointer;
       border: 5px solid rgb(47, 79, 79);
       background: linear-gradient(
@@ -74,7 +100,7 @@ export class LibraryDetail extends LitElement {
         rgba(47, 79, 79, 1) 35%,
         rgba(80, 133, 133, 1) 100%
       );
-      box-shadow: 5px 5px 5px 2px rgb(46, 46, 46), -5px -5px 5px 2px #ffffff;
+      box-shadow: 3px 3px 3px 2px rgb(46, 46, 46), -3px -3px 3px 2px #ffffff;
       transition: var(--trans);
     }
 
@@ -201,134 +227,138 @@ export class LibraryDetail extends LitElement {
 
   render() {
     return html`
-      <h2
-        @focus="${(e) => this.focus(e)}"
-        contenteditable=${this.editable}
-        placeholder="Please insert a name..."
-        .innerHTML="${this.data.name}"
-      ></h2>
-
-      <div class="buttons">
-        <button
-          @click="${() => (this.editable = !this.editable)}"
-          class=${this.editable ? "button-active" : ""}
-        >
-          Edit
-        </button>
-        <button @click="${this.save}">Save</button>
-      </div>
-
-      <a target="_blank" href="${this.setHref()}"
-        ><p
+      <header>
+        <h2
           @focus="${(e) => this.focus(e)}"
           contenteditable=${this.editable}
-          placeholder="Insert link..."
-          .innerHTML="${this.docsLabel}"
-        ></p
-      ></a>
+          placeholder="Please insert a name..."
+          .innerHTML="${this.data.name}"
+        ></h2>
+  
+        <div class="buttons">
+          <button
+            @click="${() => (this.editable = !this.editable)}"
+            class=${this.editable ? "button-active" : ""}
+          >
+            Edit
+          </button>
+          <button @click="${this.save}">Save</button>
+        </div>
+      </header>
 
-      <text-field
-        id="desc"
-        .editable=${this.editable}
-        .data=${this.data.description}
-        title="Description"
-      ></text-field>
-
-      <div class="tags-container">
-        <style>
-          input-field {
-            --input-align-items: flex-start;
-            --input-padding: 0;
-          }
-        </style>
-        <input-field
-          ?hidden=${!this.editable}
-          placeholder="Add tag"
-          .tags=${this.getTags()}
-          .clearInput=${true}
-        ></input-field>
-        <ul class="tags-list">
-          ${this.data.tags?.map((tag) => {
-            return html`
-              <li>
-                ${tag}
+      <main>
+        <a target="_blank" href="${this.setHref()}"
+          ><p
+            @focus="${(e) => this.focus(e)}"
+            contenteditable=${this.editable}
+            placeholder="Insert link..."
+            .innerHTML="${this.docsLabel}"
+          ></p
+        ></a>
+  
+        <text-field
+          id="desc"
+          .editable=${this.editable}
+          .data=${this.data.description}
+          title="Description"
+        ></text-field>
+  
+        <div class="tags-container">
+          <style>
+            input-field {
+              --input-align-items: flex-start;
+              --input-padding: 0;
+            }
+          </style>
+          <input-field
+            ?hidden=${!this.editable}
+            placeholder="Add tag"
+            .tags=${this.getTags()}
+            .clearInput=${true}
+          ></input-field>
+          <ul class="tags-list">
+            ${this.data.tags?.map((tag) => {
+              return html`
+                <li>
+                  ${tag}
+                  ${
+                    this.editable ?
+                    html`<span @click="${() => this.removeTag(tag) }" class="remove-button remove-tag">+</span>` :
+                    null
+                  }
+                </li>
+              `;
+            })}
+          </ul>
+        </div>
+  
+        ${
+          ['installation', 'installSnippet', 'implementation', 'implementationSnippet'].map((el, index) => {
+            const element = this.data[el] !== undefined ?
+              html`
                 ${
-                  this.editable ?
-                  html`<span @click="${() => this.removeTag(tag) }" class="remove-button remove-tag">+</span>` :
-                  null
+                  index % 2 === 0 ?
+                    html`
+                      <text-field
+                        id=${el}
+                        .editable=${this.editable}
+                        .data=${this.data[el]}
+                        title=${el.charAt(0).toUpperCase() + el.slice(1)}
+                      >
+                      </text-field>
+                    ` :
+                    html`
+                      <code-snippet
+                        id=${el}
+                        .editable=${this.editable}
+                        .data=${this.data[el]}
+                      >
+                      </code-snippet>
+                    `
                 }
-              </li>
-            `;
-          })}
-        </ul>
-      </div>
+              ` : null
+  
+            return html`${element}` 
+          })
+        }
+  
+        ${this.data?.additional?.map((addition, index) => {
+          let textField =
+              html`
+                <text-field
+                  class="additional-text"
+                  .editable=${this.editable}
+                  .data=${addition.textField}
+                  title=${addition.headerText}
+                  id="addition-text-${index + 1}"
+                >
+                </text-field>
+              `
+          let codeSnippet =
+                html`<code-snippet
+                  class="additional-code"
+                  .editable=${this.editable}
+                  .data=${addition.codeSnippet}
+                  id="addition-code-${index + 1}"
+                >
+                </code-snippet>
+              `  
+          return html`${textField}${codeSnippet}`;
+        })}
+  
+        <button
+          ?hidden=${!this.editable}
+          class="additional-note-button"
+          @click="${this.addAddition}"
+        >
+          Addition
+        </button>
+      </main>
 
       ${
-        ['installation', 'installSnippet', 'implementation', 'implementationSnippet'].map((el, index) => {
-          const element = this.data[el] !== undefined ?
-            html`
-              ${
-                index % 2 === 0 ?
-                  html`
-                    <text-field
-                      id=${el}
-                      .editable=${this.editable}
-                      .data=${this.data[el]}
-                      title=${el.charAt(0).toUpperCase() + el.slice(1)}
-                    >
-                    </text-field>
-                  ` :
-                  html`
-                    <code-snippet
-                      id=${el}
-                      .editable=${this.editable}
-                      .data=${this.data[el]}
-                    >
-                    </code-snippet>
-                  `
-              }
-            ` : null
-
-          return html`${element}` 
-        })
-      }
-
-      ${this.data?.additional?.map((addition, index) => {
-        let textField =
-            html`
-              <text-field
-                class="additional-text"
-                .editable=${this.editable}
-                .data=${addition.textField}
-                title=${addition.headerText}
-                id="addition-text-${index + 1}"
-              >
-              </text-field>
-            `
-        let codeSnippet =
-              html`<code-snippet
-                class="additional-code"
-                .editable=${this.editable}
-                .data=${addition.codeSnippet}
-                id="addition-code-${index + 1}"
-              >
-              </code-snippet>
-            `  
-        return html`${textField}${codeSnippet}`;
-      })}
-
-      <button
-        ?hidden=${!this.editable}
-        class="additional-note-button"
-        @click="${this.addAddition}"
-      >
-        Addition
-      </button>
-
-      ${
-        this.classList[0] === 'library-secondary' ?
-        html`<div @click="${this.removeLibrary}" class="remove-button remove-library">+</div>` : null
-      }
+          this.classList[0] === 'library-secondary' ?
+          html`<div @click="${this.removeLibrary}" class="remove-button remove-library">+</div>` : null
+        }
     `;
   }
 
