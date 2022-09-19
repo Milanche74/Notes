@@ -34,3 +34,6 @@ Single click on item labels in the dashboard will open up selected item's detail
 - [ ] When new note's installation or implementation headers are modified, don't save them as that property
 - [ ] Add clean up method to elements 
 - [ ] Improve on scroll logic
+- [ ] Convert to TS
+- [ ] use Mongo DB look into local storage
+- [ ] think of reddit

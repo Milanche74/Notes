@@ -10,11 +10,12 @@ import "regenerator-runtime/runtime";
 let data = [];
 let libraries = [];
 let tags = [];
+const apiBaseUrl = '0.0.0.0'
 
 // FUNCTIONS
 
 const getData = async (i, libraryId = 1) => {
-  const response = await fetch(`http://localhost:5000/libraries`);
+  const response = await fetch(`http://${apiBaseUrl}:5000/libraries`);
   data = await response.json();
   tags = data.map(({ tags }) => tags);
 
@@ -55,7 +56,7 @@ const putData = async (index, data, libraryId) => {
     body: JSON.stringify(data),
   };
   const response = await fetch(
-    `http://localhost:5000/libraries/${index}`,
+    `http://${apiBaseUrl}:5000/libraries/${index}`,
     requestOptions
   );
   data = await response.json();
@@ -69,7 +70,7 @@ const postData = async (data, libraryId) => {
     body: JSON.stringify(data),
   };
   const response = await fetch(
-    `http://localhost:5000/libraries`,
+    `http://${apiBaseUrl}:5000/libraries`,
     requestOptions
   );
   data = await response.json();

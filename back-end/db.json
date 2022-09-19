@@ -357,7 +357,7 @@
     {
       "name": "Vizia deployment",
       "documentation": "",
-      "description": "Steps how to deploy VIZIA",
+      "description": "Steps how to deploy VIZIA - kudos to Oscar",
       "implementationSnippet": "Containers are being used. Kubernetes orchestrates. Concourse is glue \nof CI/CD pipeline - VPN. Katalog gives instructions for Kubernetes to run service.\nbrandwatch.dev => deploy to production (slipstream)",
       "tags": [
         "#deployment"

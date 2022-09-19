@@ -1,0 +1,20 @@
+{
+    "name": "notes",
+    "version": "1.0.0",
+    "dependencies": {
+      "json-server": "^0.17.0"
+    },
+    "devDependencies": {
+      "eslint": "^8.10.0"
+    },
+    "main": "index.js",
+    "scripts": {
+      "server": "json-server db.json --port 5000 --host 0.0.0.0",
+      "lint": "eslint --fix .",
+      "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "Milan",
+    "license": "ISC",
+    "description": ""
+  }
+  
